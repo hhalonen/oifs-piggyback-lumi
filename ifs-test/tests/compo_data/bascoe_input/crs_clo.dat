@@ -1,0 +1,37 @@
+! subversion Id for THIS file : $Id: crs_clo.dat 1592 2009-10-07 15:11:14Z yvesc $
+! $URL: http://svn-ae/ae/COMMON/atmos/bascop/data_in/tags/03.00/tuv_midatm/crs_sb15a/crs_clo.dat $
+!-----------------------------------------------------------------------
+!
+! Absorption cross-section ClO: ClO + hv --> O + Cl
+! source : JPL-2006
+! http://www.atmosphere.mpg.de/enid/2295
+! -> Catalogue -> "Halogen oxides" -> "Cl oxides" -> "ClO" -> "JPL-2006"
+! Rem1: Quantum yield = 1.
+! Rem2: Temperature influence:
+!       T dep. according to the formula:
+!           crs = crs_on_file / (1+0.0036*(T-294))
+!       where crs_on_file are the crs values given in the table below.
+!       The cross sections are computed in subroutine CRS_TDEP.
+! Rem3: Note that the crs spectrum is highly complex (see JPL-2006, Figure 4-2, p.4-94).
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        79  | Finishes at wl interval :   95
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) |   Tdep_param1 |   Tdep_param2
+!-----------------------------------------------------------------------------------------------
+  79   246.90   250.00     3.23E-18           1.000
+  80   250.00   253.20     3.81E-18           1.000
+  81   253.20   256.40     4.38E-18           1.000
+  82   256.40   259.70     4.87E-18           1.000
+  83   259.70   263.20     5.24E-18           1.000
+  84   263.20   266.70     5.43E-18           1.000
+  85   266.70   270.30     5.42E-18           1.000
+  86   270.30   274.00     5.11E-18           1.000
+  87   274.00   277.80     4.65E-18           1.000
+  88   277.80   281.70     4.00E-18           1.000
+  89   281.70   285.70     3.27E-18           1.000
+  90   285.70   289.90     2.58E-18           1.000
+  91   289.90   294.10     1.67E-18           1.000
+  92   294.10   298.50     1.12E-18           1.000
+  93   298.50   303.00     7.35E-19           1.000
+  94   303.00   307.70     4.94E-19           1.000
+  95   307.70   312.50     3.51E-19           1.000

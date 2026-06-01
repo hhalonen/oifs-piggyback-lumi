@@ -1,0 +1,56 @@
+! subversion Id for THIS file : $Id: crs_n2o.dat 6008 2013-11-07 10:25:37Z simonc $
+! $URL: http://svn-ae/ae/COMMON/atmos/bascop/data_in/tags/03.00/tuv_midatm/crs_sb15a/crs_n2o.dat $
+!-----------------------------------------------------------------------
+!
+! Absorption cross-section N2O: N2O + hv --> N2 + O(1D)
+! source : JPL-2006
+! http://www.atmosphere.mpg.de/enid/2295
+! -> Catalogue -> " Nitrogen oxides" -> "Nitrous oxide N2O" -> "JPL-2006"
+! Rem1: Quantum yield = 1.
+! Rem2: Temperature influence:   
+!   i)  160-174nm: JPL-2006 reports values without mentioning the temperature influence.
+!       They are not used here **** BUT SHOULD BE !!
+!   ii) 174-240nm: T dep. according to the formula:
+!           ln crs = sum An*wl^n + (T-300)*exp (sum Bn*wl^n)
+!       where An and Bn are parameters introduced in CRS_TDEP.
+!       The cross sections are computed in subroutine CRS_TDEP.
+!       Accordingly, the values provided below are for T=298K and ARE NOT USED !!
+! Rem3: JPL-2011 (tables 4C-8 and 4C-9, p.4C-43) keeps the same values and T dependence
+!       as JPL-2006 **** BUT ALSO MENTIONS A VALUE OF 2.5e-17 AT LYMAN_ALPHA !!!
+!       reporting measurements at 298K in 6.1-168nm by Chan et al. (Chem. Phys., 180, 77-88, 1994)
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        45  | Finishes at wl interval :   75
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) |   Tdep_param1 |   Tdep_param2
+!-----------------------------------------------------------------------------------------------
+  45   173.90   175.40     1.24E-19           1.000
+  46   175.40   177.00     1.35E-19           1.000
+  47   177.00   178.60     1.40E-19           1.000
+  48   178.60   180.20     1.45E-19           1.000
+  49   180.20   181.80     1.46E-19           1.000
+  50   181.80   183.50     1.46E-19           1.000
+  51   183.50   185.20     1.44E-19           1.000
+  52   185.20   186.90     1.36E-19           1.000
+  53   186.90   188.70     1.26E-19           1.000
+  54   188.70   190.50     1.13E-19           1.000
+  55   190.50   192.30     1.01E-19           1.000
+  56   192.30   194.20     8.74E-20           1.000
+  57   194.20   196.10     7.42E-20           1.000
+  58   196.10   198.00     6.06E-20           1.000
+  59   198.00   200.00     4.71E-20           1.000
+  60   200.00   202.00     3.58E-20           1.000
+  61   202.00   204.10     2.66E-20           1.000
+  62   204.10   206.20     1.91E-20           1.000
+  63   206.20   208.30     1.33E-20           1.000
+  64   208.30   210.50     8.90E-21           1.000
+  65   210.50   212.80     5.56E-21           1.000
+  66   212.80   215.00     3.53E-21           1.000
+  67   215.00   217.40     2.16E-21           1.000
+  68   217.40   219.80     1.27E-21           1.000
+  69   219.80   222.20     7.49E-22           1.000
+  70   222.20   224.70     4.34E-22           1.000
+  71   224.70   227.30     2.44E-22           1.000
+  72   227.30   229.90     1.34E-22           1.000
+  73   229.90   232.60     7.32E-23           1.000
+  74   232.60   235.30     3.85E-23           1.000
+  75   235.30   238.10     2.09E-23           1.000

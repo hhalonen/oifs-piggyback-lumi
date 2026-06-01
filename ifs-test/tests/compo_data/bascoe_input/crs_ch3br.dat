@@ -1,0 +1,65 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_ch3br.dat
+! Cross-section data for CH3Br:
+!   CH3Br + hv --> Br + CH3
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4G-23 (457)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Halogeno-alkanes+radicals/Bromoalkanes/CH3Br_JPL-2010%282011%29_295-296K_174-290nm%28rec%29.txt
+! Rem1: TDEP unchanged
+! Rem2: While branch (CH2Br+H) has been studied, its QY is negligible.
+!
+! Only one branch for current reaction -> qy set to 1 !
+! Temperature-independent cross-section
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        45| Finishes at wl interval :     90
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) 
+!-----------------------------------------------------------------------------------------------
+  45   173.90   175.40     6.53E-18           1.000
+  46   175.40   177.00     1.03E-17           1.000
+  47   177.00   178.60     1.17E-17           1.000
+  48   178.60   180.20     4.23E-18           1.000
+  49   180.20   181.80     3.22E-19           1.000
+  50   181.80   183.50     2.03E-19           1.000
+  51   183.50   185.20     2.24E-19           1.000
+  52   185.20   186.90     2.80E-19           1.000
+  53   186.90   188.70     3.46E-19           1.000
+  54   188.70   190.50     4.24E-19           1.000
+  55   190.50   192.30     5.09E-19           1.000
+  56   192.30   194.20     5.93E-19           1.000
+  57   194.20   196.10     6.67E-19           1.000
+  58   196.10   198.00     7.31E-19           1.000
+  59   198.00   200.00     7.76E-19           1.000
+  60   200.00   202.00     7.91E-19           1.000
+  61   202.00   204.10     7.86E-19           1.000
+  62   204.10   206.20     7.64E-19           1.000
+  63   206.20   208.30     7.22E-19           1.000
+  64   208.30   210.50     6.70E-19           1.000
+  65   210.50   212.80     6.09E-19           1.000
+  66   212.80   215.00     5.44E-19           1.000
+  67   215.00   217.40     4.74E-19           1.000
+  68   217.40   219.80     4.06E-19           1.000
+  69   219.80   222.20     3.39E-19           1.000
+  70   222.20   224.70     2.78E-19           1.000
+  71   224.70   227.30     2.22E-19           1.000
+  72   227.30   229.90     1.71E-19           1.000
+  73   229.90   232.60     1.30E-19           1.000
+  74   232.60   235.30     9.54E-20           1.000
+  75   235.30   238.10     6.82E-20           1.000
+  76   238.10   241.00     4.67E-20           1.000
+  77   241.00   243.90     3.08E-20           1.000
+  78   243.90   246.90     1.98E-20           1.000
+  79   246.90   250.00     1.23E-20           1.000
+  80   250.00   253.20     7.35E-21           1.000
+  81   253.20   256.40     4.30E-21           1.000
+  82   256.40   259.70     2.42E-21           1.000
+  83   259.70   263.20     1.29E-21           1.000
+  84   263.20   266.70     6.86E-22           1.000
+  85   266.70   270.30     3.39E-22           1.000
+  86   270.30   274.00     1.71E-22           1.000
+  87   274.00   277.80     8.41E-23           1.000
+  88   277.80   281.70     4.15E-23           1.000
+  89   281.70   285.70     1.83E-23           1.000
+  90   285.70   289.90     6.52E-24           1.000

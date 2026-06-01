@@ -1,0 +1,19 @@
+MODULE YOS_LW
+ 
+USE PARKIND1  ,ONLY : JPIM     ,JPRB
+
+IMPLICIT NONE
+
+SAVE
+
+!       ----------------------------------------------------------------
+!*    ** *YOELW* - COEFFICIENTS OF THE LONGWAVE RADIATION TRANSFER
+!       ----------------------------------------------------------------
+
+TYPE :: TLW
+INTEGER(KIND=JPIM) :: NSIL    ! NUMBER OF SPECTRAL INTERVALS
+REAL(KIND=JPRB) :: TSTAND     ! REFERENCE TEMPERATURE FOR TEMPERATURE DEPENDENCE
+REAL(KIND=JPRB) :: XP(6,6)    ! POLYNOMIAL COEFFICIENTS OF PLANCK FUNCTION
+END TYPE TLW
+
+END MODULE YOS_LW

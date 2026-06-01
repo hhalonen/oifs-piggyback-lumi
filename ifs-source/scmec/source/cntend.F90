@@ -1,0 +1,71 @@
+SUBROUTINE CNTEND
+
+!**** *CNTEND*  - Closes netCDF datafiles.
+
+!     Purpose.
+!     --------
+!          Data file closure after finishing the run.
+
+!***  Interface.
+!     ----------
+!        *CALL* *CNTEND
+
+!        Explicit arguments :
+!        --------------------
+!        None
+
+!        Implicit arguments :
+!        --------------------
+!        None
+
+!     Method.
+!     -------
+
+!     Externals.
+!     ----------
+
+!     Reference.
+!     ----------
+
+!     Author.
+!     -------
+!        Bart vd Hurk *KNMI*
+
+!     Modifications.
+!     --------------
+!        Original      : 00/07/14
+!        Martin Koehler: 00/09/10 adoption to one column model
+!        M. Ko"hler      6-6-2006 Single Column Model integration within IFS 
+
+!     ------------------------------------------------------------------
+
+USE PARKIND1 , ONLY : JPIM     ,JPRB
+USE YOMLOG1C , ONLY : OUTFORM  ,NPOSPRG, NPOSDIA, NPOSDIA2
+
+IMPLICIT NONE
+
+INTEGER(KIND=JPIM), PARAMETER :: JPNCDF=3
+INTEGER(KIND=JPIM) :: IPOS(JPNCDF), NPOS, J, ISTATUS
+
+#include "netcdf.inc"
+
+!     ------------------------------------------------------------------
+#include "handle_err_nc.intfb.h"
+!     ------------------------------------------------------------------
+
+IF (OUTFORM .EQ. 'netcdf') THEN
+
+  IPOS(1) = NPOSPRG
+  IPOS(2) = NPOSDIA
+  IPOS(3) = NPOSDIA2
+  DO J = 1,JPNCDF
+    NPOS    = IPOS(J)
+    istatus = NF_CLOSE(npos)
+    call handle_err_nc(istatus)
+  ENDDO
+
+ENDIF
+
+WRITE(*,*) 'Single Column Model Completed Successfully.'
+
+END SUBROUTINE CNTEND

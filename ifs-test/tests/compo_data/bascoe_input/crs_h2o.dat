@@ -1,0 +1,74 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_h2o.dat
+! Cross-section data for H2O:
+!   H2O + hv    --> O3P + H2
+!               --> OH(X2P) + H
+!               --> O1D + H2
+!               --> OH(A2Sigma+) + H
+!               --> O3P + H + H
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4B-1 (253)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Hydrogen+water/H2O_JPL-2010%282011%29_298K_121-198nm%28rec%29.txt
+! Rem1: JPL2011 mention 5 different branches for the photodissiociation of H2O, which was not
+!       the case in previous JPL evaluation. Here, we assume QY(OH+H)=1
+!
+! Only one branch for current reaction -> qy set to 1 !
+! Temperature-independent cross-section
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :         7| Finishes at wl interval :     57
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) 
+!-----------------------------------------------------------------------------------------------
+   7   120.50   121.20     5.50E-18           1.000
+   8   121.59   121.59     1.48E-17           1.000
+   9   121.20   122.00     1.37E-17           1.000
+  10   122.00   122.70     1.10E-17           1.000
+  11   122.70   123.50     4.40E-18           1.000
+  12   123.50   124.20     1.03E-17           1.000
+  13   124.20   125.00     7.24E-18           1.000
+  14   125.00   125.80     6.71E-18           1.000
+  15   125.80   126.60     7.33E-18           1.000
+  16   126.60   127.40     7.90E-18           1.000
+  17   127.40   128.20     8.20E-18           1.000
+  18   128.20   129.00     8.10E-18           1.000
+  19   129.00   129.90     7.89E-18           1.000
+  20   129.90   130.70     7.26E-18           1.000
+  21   130.70   131.60     6.65E-18           1.000
+  22   131.60   132.40     6.28E-18           1.000
+  23   132.40   133.30     5.14E-18           1.000
+  24   133.30   134.20     4.66E-18           1.000
+  25   134.20   135.10     3.80E-18           1.000
+  26   135.10   136.00     3.04E-18           1.000
+  27   136.00   137.00     2.42E-18           1.000
+  28   137.00   137.90     1.94E-18           1.000
+  29   137.90   138.90     1.45E-18           1.000
+  30   138.90   140.80     1.08E-18           1.000
+  31   140.80   142.80     6.95E-19           1.000
+  32   142.80   144.90     5.70E-19           1.000
+  33   144.90   147.00     6.58E-19           1.000
+  34   147.00   149.20     8.80E-19           1.000
+  35   149.20   151.50     1.28E-18           1.000
+  36   151.50   153.80     1.84E-18           1.000
+  37   153.80   156.20     2.38E-18           1.000
+  38   156.20   158.70     3.09E-18           1.000
+  39   158.70   161.30     3.84E-18           1.000
+  40   161.30   163.90     4.48E-18           1.000
+  41   163.90   166.70     4.99E-18           1.000
+  42   166.70   169.50     5.06E-18           1.000
+  43   169.50   172.40     4.66E-18           1.000
+  44   172.40   173.90     3.88E-18           1.000
+  45   173.90   175.40     3.31E-18           1.000
+  46   175.40   177.00     2.74E-18           1.000
+  47   177.00   178.60     2.02E-18           1.000
+  48   178.60   180.20     1.20E-18           1.000
+  49   180.20   181.80     5.73E-19           1.000
+  50   181.80   183.50     2.34E-19           1.000
+  51   183.50   185.20     1.02E-19           1.000
+  52   185.20   186.90     4.44E-20           1.000
+  53   186.90   188.70     1.99E-20           1.000
+  54   188.70   190.50     8.56E-21           1.000
+  55   190.50   192.30     4.03E-21           1.000
+  56   192.30   194.20     2.03E-21           1.000
+  57   194.20   196.10     1.29E-21           1.000

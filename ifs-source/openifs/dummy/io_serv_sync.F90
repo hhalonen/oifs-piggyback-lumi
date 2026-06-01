@@ -1,0 +1,13 @@
+SUBROUTINE IO_SERV_SYNC(YDIOS,KTYPE,CDNAME,LDSTOP,PTSTEP)
+use parkind1, only:&
+ & jpim,&
+ & jprb
+use yomio_serv, only:&
+ & io_serv
+TYPE (IO_SERV), INTENT (INOUT) :: YDIOS
+INTEGER (KIND=JPIM), INTENT (IN) :: KTYPE
+CHARACTER (LEN=*), INTENT (IN) :: CDNAME
+LOGICAL, OPTIONAL, INTENT (IN) :: LDSTOP
+REAL (KIND=JPRB), INTENT (IN), OPTIONAL :: PTSTEP
+call abor1("io_serv_sync.F90 should never be called with OpenIFS - EXITING")
+END SUBROUTINE IO_SERV_SYNC

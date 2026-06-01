@@ -1,0 +1,4 @@
+      SUBROUTINE fagiot
+      CALL ABOR1('FAGIOT  SHOULD NEVER BE CALLED')
+      RETURN
+      END

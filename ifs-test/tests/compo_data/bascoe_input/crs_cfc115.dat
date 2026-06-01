@@ -1,0 +1,48 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_cfc115.dat
+! Cross-section data for CFC115:
+!   CFC115 + hv --> Cl + Product
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4F-41 (407)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Halogeno-alkanes+radicals/Freons-CFC%28C,F,Cl%29/CF3CF2Cl%28CFC-115%29_JPL-2010%282011%29_298K_172-230nm%28rec%29.txt
+! Rem1: QY and TDEP unchanged since JPL2006
+!
+! Only one branch for current reaction -> qy set to 1 !
+! Temperature-independent cross-section
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        43| Finishes at wl interval :     72
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) 
+!-----------------------------------------------------------------------------------------------
+  43   169.50   172.40     7.40E-21           1.000
+  44   172.40   173.90     4.71E-20           1.000
+  45   173.90   175.40     3.79E-20           1.000
+  46   175.40   177.00     3.01E-20           1.000
+  47   177.00   178.60     2.34E-20           1.000
+  48   178.60   180.20     1.78E-20           1.000
+  49   180.20   181.80     1.35E-20           1.000
+  50   181.80   183.50     1.02E-20           1.000
+  51   183.50   185.20     7.54E-21           1.000
+  52   185.20   186.90     5.65E-21           1.000
+  53   186.90   188.70     4.22E-21           1.000
+  54   188.70   190.50     3.11E-21           1.000
+  55   190.50   192.30     2.28E-21           1.000
+  56   192.30   194.20     1.66E-21           1.000
+  57   194.20   196.10     1.17E-21           1.000
+  58   196.10   198.00     8.28E-22           1.000
+  59   198.00   200.00     5.80E-22           1.000
+  60   200.00   202.00     3.99E-22           1.000
+  61   202.00   204.10     2.69E-22           1.000
+  62   204.10   206.20     1.85E-22           1.000
+  63   206.20   208.30     1.34E-22           1.000
+  64   208.30   210.50     8.49E-23           1.000
+  65   210.50   212.80     5.59E-23           1.000
+  66   212.80   215.00     3.67E-23           1.000
+  67   215.00   217.40     2.33E-23           1.000
+  68   217.40   219.80     1.53E-23           1.000
+  69   219.80   222.20     9.50E-24           1.000
+  70   222.20   224.70     6.49E-24           1.000
+  71   224.70   227.30     4.05E-24           1.000
+  72   227.30   229.90     2.58E-24           1.000

@@ -1,0 +1,53 @@
+! subversion Id for THIS file : $Id: crs_hcfc22.dat 1592 2009-10-07 15:11:14Z yvesc $
+! $URL: http://svn-ae/ae/COMMON/atmos/bascop/data_in/tags/03.00/tuv_midatm/crs_sb15a/crs_hcfc22.dat $
+!-----------------------------------------------------------------------
+!
+! Absorption cross-section CHF2Cl (HCFC22): CHF2Cl + hv --> Cl
+! source : JPL-2006 (no change with respect to JPL-2002)
+! http://www.atmosphere.mpg.de/enid/2295
+! -> Catalogue -> "Halogeno-alkanes, -alkyl radicals" -> "Freons-HCFC(C,H,F,Cl)" 
+!           -> "CHF2Cl(HCFC-22)" -> "JPL-2002"
+! Rem1: Quantum yield = 1.
+! Rem2: Temperature influence:
+!   i)  170-174nm: T ind.
+!   ii) 174-204nm: T dep. according to the formula (Gillotay & Simon, 1988):
+!           log10 crs = sum An*wl^n + (T-273)*sum Bn*wl^n
+!       where An and Bn are parameters introduced in CRS_CFC.
+!       The cross sections are computed in subroutine CRS_TDEP. 
+!       Accordingly, data (174-204nm) given below are not used.
+! Rem3: JPL-2006 reports crs for wl > 204nm at room temperature (295-298K) without
+!       mentioning their temperature dependence. These values have been obtained
+!       by extrapolation of the data "174-204nm", but JPL-2006 does not point out
+!       whether the polynomial formula is still available for the wl range.
+!		We assume it is the case and then have extended the validity of the T-dep. formula
+!		to the range [174-219.8nm].
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        44  | Finishes at wl interval :   68
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) |   Tdep_param1 |   Tdep_param2
+!-----------------------------------------------------------------------------------------------
+  44   172.40   173.90     7.45E-20           1.000
+  45   173.90   175.40     5.18E-20           1.000
+  46   175.40   177.00     3.93E-20           1.000
+  47   177.00   178.60     2.91E-20           1.000
+  48   178.60   180.20     2.17E-20           1.000
+  49   180.20   181.80     1.59E-20           1.000
+  50   181.80   183.50     1.14E-20           1.000
+  51   183.50   185.20     8.02E-21           1.000
+  52   185.20   186.90     5.77E-21           1.000
+  53   186.90   188.70     3.98E-21           1.000
+  54   188.70   190.50     2.72E-21           1.000
+  55   190.50   192.30     1.83E-21           1.000
+  56   192.30   194.20     1.23E-21           1.000
+  57   194.20   196.10     8.52E-22           1.000
+  58   196.10   198.00     5.94E-22           1.000
+  59   198.00   200.00     4.00E-22           1.000
+  60   200.00   202.00     2.70E-22           1.000
+  61   202.00   204.10     1.79E-22           1.000
+  62   204.10   206.20     1.09E-22           1.000
+  63   206.20   208.30     7.13E-23           1.000
+  64   208.30   210.50     4.91E-23           1.000
+  65   210.50   212.80     3.13E-23           1.000
+  66   212.80   215.00     1.99E-23           1.000
+  67   215.00   217.40     1.26E-23           1.000
+  68   217.40   219.80     7.78E-24           1.000

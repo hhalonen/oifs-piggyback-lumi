@@ -1,0 +1,8 @@
+SUBROUTINE FP_SERV_NEW (YDFPS, KCOMM_WORLD)
+USE YOMFP_SERV, ONLY : FP_SERV
+use parkind1, only:&
+ & jpim
+TYPE (FP_SERV), INTENT (INOUT) :: YDFPS
+INTEGER (KIND=JPIM), INTENT (IN) :: KCOMM_WORLD
+call abor1("fp_serv_new.F90 should never be called with OpenIFS - EXITING")
+END SUBROUTINE FP_SERV_NEW

@@ -1,0 +1,8 @@
+SUBROUTINE WRITECHET(YDRIP,KTSNO)
+use parkind1 , only:&
+ & jpim
+USE YOMRIP , ONLY : TRIP
+TYPE(TRIP) ,INTENT(INOUT) :: YDRIP
+INTEGER(KIND=JPIM),INTENT(IN) :: KTSNO
+call abor1("writechet.F90 should never be called with OpenIFS - EXITING")
+END SUBROUTINE WRITECHET

@@ -1,0 +1,22 @@
+      FUNCTION RDOT(N,X,INCX,Y,INCY)
+      USE PARKIND1, ONLY : JPIM, JPRB
+      IMPLICIT NONE
+      INTEGER(KIND=JPIM) :: N
+      INTEGER(KIND=JPIM) :: INCX
+      INTEGER(KIND=JPIM) :: INCY
+      REAL(KIND=JPRB) :: X(N*INCX)
+      REAL(KIND=JPRB) :: Y(N*INCY)
+      REAL(KIND=JPRB) :: RDOT
+      INTEGER :: IX,IY,J
+      REAL(KIND=JPRB) :: ZDOT
+      ZDOT=0.0_JPRB
+      IX=1
+      IY=1
+      DO J=1,N
+        ZDOT=ZDOT+X(IX)*Y(IY)
+        IX=IX+INCX
+        IY=IY+INCY
+      ENDDO
+      RDOT=ZDOT
+      RETURN
+      ENDFUNCTION RDOT

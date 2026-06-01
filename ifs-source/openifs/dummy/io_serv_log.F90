@@ -1,0 +1,11 @@
+SUBROUTINE IO_SERV_LOG (YDIOS, CDMESS, KTYPE, LDCLOSE)
+use parkind1, only:&
+ & jpim
+use yomio_serv, only:&
+ & io_serv
+TYPE (IO_SERV), INTENT (INOUT) :: YDIOS
+CHARACTER (LEN=*), INTENT (IN), OPTIONAL :: CDMESS
+INTEGER (KIND=JPIM), INTENT (IN), OPTIONAL :: KTYPE
+LOGICAL, INTENT (IN), OPTIONAL :: LDCLOSE
+call abor1("io_serv_log.F90 should never be called with OpenIFS - EXITING")
+END SUBROUTINE IO_SERV_LOG

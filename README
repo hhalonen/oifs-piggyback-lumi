@@ -1,0 +1,47 @@
+
+ECMWF OpenIFS - README
+======================
+
+The OpenIFS model and accompanying software & files is for use 
+by universities and other research institutes. It is not 
+for commercial or operational use.
+
+Use of the model is not allowed without a valid license, provided 
+free of charge by contacting:
+
+    openifs-support@ecmwf.int
+
+	
+Getting started
+---------------
+For details about how to build and run OpenIFS 48r1 please 
+refer to 
+
+https://confluence.ecmwf.int/display/OIFS/OpenIFS+48r1+User+Guide
+
+
+OpenIFS User Forums
+-------------------
+The OpenIFS User Forums are available to post support questions. 
+These are monitored by the OpenIFS support team as well as members
+of the OpenIFS user community.
+See:
+     https://confluence.ecmwf.int/display/OIFSUF/
+
+
+
+Mailing list
+------------
+A mailing list for announcements about the OpenIFS project 
+is available at:
+
+     http://www.ecmwf.int/publications/maillist/d/info/openifs-announce
+
+
+User Support
+------------
+ECMWF provides dedicated support for OpenIFS. The support
+team can be contacted at:
+
+     openifs-support@ecmwf.int
+

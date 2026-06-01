@@ -1,0 +1,26 @@
+MODULE YOMANA
+
+USE PARKIND1  ,ONLY : JPIM
+
+IMPLICIT NONE
+
+SAVE
+
+!*
+!      YOMANA - ANALYSIS PARAMETERS
+
+!        D. VASILJEVIC   ECMWF     30/5/90
+
+!     NAME    TYPE     MEANING
+!     ----    ----     -------
+
+!     NANDAT   I   ANALYSIS DATE, IN FORM YYMMDD
+!     NANTIM   I   ANALYSIS TIME, IN FORM HHMMSS
+!     NANMIN   I   ANALYSIS TIME, IN MINUTES FROM 00Z
+INTEGER(KIND=JPIM) :: NANDAT
+INTEGER(KIND=JPIM) :: NANTIM
+INTEGER(KIND=JPIM) :: NANMIN
+
+!     ------------------------------------------------------------------
+
+END MODULE YOMANA

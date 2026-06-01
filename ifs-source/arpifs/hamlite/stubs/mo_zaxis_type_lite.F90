@@ -1,0 +1,5 @@
+MODULE mo_zaxis_type_lite
+  IMPLICIT NONE
+  PUBLIC :: ZA_SURFACE
+  INTEGER, PARAMETER :: ZA_SURFACE = 1
+END MODULE mo_zaxis_type_lite

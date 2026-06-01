@@ -1,0 +1,37 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_bro.dat
+! Cross-section data for BrO:
+!   BrO + hv --> Br + O
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4G-19 (438)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Halogen%20oxides/Br%20oxides/BrO_JPL-2010%282011%29_298K_286.5-385.0nm%280.5nm,rec%29.txt
+!
+! Only one branch for current reaction -> qy set to 1 !
+! Temperature-independent cross-section
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        90| Finishes at wl interval :    109
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) 
+!-----------------------------------------------------------------------------------------------
+  90   285.70   289.90     9.80E-19           1.000
+  91   289.90   294.10     1.68E-18           1.000
+  92   294.10   298.50     2.20E-18           1.000
+  93   298.50   303.00     3.01E-18           1.000
+  94   303.00   307.70     3.63E-18           1.000
+  95   307.70   312.50     4.24E-18           1.000
+  96   312.50   317.50     5.02E-18           1.000
+  97   317.50   322.50     6.13E-18           1.000
+  98   322.50   327.50     5.52E-18           1.000
+  99   327.50   332.50     5.53E-18           1.000
+ 100   332.50   337.50     5.58E-18           1.000
+ 101   337.50   342.50     5.21E-18           1.000
+ 102   342.50   347.50     4.56E-18           1.000
+ 103   347.50   352.50     3.90E-18           1.000
+ 104   352.50   357.50     2.80E-18           1.000
+ 105   357.50   362.50     1.88E-18           1.000
+ 106   362.50   367.50     1.06E-18           1.000
+ 107   367.50   372.50     7.95E-19           1.000
+ 108   372.50   377.50     4.39E-19           1.000
+ 109   377.50   382.50     1.81E-19           1.000

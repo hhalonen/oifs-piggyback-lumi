@@ -1,0 +1,4 @@
+      SUBROUTINE facade
+      CALL ABOR1('FACADE  SHOULD NEVER BE CALLED')
+      RETURN
+      END

@@ -1,0 +1,1 @@
+      INTEGER(KIND=JPIM) :: ISRCHFGE_I

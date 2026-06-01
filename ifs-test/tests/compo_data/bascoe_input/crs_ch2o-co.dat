@@ -1,0 +1,66 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_ch2o.dat
+! Cross-section data for CH2O:
+!   CH2O + hv   --> H2 + CO
+!               --> H + HCO
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4D-1 (291)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Organics%20%28carbonyls%29/Aldehydes%28aliphatic%29/CH2O_JPL-2010%282011%29_298K_226-375nm%28rec,1nm%29.txt
+! Rem1: CRS updated JPL2011
+! Rem2: Quantum yield updated JPL2011 given in table 4D4 (p.297)
+!   QY(H2+CO) is tdep for wl>330nm. This tdep is not implemented in TUV.
+! Rem3: Temperature influence:
+!   i) 250-356nm: T dep. according to the formula (see JPL-2011, p.292):
+!           crs = crs(wl,298) + GAMMA * (T- 298)
+!       where GAMMA is the parameter given below in the last column.
+!       The cross sections are computed in subroutine CRS_TDEP.
+!   ii) GAMMA updated JPL2011
+! Rem4: In the ranges [226-249] and [361-373]nm, crs indep of qyield and gamma.
+!       Here, for these ranges, qyield and gamma are 0 => these ranges will not
+!       contribute to the calculation of the j's table.
+!
+! Photodissiation Branch: CO+H2
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        71| Finishes at wl interval :    107
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) |         GAMMA 
+!-----------------------------------------------------------------------------------------------
+  71   224.70   227.30     8.66E-23           0.000        0.00E+00
+  72   227.30   229.90     1.86E-22           0.000        0.00E+00
+  73   229.90   232.60     2.99E-22           0.000        0.00E+00
+  74   232.60   235.30     3.20E-22           0.000        0.00E+00
+  75   235.30   238.10     6.13E-22           0.000        0.00E+00
+  76   238.10   241.00     7.17E-22           0.000        0.00E+00
+  77   241.00   243.90     1.26E-21           0.000        0.00E+00
+  78   243.90   246.90     1.40E-21           0.000        0.00E+00
+  79   246.90   250.00     2.49E-21           0.000        0.00E+00
+  80   250.00   253.20     2.73E-21           0.493        7.20E-01
+  81   253.20   256.40     4.47E-21           0.496        1.77E+00
+  82   256.40   259.70     4.75E-21           0.497        5.30E+00
+  83   259.70   263.20     7.14E-21           0.489        1.50E+00
+  84   263.20   266.70     7.57E-21           0.477        4.97E+00
+  85   266.70   270.30     1.14E-20           0.454        2.80E+00
+  86   270.30   274.00     1.26E-20           0.421        3.74E+00
+  87   274.00   277.80     1.83E-20           0.381       -5.73E+00
+  88   277.80   281.70     1.86E-20           0.349       -3.83E+00
+  89   281.70   285.70     2.54E-20           0.315       -2.23E+01
+  90   285.70   289.90     2.32E-20           0.292       -8.11E+00
+  91   289.90   294.10     2.56E-20           0.266       -3.49E+01
+  92   294.10   298.50     3.38E-20           0.253        5.73E+00
+  93   298.50   303.00     1.83E-20           0.240        2.83E+00
+  94   303.00   307.70     4.21E-20           0.241       -1.68E+00
+  95   307.70   312.50     1.61E-20           0.264       -5.47E+00
+  96   312.50   317.50     4.03E-20           0.315        8.40E+00
+  97   317.50   322.50     1.58E-20           0.397        8.13E+00
+  98   322.50   327.50     2.72E-20           0.511        3.87E+00
+  99   327.50   332.50     2.07E-20           0.657        1.05E+01
+ 100   332.50   337.50     2.37E-21           0.735        1.71E+00
+ 101   337.50   342.50     2.41E-20           0.645        1.52E+01
+ 102   342.50   347.50     7.23E-21           0.505        4.80E-01
+ 103   347.50   352.50     2.32E-21           0.375       -3.40E+00
+ 104   352.50   357.50     9.23E-21           0.220        0.00E+00
+ 105   357.50   362.50     1.41E-22           0.040        0.00E+00
+ 106   362.50   367.50     1.03E-22           0.000        0.00E+00
+ 107   367.50   372.50     3.66E-22           0.000        0.00E+00

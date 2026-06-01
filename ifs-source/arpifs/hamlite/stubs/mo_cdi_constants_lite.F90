@@ -1,0 +1,6 @@
+MODULE mo_cdi_constants_lite
+  IMPLICIT NONE
+  PUBLIC
+  INTEGER, PARAMETER :: GRID_UNSTRUCTURED_CELL = 1
+  INTEGER, PARAMETER :: GRID_CELL = 1
+END MODULE mo_cdi_constants_lite

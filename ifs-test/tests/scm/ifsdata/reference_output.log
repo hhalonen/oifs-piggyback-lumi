@@ -1,0 +1,2429 @@
+ NULOUT= 20 NULNAM=  4
+ NPOSSH= 51 NPODDH= 53 NULCO= 55 NTIDE = 56
+ NULDILA= 46 NULCONT= 47 NINISH= 81 NINIGG= 82 NFGISH= 83
+ NTRJSH= 71 NPPPSH= 91 NULCL1= 10 NULCL2= 11
+ NULASE= 16 NULASS= 17 NULRCF= 94 NULHWF= 93
+ NULUSR1 =  95 NULUSR2 =  96 NULUSR3 =  97 NULUSR4 =  98 NULUSR5 =  99
+ NEFLS =  78 NEFLSS =  73
+ NULFP01 =  54 NULFP02 =  50 NULFP03 =  43 NULFP04 =  30 NULFP05 =  19 NULFP06 =  18
+ NULFP07 =  14 NULFP08 =  13 NULFP09 =  12 NULFP10 =   9 NULFPOS =  74 NSCRTCH =   8
+ NULERR =   0 NULRAD =  25 NULRTL =  26
+ NULFP11 =   7 NULFP12 =  32 NULFP13 =  33 NULFP14 =  34 NULFP15 =  35
+ NEGASH =  39
+ NULTRAJHR =  72
+ NULTRAJBG =  83
+ NUIO_SERV_LOG =  67
+ Printings for module YOMCT0 
+ * SUCT0: General 0-level control variables.
+ LECMWF =  T
+ LELAM  =  F LRPLANE  =  F
+ NCONF  =      1
+ CNMEXP = -9              
+ LSLAG =  T LTWOTL =  T
+ LNF    =  T
+ LSPRT =  T LNHDYN =  F LTRAJNH =  F
+ LNHEE =  F LNHQE =  F
+ LSFORC =  F
+ NQUAD  =      1
+ N2DINI =      1
+ N3DINI =      0
+ NUNDEFLD =          1
+ NOPT_MEMORY =  2
+ NITER_ADTEST =   1
+ LIOLEVG =  T
+ LALLOPR =  F
+ LREGETA =  F
+ LVFE_REGETA =  F
+ LOLDPP = T
+ LAROME = F
+ LCALLSFX = T LSFXLSM = F
+ LSFORC = F LSFORCS = F
+ LCOUPLO4 = F
+ * SUCT0: Assimilation general keys.
+ L4DVAR =  F
+ NTASKS_CANARI =      1
+ NINTERPTRAJ =  1 NINTERPINCR =  1
+ LCANARI=  F LGUESS =  F LOBSC1 =  F LOBSREF=  F LOBS =  F LSIMOB =  T
+ LSCREEN =  F L_SCREEN_CALL =  T L_SPLIT_SCREEN =  F LBACKG =  F LMINIM =  F
+ LSCREEN_OPENMP =  T
+ LIFSTRAJ = F
+ LIFSMIN = F
+ LMONITORING =  F
+ LINFLAT = F
+ LINFLP9 = F
+ LINFLF1 = F
+ LSPBSBAL = F
+ * SUCT0: Control of outputs.
+ NSPPR  =      0
+ NFRPOS =      1 NFRSFXHIS =      1 NFRHIS =      1 NFRGDI =      1 NFRSDI =     24
+ NFRDHFG =      4 NFRDHFZ =      4 NFRDHFD =      4 NFRDHP =     48 N6BINS =      6
+ NFRCO =      0
+ NFRCORM =      0
+  NPOSTS =             0
+  NPOSTSMIN =             0
+  NHISTS =             0
+  NHISTSMIN =             0
+  NSFXHISTS =            0
+  NSFXHISTSMIN =             0
+  NGDITS =             0
+  NSDITS =             0
+  NDHPTS =             0
+  NDHFGTS =            0
+  NDHFZTS =            0
+  NDHFDTS =            0
+  NMASSCONS =            0
+ * SUCT0: File kind or content.
+ LFDBOP =  T LFBDAP =  F
+ LGRIB_API =  T
+ LARPEGEF =  F
+ LARPEGEF_TRAJHR =  F
+ LARPEGEF_TRAJBG =  F
+ LARPEGEF_RDGP_INIT =  F
+ LARPEGEF_RDGP_TRAJHR =  F
+ LARPEGEF_RDGP_TRAJBG =  F
+ LWRSPECA_GP =  F
+ LSUSPECA_GP =  F
+ LWRSPECA_GP_UV =  F
+ LSUSPECA_GP_UV =  F
+ * SUCT0: General FULL-POS keys.
+ NFPOS =   0 LECFPOS =  F
+ * SUCT0: Script filenames.
+ CSCRIPT_LAMRTC  = atcp CSCRIPT_PPSERVER = cnt3_wait
+ MODULE YOMJFH
+   N_VMASS =-1
+ RPLRADI     = 0.1000000E+01
+ RCORIOI     = 0.1000000E+01
+ LAQUA       =  F
+ LAPE        =  F
+ LHELDSUAREZ =  F
+ RT00_DYN     = 0.2881500E+03
+ RP00_DYN     = 0.1013150E+06
+ RU00_DYN     = 0.0000000E+00
+ RST0_DYN     = 0.0000000E+00
+ NOISEVOR     = 0
+ RAMP         = 0.0000000E+00
+ RPLRADI     = 0.1000000E+01
+ RCORIOI     = 0.1000000E+01
+ LAQUA       =  F
+ LAPE        =  F
+ LHELDSUAREZ =  F
+ RT00_DYN     = 0.2881500E+03
+ RP00_DYN     = 0.1013150E+06
+ RU00_DYN     = 0.0000000E+00
+ RST0_DYN     = 0.0000000E+00
+ NOISEVOR     = 0
+ RAMP         = 0.0000000E+00
+ The model is using double precision. 
+ Printings of YOMDYNA/NAMDYNA variables 
+ LGWADV =  F
+ NGWADVSI =  1
+ LRDBBC =  F
+ NPDVAR =  2
+ NVDVAR =  3
+ LSLHD_W       =  F
+ LSLHD_T       =  F
+ LSLHD_SPD     =  F
+ LSLHD_SVD     =  F
+ LSLHD_GFL     =  F
+ LSLHD         =  F
+ LSLHDQUAD     =  F
+ LSLHD_OLD     =  F
+ LSLHD_STATIC  =  F
+ SLHDKMIN      = 0.0000E+00
+ SLHDKMAX      = 0.6000E+01
+ SLHDKREF      = 0.0000E+00
+ SLHDEPSH      = 0.0000E+00
+ SLHDEPSV      = 0.0000E+00
+ LSLVF         =  F
+ P_SLVF_BOT    = 0.00000000E+00
+ SLVFEPS       = 0.1875E-02
+ LCOMAD        =  F
+ LCOMADH       =  F
+ LCOMADV       =  F
+ LCOMAD_W      =  F
+ LCOMAD_T      =  F
+ LCOMAD_SPD    =  F
+ LCOMAD_SVD    =  F
+ LCOMAD_SP     =  F
+ LCOMAD_GFL    =  F
+ ND4SYS = 2
+ LNHX =  F
+ LNHXDER =  F
+ LSLDIA =  F
+ LGRADSP =  T
+ LGRADGP =  F
+ L3DTURB =  F
+ LHOISLT =  F
+ HOISLTH = 0.0000E+00 HOISLTV = 0.0000E+00
+ LSLTVWENO =  F
+ LRHSVWENO =  T
+ LAPRXPK =  T NDLNPR =  0 RHYDR0 = 0.6931E+00
+ LRUBC =  F
+ LRALTVDISP =  F
+ LRPRSLTRJ =  T
+ LPC_FULL =  F
+ LPC_CHEAP =  F
+ LPC_CHEAP2 =  F
+ LNESCT =  F
+ LNESCV =  F
+ LNESC =  F
+ LSETTLST =  T
+ LSETTLSV =  T
+ LSETTLS =  T
+ LELTRA =  F
+ LSLINLC2 =  F
+ LSLINL =  F
+ LDRY_ECMWF=  T
+ L_RDRY_VD=  T
+ LNHQE_SIHYD =  F
+ LSI_NHEE =  F
+ LNHEE_SVDLAPL_FIRST =  F
+ LMIXETTLS    =  F
+ LMIXETTLS_PRINT   =  F
+ RMIXNL_TRH  = 0.5000E+00
+ 
+ Printings of YOMCVER/NAMCVER variables 
+ LVERTFE=  F NVFE_TYPE=  0
+ NVFE_ORDER=  1
+ NVFE_INTBC=  0
+ NVFE_DERBC=  0
+ LVFE_LAPL =  F
+ LVFE_LAPL_BC =  F
+ LVFE_LAPL_TBC =  F
+ LVFE_LAPL_BBC =  F
+ LVFE_LAPL2PI =  F RLAPL2PI =    0.00000000000000
+ LVFE_X_TERM =  F
+ LVFE_Z_TERM =  F
+ LVFE_GW =  F
+ LVFE_DELNHPRE =  F
+ LVFE_GWMPA =  F
+ LVFE_CENTRI =  F RVFE_ALPHA=     0.00000000000000 RVFE_BETA=     0.50000000000000
+ LVFE_CHEB =  F
+ LVFE_APPROX =  F
+ LVFE_ECMWF=  T
+ LVFE_LAPL_HALF =  F
+ LVFE_FIX_ORDER =  F
+ LVFE_GW_HALF =  F
+ LVFE_MAXIMAS =  F
+ LVFE_VERBOSE =  F
+ RMINDETA =     0.00000000000000
+ RVFE_KNOT_STRETCH =     1.00000000000000
+ LVFE_NORMALIZE =  F
+ LDYN_ANALYSIS_STABILITY =  F
+ RFAC1 =     0.00000000000000
+ RFAC2 =     0.00000000000000
+ Printings for module YOMRIP 
+ TSTEP  = 0.90000000E+03 TDT    = 0.90000000E+03
+ TSTEP_TRAJ = 0.90000000E+03
+ NSTART =      0
+ NSTOP  =     48
+ NFOST  =      0
+ SCM: NINDAT=  20060117 NSSSSS=     0
+0*** Constants of the ICM   ***
+ *** Fundamental constants ***
+           PI = 0.3141593E+01 -
+            c = 0.2997925E+09m s-1
+            h = 0.6626076E-33J s
+            K = 0.1380658E-22J K-1
+            N = 0.6022137E+24mol-1
+ *** Astronomical constants ***
+          day = 0.8640000E+05 s
+ half g. axis = 0.1495979E+12 m
+ mean anomaly = 0.4090930E+00 -
+ sideral year = 0.3155815E+08 s
+  sideral day = 0.8616410E+05 s
+        omega = 0.7292115E-04 s-1
+ ***         Geoide         ***
+      Gravity = 0.9806650E+01 m s-2
+ Earth radius = 0.6371229E+07 m
+ Inverse E.R. = 0.1569556E-06 m
+ ***        Radiation       ***
+ Stefan-Bol.  = 0.5670509E-07 W m-2 K-4
+ Solar const. = 0.1366000E+04 W m-2
+ *** Thermodynamic, gas     ***
+ Perfect gas  = 0.8314511E+01
+ Dry air mass = 0.2896440E+02
+ Vapour  mass = 0.1801530E+02
+ Ozone   mass = 0.4799420E+02
+ Dry air cst. = 0.2870597E+03
+ Vapour  cst. = 0.4615250E+03
+         Cpd  = 0.1004709E+04
+         Cvd  = 0.7176492E+03
+         Cpv  = 0.1846100E+04
+         Cvv  = 0.1384575E+04
+      Rd/Cpd  = 0.2857143E+00
+     Rv/Rd-1  = 0.6077667E+00
+ *** Thermodynamic, liquid  ***
+         Cw   = 0.4218000E+04
+ *** thermodynamic, solid   ***
+         Cs   = 0.2106000E+04
+ *** Thermodynamic, trans.  ***
+ Fusion point  = 0.2731600E+03
+ RTT-Tx(ew-ei) = 0.1182000E+02
+        RLvTt  = 0.2500800E+07
+        RLsTt  = 0.2834500E+07
+        RLv0   = 0.3148708E+07
+        RLs0   = 0.2905494E+07
+        RLMlt  = 0.3337000E+06
+ Normal press. = 0.1000000E+06
+ Latent heat :  
+ -.4000E+02 -.3000E+02 -.2000E+02 -.1000E+02 0.0000E+00 0.1000E+02 0.2000E+02 0.3000E+02 0.4000E+02
+ 0.2596E+07 0.2572E+07 0.2548E+07 0.2525E+07 0.2501E+07 0.2477E+07 0.2453E+07 0.2430E+07 0.2406E+07
+ 0.2845E+07 0.2842E+07 0.2840E+07 0.2837E+07 0.2834E+07 0.2832E+07 0.2829E+07 0.2827E+07 0.2824E+07
+ *** Thermodynamic, satur.  ***
+ Fusion point = 0.2731600E+03
+      es(Tt)  = 0.6111400E+03
+ es(T) :  
+ -.4000E+02 -.3000E+02 -.2000E+02 -.1000E+02 0.0000E+00 0.1000E+02 0.2000E+02 0.3000E+02 0.4000E+02
+ 0.1900E+02 0.5100E+02 0.1256E+03 0.2866E+03 0.6111E+03 0.1227E+04 0.2336E+04 0.4236E+04 0.7355E+04
+ 0.1282E+02 0.3799E+02 0.1033E+03 0.2600E+03 0.6111E+03 0.1352E+04 0.2829E+04 0.5638E+04 0.1074E+05
+ 0.1282E+02 0.3799E+02 0.1033E+03 0.2600E+03 0.6111E+03 0.1227E+04 0.2336E+04 0.4236E+04 0.7355E+04
+ MODULE YOMSCM
+   LGSCM =     F
+ COMMON YOMPHY 
+ LMPHYS=     F LREASUR =     T
+ LCONDWT=    F LCVPP =     F LCVPPKF =     F LEDKF =     F LEDMFI =     F LCVGQKF =     T LNEIGE =     T LRNUMX =     F LRNUEXP =     F LACPANMX =     F LCLSATUR =     F LVOIGT =     F LVFULL =     F LCVDD =     F LCAPE=     F LCVGQ=     T LCVGQD=     F LCVGQM=     F LCVGQP=     F LCVLIS =     F LCVCAS=     F LO3ABC=     F LO3FL=     F LECSHAL =     F LECDEEP=     F LAEROSEA =     F LAEROLAN =     F LAEROSOO =     F LAERODES =     F LAEROVOL =     F LAEROSUL =     F LRELAXT  =     F LRELAXW  =     F LSLC =     F LRRGUST=     F LNEWD =     F LGLT=     F LDIFCONS=     F LDIFQL=     F LDISTUR=     F LECT =     F LEFB =     F LECTFL =     F LECTFL0 =     F NLEND =  0 LPBLE =     F LCVPGY=     F LCVTURB=     F LPTKE=     F L3MT=     F LGPCMT=     F LACDIFUS =     F LZ0HSREL=     F LFLUSO=     F L2MICRO=     F LECTQ1=     F LECTREP=     T LPROCLDTL=     F LGLACIERS=     F LCOEFKTKE=     F LAFGD_A=     T LCOEFK_TOMS=     F LCOEFK_THS1=     F LCOEFKSURF=     F LCOEFK_PL=     F LCOEFK_PTTE=     F LCOEFK_MSC=     F LCOEFK_RIS=     T LCOEFK_RIH=     F LCOEFK_F1=     T LCOEFK_FLX=     F LCOEFK_SCQ=     F LCOEFK_ML=     F
+ LCVRA =     F LFPCOR =     F LNOIAS =     F LGWD =     F LHMTO =     F LRAY =     F LSFHYD =     F LSTRA =     F LTHERMO =     F
+ LVDIF =     F LNEBCO =     F LNEBECT =     F LNEB_FP =     F
+ LRRMES =     F LOZONE =     F LNEBR =     F LPTOPC =     F
+ LSNV =     F LSOLV =     F LFGEL =     F
+ LVGSN =    F
+ LNEBN =     F LNEBNXR =     F LQXRTGH =     F LSTRAS =     F
+ LHUCN =     F LGWDC =     F LNORGWD =     F LRAYFM =     F LRAYFM15 =     F
+ LRMU0M =     F LRAYLU =     F LRPROX =     F
+ LRSTAER =     T LRTPP =     F LRAYPL =     F
+ LREWS  =     F LRSTAB =     F
+ LRMIX  =     F LRTDL  =     F
+ NBITER =  2 NDPSFI =  0 NPHYREP =  1
+ NOIR =  0 NRAY = 1
+ NRAUTOEV=  0
+ NITERFL =  6
+ NCALLRAD=  0
+ LDAYD= F
+ - - - - - - - - - -
+ COMMON YOMPHY
+ - - - - - - - - - -
+ LAJUCV  =     F LCVRAV3 =     F LNEBGR  =     F LNEBGY  =     F
+ LMLH    =     F LNODIFQC=     T LDIFCEXP=     F LSQRML  =     F LNCVPGY =     F
+ - - - - - - - - -
+ MICROPHYSICS KEY 
+ - - - - - - - - -
+ LPROCLD =     F LEVAPP  =     T LCOLLEC =     T LSMITH_CDEV =     F LNEBRIC  =     T LADJCLD  =     F LSSD =     F LSMOOTHMELT=    F
+ LSEDSTA =     T LSEDLAG  =     F LSEDCL =     F LFSVAR =     T LFSFIX  =     F LA0MPS =     T LARPMPS =    F
+ ALARO-0 cloud 
+ LSTRAPRO =     F LNEWSTAT =     T LPHSPSH =     F LCAMOD =     F LCOMOD =     F LSMTPS =     F LSMNIMBT =     F LSMGCDEV =     F LXRCDEV =     F LRKCDEV =     F LNEBCV =     F LNEBINS =     F NSMTBOT =  0 NSMDNEB =  2 NDIFFNEB =  0 NPRAC =  1 NPRRI =  1
+ ALARO-0 prognostic convection  
+ LCVPRO =F LCDDPRO =F LSCMF =F LCDDEVPRO =T LENTCH =F LRCVOTT =F NIMELIT = 1
+ ALARO-1 prognostic convection  
+ LCVCSD =F LNSDO =F LCDDCSD =T LCVSHCU, =T LUDEVOL =T LPEC =F NCLOMIX, = 4 NFSIG = 2
+ LUSL=T CGTRG=      RC
+ ALARO prognostic graupel  
+ LGRAPRO =F
+ COMMON YOMSIMPHL 
+ LSIMPH=     F LTRAJPS =     F LTRAJPST =     F LSMOOTHD =     F LSMOOTHA =     F LSMOOTHB =     F LCLOUDS =     F
+ LCVRASP =     F LGWDSP =     F LRAYSP =     F LSTRASP =     F LVDIFSP =     F LVDIFSPNL =     F LRRMESSP =     F LSTRASPN =     F LPROCLDTL =     F LMICROTL =     FLCOLLECTL =     F LEVAPTL   =     F LMELTNL  =     FLMELTTL   =     F LSMOOTHEVP=     T LTRAJRAIN=     FLTRAJCOND =     F LNEBCVPPKF=     F
+ COMMON YOMRCOEF 
+ LRCOEF=     F LTLADDIA =     F LGLOBRAD =     F
+ LGCHECKMV= T
+ COMMON YOMARPHY 
+ LMPA =     F LMICRO =     F LTURB =     F LMSE =     F NSURFEXCTL =     3 NSURFEX_ITER =     1 LKFBCONV =     F LKFBD =     F LKFBS =     F LMFSHAL =     F LUSECHEM =     F LORILAM =     F LRDUST =     F LINITCHEM =     F LINITORILAM =     F LINITDUST =     F LRDEPOS =     F LRCO2 =     F LMDUST =     F
+ COMMON YOEPHY 
+ LEPHYS =     T LSLPHY =     T LECOND =     F LECUMF =     T
+ LECLIPQT0 =     F LECLIPCLDT0 =     F
+RCLDTOPP=    100.00
+ LEDCLD =     T LEGWDG =     T LEGWWMS =     T LEOZOC =     T LEQNGT =     T LBUDCYCLE =     F LMFSCAV =     T LNEEONLINE =     T LBFASCO2 =     F LEO3CH =     F LO3CH_SAFE =     T LO3CH_OLDVER =     F LO3CH_HLO =     F CO3CHEM = H1.0 LECO2DIU =     F LDIAGTURB_EC =     F
+ LERADI =     T LESURF =     T LEVDIF =     T LEOCWA =     T LEOCCO =     T LEOCSA =     T LEOCLA =     F LECURR =     F LESURFTRAJ =     F RTHRFRTI =    0.00 RCIMIN =   -1.00 LESICE =     T
+ LEPCLD =     T LEMETHOX=     T LEVGEN =     T LESSRO =     T LELAIV =     T LECTESSEL =     T LEFLAKE =     T LEOCML =     FLEOBC =     F LEOBCICE =     F LOCMLTKE =     F LSPCRM =     F LESN09 =     T LESNML =     F LDUCTDIA =     F RLAIINT =    0.00 LEOCLAKE =     F LEOLAKESST=     T LELIGHT=     F NLIMODE =   6 NSNMLWS =   1
+ LEOBCMAX =     TREOBCMAX =   50.00
+ LERAIN =     F LEMWAVE =     F
+ LEGBRAD =     F NPRACCL = 21600s
+ LERAINGG =     F
+ NALBEDOSCHEME =    2 NEMISSSCHEME =    0 RALFMINPSN =    0.835
+ ============================ 
+ LINEAR PHYSICS NOT ACTIVATED 
+ ============================ 
+ LENCLD2 =    F
+ LEVAPLS2=    F
+ LSPHLC =     F LVDFLC =     F LVDFDS =     T LSDRLC =     T LSDRDS =     F
+ LZMCON =     T LKEXP  =     T
+ ALPHA  =     0.300000E+01
+ AH0    =     0.100000E+04m
+ USTARL =     0.500000E+00m s-1
+ USTARS =     0.200000E+00m s-1
+ ALANDZ0=     0.500000E-01m
+ ASEAZ0 =     0.500000E-03m
+ LAGPHY =     T THE PHYSICS PAC KAGE IS CALLED AFTER THE DYNAMICS IN LAGGED MODE
+ CGMIXLEN=Z
+ CGTURS=MD2
+ LPRGML =    F
+ YOMRCOEF DIMENSIONS 
+ NG3SR =      0 NGMTR =      0
+ LEDR =  F
+ ------ Set up geometry dimensions  ---------------------------------------- 
+ ******* ALIASING IN THE STRETCHED  COORDINATE MODEL ******** 
+ ******* ALIASING IN THE UNIFORM    COORDINATE MODEL ******** 
+  PRINTINGS IN SUDIM: VERTICAL DIMENSIONING 
+ NFLEVG =   137 NIOLEVG =   137 NFLSUL=     1 NFLSA =     0 NFLEN =   138
+  PRINTINGS IN SUDIM: HORIZONTAL DIMENSIONING 
+ NDGLG =     1
+ NSTENCILWIDE=           1
+ NDGNH =     1 NDGSUR=     1 NDGSAG =     0 NDGENG =     2
+ NDLON =     1 NDSUR1=     1 NDLSUR=  1600 NDLSM =  1599
+ NDGUNG =     0 NDGUXG =     2 NDLUNG =     1 NDLUXG =     1
+ NPROMA=     1
+ NSMAX =   799 NMSMAX=    21 NSEFRE=  640000 NSPECG =  320400 NSPEC2G=  640800
+ NVARMAX =    21
+ NCMAX =   799
+ ---- Set up vertical coordinate ----------------------------------------- 
+ LLFORCE_READ =  F
+ VP00 = 0.1013250E+06
+ SHAPE VALHIO/VBHIO :          138
+ ---- Set up geometry, (namelist variables) for global model --------------------------------------- 
+  
+  --- Printings in SUGEM_NAML:
+ NSTTYP =      1 RMUCEN = 0.1000000E+01 RLOCEN = 0.0000000E+00 RSTRET = 0.1000000E+01
+ NHTYP  =      0
+ RNLGINC  = 0.0000000E+00
+ ---- Set up vertical geometry ----------------------------------------- 
+ 
+  * A and B at half levels:
+ JLEV           ALPHA                    B                        A              
+   0               0.0000000000             0.0000000000             0.0000000000
+   1               0.0000197421             0.0000000000             2.0003650000
+   2               0.0000306167             0.0000000000             3.1022410000
+   3               0.0000460507             0.0000000000             4.6660840000
+   4               0.0000673869             0.0000000000             6.8279770000
+   5               0.0000961951             0.0000000000             9.7469660000
+   6               0.0001342751             0.0000000000            13.6054240000
+   7               0.0001836559             0.0000000000            18.6089310000
+   8               0.0002465899             0.0000000000            24.9857180000
+   9               0.0003255436             0.0000000000            32.9857100000
+  10               0.0004231852             0.0000000000            42.8792420000
+  11               0.0005423683             0.0000000000            54.9554630000
+  12               0.0006861147             0.0000000000            69.5205760000
+  13               0.0008575957             0.0000000000            86.8958820000
+  14               0.0010601109             0.0000000000           107.4157410000
+  15               0.0012970689             0.0000000000           131.4255070000
+  16               0.0015719655             0.0000000000           159.2794040000
+  17               0.0018883648             0.0000000000           191.3385620000
+  18               0.0022498786             0.0000000000           227.9689480000
+  19               0.0026601488             0.0000000000           269.5395810000
+  20               0.0031228300             0.0000000000           316.4207460000
+  21               0.0036415728             0.0000000000           368.9823610000
+  22               0.0042200099             0.0000000000           427.5924990000
+  23               0.0048617422             0.0000000000           492.6160280000
+  24               0.0055703277             0.0000000000           564.4134520000
+  25               0.0063492712             0.0000000000           643.3399050000
+  26               0.0072020147             0.0000000000           729.7441410000
+  27               0.0081319303             0.0000000000           823.9678340000
+  28               0.0091423134             0.0000000000           926.3449100000
+  29               0.0102363797             0.0000000000          1037.2011720000
+  30               0.0114172577             0.0000000000          1156.8536380000
+  31               0.0126879877             0.0000000000          1285.6103520000
+  32               0.0140515188             0.0000000000          1423.7701420000
+  33               0.0155107123             0.0000000000          1571.6229250000
+  34               0.0170683343             0.0000000000          1729.4489750000
+  35               0.0187270593             0.0000000000          1897.5192870000
+  36               0.0204894739             0.0000000000          2076.0959470000
+  37               0.0223580720             0.0000000000          2265.4316410000
+  38               0.0243352628             0.0000000000          2465.7705080000
+  39               0.0264233718             0.0000000000          2677.3481450000
+  40               0.0286246371             0.0000000000          2900.3913570000
+  41               0.0309412226             0.0000000000          3135.1193850000
+  42               0.0333752149             0.0000000000          3381.7436520000
+  43               0.0359286283             0.0000000000          3640.4682620000
+  44               0.0386034096             0.0000000000          3911.4904790000
+  45               0.0414007467             0.0000000000          4194.9306640000
+  46               0.0443209216             0.0000000000          4490.8173830000
+  47               0.0473639222             0.0000000000          4799.1494140000
+  48               0.0505294352             0.0000000000          5119.8950200000
+  49               0.0538168342             0.0000000000          5452.9907230000
+  50               0.0572252132             0.0000000000          5798.3447270000
+  51               0.0607557288             0.0000000000          6156.0742190000
+  52               0.0644159563             0.0000000000          6526.9467770000
+  53               0.0682148592             0.0000000000          6911.8706050000
+  54               0.0721625378             0.0000000382          7311.8691410000
+  55               0.0762636280             0.0000067607          7727.4121090000
+  56               0.0805265631             0.0000243480          8159.3540040000
+  57               0.0849595400             0.0000589220          8608.5253910000
+  58               0.0895771072             0.0001119143          9076.4003910000
+  59               0.0943763397             0.0001985774          9562.6826170000
+  60               0.0993434840             0.0003403797         10065.9785160000
+  61               0.1044621943             0.0005615553         10584.6318360000
+  62               0.1097129248             0.0008896979         11116.6621090000
+  63               0.1150759179             0.0013528055         11660.0673830000
+  64               0.1205186070             0.0019918380         12211.5478520000
+  65               0.1259992405             0.0028571242         12766.8730470000
+  66               0.1315042580             0.0039709536         13324.6689450000
+  67               0.1369980859             0.0053778146         13881.3310550000
+  68               0.1424341441             0.0071333768         14432.1396480000
+  69               0.1477978311             0.0092614600         14975.6152340000
+  70               0.1530545950             0.0118060224         15508.2568360000
+  71               0.1581654600             0.0148156285         16026.1152340000
+  72               0.1631119888             0.0183184519         16527.3222660000
+  73               0.1678636966             0.0223548450         17008.7890630000
+  74               0.1723919396             0.0269635208         17467.6132810000
+  75               0.1766752637             0.0321760960         17901.6210940000
+  76               0.1806901909             0.0380263999         18308.4335940000
+  77               0.1844137059             0.0445479602         18685.7187500000
+  78               0.1878242197             0.0517730154         19031.2890630000
+  79               0.1909056178             0.0597284138         19343.5117190000
+  80               0.1936347690             0.0684482530         19620.0429690000
+  81               0.1959969467             0.0779583082         19859.3906250000
+  82               0.1979761327             0.0882857367         20059.9316410000
+  83               0.1995525691             0.0994616672         20219.6640630000
+  84               0.2007191047             0.1115046516         20337.8632810000
+  85               0.2014538228             0.1244481280         20412.3085940000
+  86               0.2017476252             0.1383128911         20442.0781250000
+  87               0.2015861707             0.1531250328         20425.7187500000
+  88               0.2009555036             0.1689104140         20361.8164060000
+  89               0.1998471426             0.1856894493         20249.5117190000
+  90               0.1982441247             0.2034912109         20087.0859380000
+  91               0.1961413806             0.2223328650         19874.0253910000
+  92               0.1935215620             0.2422440052         19608.5722660000
+  93               0.1903797342             0.2632418871         19290.2265630000
+  94               0.1867008235             0.2853540182         18917.4609380000
+  95               0.1824792206             0.3085984588         18489.7070310000
+  96               0.1777145402             0.3329390883         18006.9257810000
+  97               0.1724336525             0.3582541943         17471.8398440000
+  98               0.1666783864             0.3843633235         16888.6875000000
+  99               0.1604939243             0.4111247659         16262.0468750000
+ 100               0.1539274149             0.4383912086         15596.6953130000
+ 101               0.1470363003             0.4660032988         14898.4531250000
+ 102               0.1398798344             0.4938003123         14173.3242190000
+ 103               0.1325217817             0.5216192007         13427.7695310000
+ 104               0.1250259838             0.5493011475         12668.2578130000
+ 105               0.1174570920             0.5766921639         11901.3398440000
+ 106               0.1098771743             0.6036480665         11133.3046880000
+ 107               0.1023456776             0.6300358176         10370.1757810000
+ 108               0.0949174994             0.6557359695          9617.5156250000
+ 109               0.0876432581             0.6806430221          8880.4531250000
+ 110               0.0805662472             0.7046689987          8163.3750000000
+ 111               0.0737265606             0.7277387381          7470.3437500000
+ 112               0.0671544226             0.7497965693          6804.4218750000
+ 113               0.0608786701             0.7707975507          6168.5312500000
+ 114               0.0549161886             0.7907167673          5564.3828130000
+ 115               0.0492849433             0.8095360398          4993.7968750000
+ 116               0.0439908710             0.8272560835          4457.3750000000
+ 117               0.0390422989             0.8438811302          3955.9609380000
+ 118               0.0344360659             0.8594318032          3489.2343750000
+ 119               0.0301728658             0.8739292622          3057.2656250000
+ 120               0.0262436775             0.8874075413          2659.1406250000
+ 121               0.0226424099             0.8999004960          2294.2421880000
+ 122               0.0193584999             0.9114481807          1961.5000000000
+ 123               0.0163777603             0.9220956564          1659.4765630000
+ 124               0.0136940229             0.9318807721          1387.5468750000
+ 125               0.0112830002             0.9408595562          1143.2500000000
+ 126               0.0091439212             0.9490644336           926.5078130000
+ 127               0.0072538089             0.9565495253           734.9921880000
+ 128               0.0056063410             0.9633517265           568.0625000000
+ 129               0.0041886411             0.9695134163           424.4140630000
+ 130               0.0029852116             0.9750784039           302.4765630000
+ 131               0.0019983654             0.9800716043           202.4843750000
+ 132               0.0012050487             0.9845418930           122.1015630000
+ 133               0.0006196028             0.9884995222            62.7812500000
+ 134               0.0002253732             0.9919840097            22.8359380000
+ 135               0.0000370867             0.9950025082             3.7578130000
+ 136               0.0000000000             0.9976301193             0.0000000000
+ 137               0.0000000000             1.0000000000             0.0000000000
+ ---- Set up standard atmosphere --------------------------------------- 
+ SUSTA - STANDARD ATMOSPHERE HEIGHT
+         137   9.9994260296664681     
+         136   30.960391255297232     
+         135   53.914928003329038     
+         134   79.043626428742144     
+         133   106.54215439748268     
+         132   136.62043904988002     
+         131   169.50422678198521     
+         130   205.43691769333137     
+         129   244.67909632082797     
+         128   287.50894904852760     
+         127   334.22252066124469     
+         126   385.13500817746223     
+         125   440.57958789328518     
+         124   500.90664678439623     
+         123   566.48350680197314     
+         122   637.69394458595332     
+         121   714.93642177993911     
+         120   798.62047243070492     
+         119   889.16493421973621     
+         118   986.99414717076320     
+         117   1092.5337406247752     
+         116   1206.2052228781374     
+         115   1328.4196863620127     
+         114   1459.5720484723481     
+         113   1600.0324056596173     
+         112   1750.1365823813419     
+         111   1910.1788774976508     
+         110   2080.4018185377927     
+         109   2260.9839676025813     
+         108   2452.0322706133679     
+         107   2653.5708025426743     
+         106   2865.5299503631832     
+         105   3087.7399866990977     
+         104   3319.9226279949316     
+         103   3561.6845322810882     
+         102   3812.5157607436045     
+         101   4071.7878707798814     
+         100   4338.7553323988604     
+          99   4612.5606086896096     
+          98   4892.2417129713822     
+          97   5176.7438041285322     
+          96   5464.5812508241770     
+          95   5754.0764833500170     
+          94   6044.1265718499062     
+          93   6334.3518142925259     
+          92   6624.7345781521890     
+          91   6915.2571665208079     
+          90   7205.9014150862768     
+          89   7496.6484116358542     
+          88   7787.4793519299928     
+          87   8078.3754268219436     
+          86   8369.3175414984180     
+          85   8660.2866349373489     
+          84   8951.2635383453453     
+          83   9242.2288607867049     
+          82   9533.1622986522070     
+          81   9824.0443891001669     
+          80   10114.855401615105     
+          79   10405.574619948189     
+          78   10696.182342574113     
+          77   10986.658200415670     
+          76   11278.138408625939     
+          75   11572.011186273880     
+          74   11868.299237954681     
+          73   12167.021947105137     
+          72   12468.199150857698     
+          71   12771.851080811619     
+          70   13077.997779071800     
+          69   13386.660219974718     
+          68   13697.859491423778     
+          67   14011.615939976453     
+          66   14327.950300667044     
+          65   14646.884178488552     
+          64   14968.438797830848     
+          63   15292.635559485178     
+          62   15619.496162857060     
+          61   15949.042651287349     
+          60   16281.297231807072     
+          59   16616.282070744161     
+          58   16954.019952916140     
+          57   17294.717201735875     
+          56   17638.969437768221     
+          55   17987.598498007894     
+          54   18341.460661393041     
+          53   18701.452999426205     
+          52   19068.534507024138     
+          51   19443.733499952439     
+          50   19828.134362178625     
+          49   20222.554485439312     
+          48   20627.388629792287     
+          47   21042.911344343705     
+          46   21469.404306680553     
+          45   21907.157668566666     
+          44   22356.468710169604     
+          43   22817.697158929521     
+          42   23291.332735938202     
+          41   23777.953236454992     
+          40   24278.172029821741     
+          39   24792.641126438448     
+          38   25322.053726296319     
+          37   25867.147904778423     
+          36   26428.710932783317     
+          35   27007.582304248488     
+          34   27604.658773987248     
+          33   28220.899388094349     
+          32   28857.330189483182     
+          31   29515.051514990999     
+          30   30195.244072331552     
+          29   30899.175513320890     
+          28   31628.209578950311     
+          27   32383.815713865119     
+          26   33167.579034629176     
+          25   33981.211325188953     
+          24   34826.564322774117     
+          23   35705.644507730234     
+          22   36620.629370222799     
+          21   37573.885366380178     
+          20   38567.989234956491     
+          19   39605.751907006146     
+          18   40690.245463800326     
+          17   41824.833990886909     
+          16   43013.208071642730     
+          15   44259.425973344172     
+          14   45567.960084805287     
+          13   46943.749886925209     
+          12   48392.265103620535     
+          11   49919.577112645617     
+          10   51532.443919524645     
+           9   53238.407755083463     
+           8   55045.911577716201     
+           7   56964.436876416272     
+           6   59004.664299349424     
+           5   61178.667537198184     
+           4   63500.144689569817     
+           3   65984.695714267698     
+           2   68650.160070008933     
+           1   74588.727412971712     
+ SUSTA - NLEXTRAP          132
+ ---- Set up vertical interpolator ----------------------------------------- 
+ 
+  SUSVSLETA: NRLEVX=      183915
+  PRINTINGS IN SUDIMF1: PHYSICS DIMENSIONING (YOMDPHY) 
+  -- PHYSICS DIMENSIONING (YOMDPHY) 
+  NCSS =            4
+  NCSNEC =            1
+  NVXP =            0  NVXP2 =            0
+  NCXP =            0  NTILES =            9
+  NVEXTR =            0  NVEXTRRAD =            0  NVXTR2 =            0  NVEXTRDYN =            0  NVECOUT =            1
+  NCEXTR=          137
+  NVCLIS =            0  NTSSG =            0  NTOZ1D =            0  NTOZ2D =            0  NTOZ3D =            0  LTPROF =  F
+  LDIRCLSMOD =  F
+ PRINTINGS IN SUDIMF2: NUMBER OF FIELDS 
+ NFTHER=     1 NF3D  =     3 NFD2D =     1 NFC2D =     1 NPPM =      4
+ LVOR  = F LADER = T LUVDER= F
+ PRINTINGS IN SUDIMF2: LAPLACE SPACE DIMENSIONING 
+ NS3D  =     3 NS2D  =     2 NS1D  =     2
+  -- YOMSLPHY CONTENT: 
+  NVTEND=            4
+ NGFL_EXT =    0 NLIMA =    0
+  LTRCMFP= F  LTRCMFBC= F  LTRCMFPR= F  LTRCMFMG= F  LTRCMFA_DIF= F  LTRCMFIX_PS= F
+  LQM3DCONS= F
+  BEFORE READ NAMCOMP 
+  SUGFL1: all NAMCHEM keys are set to F 
+  ---- GFL COMPONENT ATTRIBUTES ----
+ GFL COMPONENT DEFINED - NAME=TENVNOGW         GRIBCODE=      228136
+  LGP= T  NREQIN=           0  LREQOUT= T  REFVALI=   0.0000000000000000       LCDERS= F  LADV= F  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=   0.0000000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=             WENO_ALPHA=   0.0000000000000000       LTHERMACT= F  R=   0.0000000000000000       RCP=   0.0000000000000000     
+  LWATER= F  LPRECIP= F  RLZER=   0.0000000000000000     
+  MP=           8  MPL=           1  MPM=           1  MP9=           8  MP1=           1  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=TENUNOGW         GRIBCODE=      228134
+  LGP= T  NREQIN=           0  LREQOUT= T  REFVALI=   0.0000000000000000       LCDERS= F  LADV= F  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=   0.0000000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=             WENO_ALPHA=   0.0000000000000000       LTHERMACT= F  R=   0.0000000000000000       RCP=   0.0000000000000000     
+  LWATER= F  LPRECIP= F  RLZER=   0.0000000000000000     
+  MP=           7  MPL=           1  MPM=           1  MP9=           7  MP1=           1  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=         248
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= T  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITQM3D     WENO_ALPHA=   0.0000000000000000       LTHERMACT= F  R=   0.0000000000000000       RCP=   0.0000000000000000     
+  LWATER= F  LPRECIP= F  RLZER=   0.0000000000000000     
+  MP=           6  MPL=           1  MPM=           1  MP9=           6  MP1=           6  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           2  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=          75
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITQM3D     WENO_ALPHA=   0.0000000000000000       LTHERMACT= T  R=   0.0000000000000000       RCP=   4218.0000000000000     
+  LWATER= T  LPRECIP= T  RLZER=   3148708.2113115233     
+  MP=           5  MPL=           1  MPM=           1  MP9=           5  MP1=           5  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=          76
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITQM3D     WENO_ALPHA=   0.0000000000000000       LTHERMACT= T  R=   0.0000000000000000       RCP=   2106.0000000000000     
+  LWATER= T  LPRECIP= T  RLZER=   2905494.2913115229     
+  MP=           4  MPL=           1  MPM=           1  MP9=           4  MP1=           4  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=         247
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITQM3D     WENO_ALPHA=   0.0000000000000000       LTHERMACT= T  R=   0.0000000000000000       RCP=   2106.0000000000000     
+  LWATER= T  LPRECIP= F  RLZER=   2905494.2913115229     
+  MP=           3  MPL=           1  MPM=           1  MP9=           3  MP1=           3  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=         246
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= F  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITQM3D     WENO_ALPHA=   0.0000000000000000       LTHERMACT= T  R=   0.0000000000000000       RCP=   4218.0000000000000     
+  LWATER= T  LPRECIP= F  RLZER=   3148708.2113115233     
+  MP=           2  MPL=           1  MPM=           1  MP9=           2  MP1=           2  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+ GFL COMPONENT DEFINED - NAME=                 GRIBCODE=         133
+  LGP= T  NREQIN=           1  LREQOUT= T  REFVALI=  -999.00000000000000       LCDERS= F  LADV= T  LTDIABLIN= F  LHORTURB= F  LPHY= T  LPT= F  LPC= F
+  LADJUST0= F  LADJUST1= F  NCOUPLING=           0  REFVALC=  -999.00000000000000       LBIPER= F
+  LTRAJIO= F  LDIAG= F  LGPINGP= T
+  CSLINT=LAITRWENOQM  WENO_ALPHA=   0.0000000000000000       LTHERMACT= T  R=   461.52499330838788       RCP=   1846.0999732335515     
+  LWATER= T  LPRECIP= F  RLZER=   0.0000000000000000     
+  MP=           1  MPL=           1  MPM=           1  MP9=           1  MP1=           1  MP5=           1  MP5L=           1  MP5M=           1  MPSLP=           1  MPSP=           1  MPPT=           1  MPPC=           1
+  ---- YGFL ATTRIBUTES ----
+  YGFL%NUMFLDS=           8  YGFL%NUMSPFLDS=           0  YGFL%NUMGPFLDS=           8  YGFL%NDERS=           0  YGFL%NUMFLDSPT=           0  YGFL%NUMFLDSPC=           0
+  YGFL%NUMFLDS_SL1=           6
+  YGFL%NDIM=           8  YGFL%NDIM0=           8  YGFL%NDIM9=           0  YGFL%NDIM1=           6  YGFL%NDIM5=           0  YGFL%NDIMSLP=           2  YGFL%NDIMPT=           0  YGFL%NDIMPC=           0
+  --------------------------------------------
+ INITIALIZING 3-D SURFACE FIELD GROUP SOILB - SP_SB              0
+ 3-D SURFACE FIELD GROUP INITIALIZED SOILB - SP_SB   
+ NUMFLDS=           3  NLEVS=           4  LMTL= T
+ SOILB    1   1 LEV1TEMPERATURE    139     1     1     4     1     1
+ SOILB    1   2 LEV2TEMPERATURE    170     1     1     4     1     1
+ SOILB    1   3 LEV3TEMPERATURE    183     1     1     4     1     1
+ SOILB    1   4 LEV4TEMPERATURE    236     1     1     4     1     1
+ SOILB    2   1 LEV1RESERV.EAU      39     2     2     5     1     1
+ SOILB    2   2 LEV2RESERV.EAU      40     2     2     5     1     1
+ SOILB    2   3 LEV3RESERV.EAU      41     2     2     5     1     1
+ SOILB    2   4 LEV4RESERV.EAU      42     2     2     5     1     1
+ SOILB    3   1 LEV1ICETEMP         35     3     3     6     0     1
+ SOILB    3   2 LEV2ICETEMP         36     3     3     6     0     1
+ SOILB    3   3 LEV3ICETEMP         37     3     3     6     0     1
+ SOILB    3   4 LEV4ICETEMP         38     3     3     6     0     1
+ INITIALIZING 3-D SURFACE FIELD GROUP SNOWG - SP_SG              8
+ 3-D SURFACE FIELD GROUP INITIALIZED SNOWG - SP_SG   
+ NUMFLDS=           5  NLEVS=           1  LMTL= T
+ SNOWG    1   1 LEV01SnowMass      141     1     1     6     1     1
+ SNOWG    2   1 LEV01SnowAlb        32     2     2     7     1     1
+ SNOWG    3   1 LEV01SnowDens       33     3     3     8     1     1
+ SNOWG    4   1 LEV01SnowTemp      238     4     4     9     1     1
+ SNOWG    5   1 LEV01SnowLiqC       80     5     5    10     1    -1
+ INITIALIZING 2-D SURFACE FIELD GROUP LAKEG - SP_SL             13
+ 2-D SURFACE FIELD GROUP INITIALIZED LAKEG - SP_SL   
+ NUMFLDS=           7  LMTL= T
+ LAKEG    1 Lake mix layer T 228008      1     1     8     2     1
+ LAKEG    2 Lake mix layer D 228009      2     2     9     2     1
+ LAKEG    3 Lake bottom lay  228010      3     3    10     2     1
+ LAKEG    4 Lake total lay T 228011      4     4    11     2     1
+ LAKEG    5 Lake shape fact. 228012      5     5    12     2     1
+ LAKEG    6 Lake ice T       228013      6     6    13     2     1
+ LAKEG    7 Lake ice depth   228014      7     7    14     2     1
+ INITIALIZING 2-D SURFACE FIELD GROUP RESVR - SP_RR             13
+ 2-D SURFACE FIELD GROUP INITIALIZED RESVR - SP_RR   
+ NUMFLDS=           2  LMTL= T
+ RESVR    1 SKINTEMPERATURE     235      1     1     3     1     1
+ RESVR    2 SKINRESERV.EAU      198      2     2     4     1     1
+ INITIALIZING 2-D SURFACE FIELD GROUP CLS   - SP_CL             15
+ 2-D SURFACE FIELD GROUP INITIALIZED CLS   - SP_CL   
+ NUMFLDS=           0  LMTL= T
+ INITIALIZING 3-D SURFACE FIELD GROUP OML   - SP_OM             15
+ 3-D SURFACE FIELD GROUP INITIALIZED OML   - SP_OM   
+ NUMFLDS=           0  NLEVS=           0  LMTL= T
+ INITIALIZING 3-D SURFACE FIELD GROUP EXTRP - SP_EP             15
+ 3-D SURFACE FIELD GROUP INITIALIZED EXTRP - SP_EP   
+ NUMFLDS=           0  NLEVS=           0  LMTL= T
+ INITIALIZING 2-D SURFACE FIELD GROUP XTRP2 - SP_X2             15
+ 2-D SURFACE FIELD GROUP INITIALIZED XTRP2 - SP_X2   
+ NUMFLDS=           0  LMTL= T
+ INITIALIZING 2-D SURFACE FIELD GROUP CANRI - SP_CI             15
+ 2-D SURFACE FIELD GROUP INITIALIZED CANRI - SP_CI   
+ NUMFLDS=           0  LMTL= T
+ INITIALIZING 2-D SURFACE FIELD GROUP VARSF - SD_VF             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VARSF - SD_VF   
+ NUMFLDS=          35  LMTL= F
+ VARSF    1 SURFZ0.FOIS.G       173      1     2     1
+ VARSF    2 SURFALBEDO          174      2     2     1
+ VARSF    3 SURFEMISSIVITE     -999      3     2    -1
+ VARSF    4 SURFET.GEOPOTENT    160      4     2     1
+ VARSF    5 SURFIND.TERREMER    172      5     2     1
+ VARSF    6 SURFVAR.GEOP.ANI    161      6     2     1
+ VARSF    7 SURFVAR.GEOP.DIR    162      7     2     1
+ VARSF    8 SURFMEAN SLOPE      163      8     2     1
+ VARSF    9 SURFLOGZ0H          234      9     2     1
+ VARSF   10 LOW VEG. COVER       27     10     2     1
+ VARSF   11 HIGH VEG. COVER      28     11     2     1
+ VARSF   12 LOW VEG. TYPE        29     12     2     1
+ VARSF   13 HIGH VEG. TYPE       30     13     2     1
+ VARSF   14 LOW VEG. LAI         66     14     2     1
+ VARSF   15 HIGH VEG. LAI        67     15     2     1
+ VARSF   16 SOIL TYPE            43     16     2     1
+ VARSF   17 LAKE COVER           26     17     2     1
+ VARSF   18 LAKE DEPTH       228007     18     2     1
+ VARSF   19 SEA ICE COVER        31     19     2     1
+ VARSF   20 SEA SURFACE TEMP     34     20     2     1
+ VARSF   21 UCOM OCEAN CURRE 151131     21     2    -1
+ VARSF   22 VCOM OCEAN CURRE 151132     22     2    -1
+ VARSF   23 SD FILTRED OROG      74     23     2     1
+ VARSF   24 M_ALB.UVis PARAL     15     24     2    -1
+ VARSF   25 M_ALB.UVis DIFFU     16     25     2    -1
+ VARSF   26 M_ALB.N-IR PARAL     17     26     2    -1
+ VARSF   27 M_ALB.N-IR DIFFU     18     27     2    -1
+ VARSF   28 M_ALB.UVisPARALI 210186     28     2     1
+ VARSF   29 M_ALB.UVisPARALV 210187     29     2     1
+ VARSF   30 M_ALB.UVisPARALG 210188     30     2     1
+ VARSF   31 M_ALB.N-IRPARALI 210189     31     2     1
+ VARSF   32 M_ALB.N-IRPARALV 210190     32     2     1
+ VARSF   33 M_ALB.N-IRPARALG 210191     33     2     1
+ VARSF   34 GPP FLUX ADJ. CO 228078     34     2    -1
+ VARSF   35 REC FLUX ADJ. CO 228079     35     2    -1
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIP - SD_VP             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIP - SD_VP   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIV - SD_VV             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIV - SD_VV   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIN - SD_VN             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIN - SD_VN   
+ NUMFLDS=           5  LMTL= F
+ VCLIN    1                    -999      1     0    -1
+ VCLIN    2                    -999      2     0    -1
+ VCLIN    3                    -999      3     0    -1
+ VCLIN    4                    -999      4     0    -1
+ VCLIN    5                    -999      5     0    -1
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIH - SD_VH             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIH - SD_VH   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIK - SD_VK             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIK - SD_VK   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIA - SD_VA             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIA - SD_VA   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VO3ABC - SD_VC            15
+ 2-D SURFACE FIELD GROUP INITIALIZED VO3ABC - SD_VC  
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VDIAGO2 - SD_V2           15
+ 2-D SURFACE FIELD GROUP INITIALIZED VDIAGO2 - SD_V2 
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 3-D SURFACE FIELD GROUP VDIAGO3 - SD_V3           15
+ 3-D SURFACE FIELD GROUP INITIALIZED VDIAGO3 - SD_V3 
+ NUMFLDS=           0  NLEVS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP OCEAN - SD_OC             15
+ 2-D SURFACE FIELD GROUP INITIALIZED OCEAN - SD_OC   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VDIAG - SD_VD             15
+ 2-D SURFACE FIELD GROUP INITIALIZED VDIAG - SD_VD   
+ NUMFLDS=         198  LMTL= F
+ VDIAG    1                     142      1     0    -1
+ VDIAG    2                     143      2     0    -1
+ VDIAG    3                     144      3     0    -1
+ VDIAG    4                  228216      4     0    -1
+ VDIAG    5                     145      5     0    -1
+ VDIAG    6                     146      6     0    -1
+ VDIAG    7                     147      7     0    -1
+ VDIAG    8                  228080      8     0    -1
+ VDIAG    9                  228081      9     0    -1
+ VDIAG   10                  228082     10     0    -1
+ VDIAG   11                     151     11     0    -1
+ VDIAG   12                     134     12     0    -1
+ VDIAG   13                     164     13     0    -1
+ VDIAG   14                     176     14     0    -1
+ VDIAG   15                     177     15     0    -1
+ VDIAG   16                     178     16     0    -1
+ VDIAG   17                     179     17     0    -1
+ VDIAG   18                     180     18     0    -1
+ VDIAG   19                     181     19     0    -1
+ VDIAG   20                     182     20     0    -1
+ VDIAG   21                  228251     21     0    -1
+ VDIAG   22                     185     22     0    -1
+ VDIAG   23                     186     23     0    -1
+ VDIAG   24                     187     24     0    -1
+ VDIAG   25                     188     25     0    -1
+ VDIAG   26                     195     26     0    -1
+ VDIAG   27                     196     27     0    -1
+ VDIAG   28                     197     28     0    -1
+ VDIAG   29                     201     29     0    -1
+ VDIAG   30                     202     30     0    -1
+ VDIAG   31                     205     31     0    -1
+ VDIAG   32                       8     32     0    -1
+ VDIAG   33                       9     33     0    -1
+ VDIAG   34                     243     34     0    -1
+ VDIAG   35                     229     35     0    -1
+ VDIAG   36                     230     36     0    -1
+ VDIAG   37                     231     37     0    -1
+ VDIAG   38                     232     38     0    -1
+ VDIAG   39                  228083     39     0    -1
+ VDIAG   40                  228084     40     0    -1
+ VDIAG   41                  228085     41     0    -1
+ VDIAG   42                     239     42     0    -1
+ VDIAG   43                     240     43     0    -1
+ VDIAG   44                  228226     44     0    -1
+ VDIAG   45                  228227     45     0    -1
+ VDIAG   46                  260048     46     0    -1
+ VDIAG   47                  228219     47     0    -1
+ VDIAG   48                  228218     48     0    -1
+ VDIAG   49                  228221     49     0    -1
+ VDIAG   50                  228220     50     0    -1
+ VDIAG   51                  260015     51     0    -1
+ VDIAG   52                  228217     52     0    -1
+ VDIAG   53 FC SURFACE Z0       244     53     1     0
+ VDIAG   54 LOG FC SURF Z0H     245     54     1     0
+ VDIAG   55                  162071     55     0    -1
+ VDIAG   56                  162072     56     0    -1
+ VDIAG   57                     136     57     0    -1
+ VDIAG   58                     137     58     0    -1
+ VDIAG   59                      78     59     0    -1
+ VDIAG   60                      79     60     0    -1
+ VDIAG   61                  228089     61     0    -1
+ VDIAG   62                  228090     62     0    -1
+ VDIAG   63                  228088     63     0    -1
+ VDIAG   64                     169     64     0    -1
+ VDIAG   65                  228129     65     0    -1
+ VDIAG   66                  228130     66     0    -1
+ VDIAG   67                     175     67     0    -1
+ VDIAG   68                     159     68     0    -1
+ VDIAG   69                     189     69     0    -1
+ VDIAG   70                      58     70     0    -1
+ VDIAG   71                      57     71     0    -1
+ VDIAG   72                      59     72     0    -1
+ VDIAG   73                  228235     73     0    -1
+ VDIAG   74                  228231     74     0    -1
+ VDIAG   75                  228233     75     0    -1
+ VDIAG   76                  228237     76     0    -1
+ VDIAG   77                  228044     77     0    -1
+ VDIAG   78                  228045     78     0    -1
+ VDIAG   79                     208     79     0    -1
+ VDIAG   80                     209     80     0    -1
+ VDIAG   81                     210     81     0    -1
+ VDIAG   82                     211     82     0    -1
+ VDIAG   83                      44     83     0    -1
+ VDIAG   84                      45     84     0    -1
+ VDIAG   85                      49     85     0    -1
+ VDIAG   86                  228029     86     0    -1
+ VDIAG   87                    -999     87     0    -1
+ VDIAG   88                      50     88     0    -1
+ VDIAG   89                     206     89     0    -1
+ VDIAG   90                     213     90     0    -1
+ VDIAG   91                      20     91     0    -1
+ VDIAG   92                     212     92     0    -1
+ VDIAG   93                  228021     93     0    -1
+ VDIAG   94                  228022     94     0    -1
+ VDIAG   95                      47     95     0    -1
+ VDIAG   96                  228023     96     0    -1
+ VDIAG   97                  228024     97     0    -1
+ VDIAG   98                  228020     98     0    -1
+ VDIAG   99                    3020     99     0    -1
+ VDIAG  100                  228001    100     0    -1
+ VDIAG  101                  228232    101     0    -1
+ VDIAG  102                  228234    102     0    -1
+ VDIAG  103                  260121    103     0    -1
+ VDIAG  104                  260123    104     0    -1
+ VDIAG  105                  260109    105     0    -1
+ VDIAG  106                  228046    106     0    -1
+ VDIAG  107                  228047    107     0    -1
+ VDIAG  108                  228048    108     0    -1
+ VDIAG  109                  228246    109     0    -1
+ VDIAG  110                  228247    110     0    -1
+ VDIAG  111                  228239    111     0    -1
+ VDIAG  112                  228240    112     0    -1
+ VDIAG  113                  228003    113     0    -1
+ VDIAG  114 10M UWIND           165    114     1     0
+ VDIAG  115 10M VWIND           166    115     1     0
+ VDIAG  116 2M TEMPERATURE      167    116     1     0
+ VDIAG  117 2M DEWPOINT         168    117     1     0
+ VDIAG  118 2M HUMIDITY      174096    118     1     0
+ VDIAG  119 10M NEUTRL UWIND 228131    119     1     0
+ VDIAG  120 10M NEUTRL VWIND 228132    120     1     0
+ VDIAG  121                  228015    121     0    -1
+ VDIAG  122                  228016    122     0    -1
+ VDIAG  123                  228017    123     0    -1
+ VDIAG  124                  228018    124     0    -1
+ VDIAG  125                  228019    125     0    -1
+ VDIAG  126                  228050    126     0    -1
+ VDIAG  127                  228052    127     0    -1
+ VDIAG  128                  210208    128     0    -1
+ VDIAG  129                  210209    129     0    -1
+ VDIAG  130                  210210    130     0    -1
+ VDIAG  131                  210211    131     0    -1
+ VDIAG  132                  210212    132     0    -1
+ VDIAG  133                  210250    133     0    -1
+ VDIAG  134                  210251    134     0    -1
+ VDIAG  135                  216047    135     0    -1
+ VDIAG  136                  210244    136     0    -1
+ VDIAG  137                  210243    137     0    -1
+ VDIAG  138                  215089    138     0    -1
+ VDIAG  139                  210072    139     0    -1
+ VDIAG  140                  210073    140     0    -1
+ VDIAG  141                  210074    141     0    -1
+ VDIAG  142                  214002    142     0    -1
+ VDIAG  143                  214003    143     0    -1
+ VDIAG  144                  210207    144     0    -1
+ VDIAG  145                     121    145     0    -1
+ VDIAG  146                     121    146     0    -1
+ VDIAG  147                     121    147     0    -1
+ VDIAG  148                     121    148     0    -1
+ VDIAG  149                     121    149     0    -1
+ VDIAG  150                     121    150     0    -1
+ VDIAG  151                     122    151     0    -1
+ VDIAG  152                     122    152     0    -1
+ VDIAG  153                     122    153     0    -1
+ VDIAG  154                     122    154     0    -1
+ VDIAG  155                     122    155     0    -1
+ VDIAG  156                     122    156     0    -1
+ VDIAG  157                     123    157     0    -1
+ VDIAG  158                     123    158     0    -1
+ VDIAG  159                     123    159     0    -1
+ VDIAG  160                     123    160     0    -1
+ VDIAG  161                     123    161     0    -1
+ VDIAG  162                     123    162     0    -1
+ VDIAG  163                  228224    163     0    -1
+ VDIAG  164                  228224    164     0    -1
+ VDIAG  165                  228224    165     0    -1
+ VDIAG  166                  228224    166     0    -1
+ VDIAG  167                  228224    167     0    -1
+ VDIAG  168                  228224    168     0    -1
+ VDIAG  169                  228225    169     0    -1
+ VDIAG  170                  228225    170     0    -1
+ VDIAG  171                  228225    171     0    -1
+ VDIAG  172                  228225    172     0    -1
+ VDIAG  173                  228225    173     0    -1
+ VDIAG  174                  228225    174     0    -1
+ VDIAG  175                  228035    175     0    -1
+ VDIAG  176                  228035    176     0    -1
+ VDIAG  177                  228035    177     0    -1
+ VDIAG  178                  228035    178     0    -1
+ VDIAG  179                  228035    179     0    -1
+ VDIAG  180                  228035    180     0    -1
+ VDIAG  181                  228036    181     0    -1
+ VDIAG  182                  228036    182     0    -1
+ VDIAG  183                  228036    183     0    -1
+ VDIAG  184                  228036    184     0    -1
+ VDIAG  185                  228036    185     0    -1
+ VDIAG  186                  228036    186     0    -1
+ VDIAG  187                  228058    187     0    -1
+ VDIAG  188                  228058    188     0    -1
+ VDIAG  189                  228058    189     0    -1
+ VDIAG  190                  228058    190     0    -1
+ VDIAG  191                  228058    191     0    -1
+ VDIAG  192                  228058    192     0    -1
+ VDIAG  193                  228060    193     0    -1
+ VDIAG  194                  228060    194     0    -1
+ VDIAG  195                  228060    195     0    -1
+ VDIAG  196                  228060    196     0    -1
+ VDIAG  197                  228060    197     0    -1
+ VDIAG  198                  228060    198     0    -1
+ INITIALIZING 3-D SURFACE FIELD GROUP SATSIM - SD_SM            24
+ 3-D SURFACE FIELD GROUP INITIALIZED SATSIM - SD_SM  
+ NUMFLDS=           0  NLEVS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP WAVES - SD_WS             24
+ 2-D SURFACE FIELD GROUP INITIALIZED WAVES - SD_WS   
+ NUMFLDS=           1  LMTL= F
+ WAVES    1 CHARNOCK_PARAM      148      1     1    -1
+ INITIALIZING 2-D SURFACE FIELD GROUP WAVES - SD_WW             25
+ 2-D SURFACE FIELD GROUP INITIALIZED WAVES - SD_WW   
+ NUMFLDS=           6  LMTL= F
+ WAVES    1 10m_NEUTRAL_U      -999      1     0    -1
+ WAVES    2 10m_NEUTRAL_V      -999      2     0    -1
+ WAVES    3 SURFACE_DENSITY    -999      3     0    -1
+ WAVES    4 w*                 -999      4     0    -1
+ WAVES    5 SEA_ICE_FRACTION   -999      5     0    -1
+ WAVES    6 LAKE_FRACTION      -999      6     0    -1
+ INITIALIZING 2-D SURFACE FIELD GROUP VCLIX - SD_VX             25
+ 2-D SURFACE FIELD GROUP INITIALIZED VCLIX - SD_VX   
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 3-D SURFACE FIELD GROUP VEXTRDI - SD_DI           25
+ 3-D SURFACE FIELD GROUP INITIALIZED VEXTRDI - SD_DI 
+ NUMFLDS=           0  NLEVS=           0  LMTL= F
+ INITIALIZING 3-D SURFACE FIELD GROUP VEXTRA - SD_XA            25
+ 3-D SURFACE FIELD GROUP INITIALIZED VEXTRA - SD_XA  
+ NUMFLDS=           0  NLEVS=         137  LMTL= F
+ INITIALIZING 3-D SURFACE FIELD GROUP precip fraction           25
+ 3-D SURFACE FIELD GROUP INITIALIZED precip fraction 
+ NUMFLDS=           1  NLEVS=         137  LMTL= F
+ INITIALIZING 3-D SURFACE FIELD GROUP VEXTRAD - SD_XR           25
+ 3-D SURFACE FIELD GROUP INITIALIZED VEXTRAD - SD_XR 
+ NUMFLDS=           0  NLEVS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP VEXTR2 - SD_X2            25
+ 2-D SURFACE FIELD GROUP INITIALIZED VEXTR2 - SD_X2  
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP SFLUX - SD_SFL            25
+ 2-D SURFACE FIELD GROUP INITIALIZED SFLUX - SD_SFL  
+ NUMFLDS=           0  LMTL= F
+ INITIALIZING 2-D SURFACE FIELD GROUP SFORC - SD_SFO            25
+ 2-D SURFACE FIELD GROUP INITIALIZED SFORC - SD_SFO  
+ NUMFLDS=           0  LMTL= F
+  ----- Some printings in SU_SURF_FLDS: 
+ NSURF=         263  NSURFL=         408  NDIMSURF=         280  NDIMSURFL=         434
+ NFPCLI =  0 NFPSWI =  0 NSATSIM =  0
+ NGP5=          25  NTRAJ_CST=          42
+ NSTRAJGRIB  139 170 183 236  39  40  41  42 141  32
+  33 238  80 235 198 244 245 165 166 167
+ 168************ 148
+  ---------------------------------------
+  DDH * DDH * DDH * DDH * DDH *
+  DIAGNOSTICS PAR DOMAINES HORIZONTAUX
+  DOMAINE GLOBAL =  F  BANDES ZONALES = F
+  DOMAINES LIMITES OU POINTS =  F
+  MASSES - ENERGIES - SOL =  F
+  ENTROPIE =  F
+  MOMENT CINETIQUE =  F
+  IMPRESSIONS GLOBE =  F
+  IMPRESSIONS 1 BANDE ZONALE =  F  BANDE NDHZPR =            1
+  IMPRESSIONS DOMAINES ET POINTS =  F
+  ECRITURE GLOBE =  F  BANDES ZONALES = F
+  ECRITURE DOMAINES LIMITES ET POINTS  F
+  LHDQLN =  F  LHDPAS =  T
+  
+  LOGIQUE GLOBALE LSDDH =  F
+  DDH FLEXIBLES LFLEXDIA =  F
+  LOGIQUE IMPRESSION LHDPR =  F
+  NSPEC2VDDH =            0
+ LHDLFA =  F CFPATHDDH =                                                                                                                                                                                                         
+  
+  ---------------------------------- DDH -
+  
+ SUALLO PRINTOUTS 
+ ARRAY  RMESOU    ALLOCATED      137     137
+ ARRAY  RMESOT    ALLOCATED      137     137
+ ARRAY  CETA      ALLOCATED      137     137
+ ARRAY  CVDAES    ALLOCATED      138     138
+ ARRAY  CVDAEL    ALLOCATED      138     138
+ ARRAY  CVDAEU    ALLOCATED      138     138
+ ARRAY  CVDAED    ALLOCATED      138     138
+ ARRAY  RA1OVLP   ALLOCATED      137     137
+ ARRAY  CVDAESS   ALLOCATED      138     138
+ ARRAY  CVDAEDU   ALLOCATED      138     138
+ ARRAY  CVDAEOM   ALLOCATED      138     138
+ ARRAY  CVDAEBC   ALLOCATED      138     138
+ ARRAY  CVDAESU   ALLOCATED      138     138
+  MPREHYDS=           1
+ NDIMPT=           0
+ NDIMPC=           0
+  NITMP=            3    LSETTLS=  T
+ SAVTEND           548           1         137           4           1
+ Uncoupled run so resetting LMCCDYNSEAICE
+ LIM switches reset since LMCCDYNSEAICE is false
+ Printings for module YOMMCC done in SUMCC 
+ NSSTICEOP =  9 LCURR =  F LGELATO =  F LMCC01 =  F LMCC02 =  F LMCC03 =  F LMCC04 =  F LMCCEC =  F LMCCIEC=  T
+ LMCCICEIC=  F
+ N923 = 0 LMCC05 =  F NOACOMM =2 LMCC01_MSE = F LMCC_COMPO =  F LMCCIEC_COMPO =  F LMULTIYR =  F
+ * Module YOMMCC NEMO PART
+ LNEMOCOUP =  F LNEMOSSTFREEZ =  F LNEMO1WAY =  F LNEMOFLUXNC =  F LNEMOIFSLOG =  F LMCCDYNSEAICE =  F LNEMOGRIBFLDS =  F LNEMOLIMGET =  F LNEMOLIMPUT =  F LNEMOLIMALB =  F LNEMOLIMTEMP =  F LNEMOLIMTLVL =  F LNEMOLIMTHK =  F LNEMOOCEICEMIX =  F LNEMOQNSICEFILT =  F LNEMOSICOUP =  F
+ LNEMOGRIB3D =  F NNEMO3DLEVS =    20
+ LNEMOPARTCOUP =  F LNEMOPARTMASK =  F LNEMOPARTMASKFILE =  F CDNPARTMASKFILE = partialmask.grib RNPARTRAMPSTART =     5.00 RNPARTRAMPLEN =     4.00 RNPARTLAT =    20.00 RNPARTLATSPREAD =     5.00
+ COMMON YOECND 
+ SUCUMF: NJKT1=          87  NJKT2=          52  NJKT3=         124
+ COMMON YOECUMF 
+ LMFMID =     T LMFDD =     T LMFDUDV =     T LMFPEN =     T RTAUA =  0.10000E+01 s-1
+ LMFWETB =     T LMFGLAC =     T
+ RMFSOLUV =  0.10000E+01 RMFSOLTQ =  0.10000E+01 RMFSOLCT =  0.10000E+01 RMFSOLRHS =  0.00000E+00 RMFADVW =  0.00000E+00
+ RCAPDCYCL=  0.20000E+01 RCAPQADV=  0.80000E+00
+ SUCUMF2
+ COMMON YOMCUMFS 
+ LECUMFS =     F LREGCV =     F
+ COMMON YOECUMF2 
+ NJKT12 =   87 NJKT22 =   52 NJKT32 =  124
+ NJKT12 =   96 NJKT22 =  106 NJKT32 = 
+ LMFMID2 =     T LMFDD2 =     T LMFDUDV2 =     T RTAU2 =  0.33000E+00 s-1
+ LMFWETB2 =     T LMFGLAC2 =     T
+ RMFSOLUV2 =  0.10000E+01 RMFSOLTQ2 =  0.10000E+01 RMFSOLCT2 =  0.10000E+01 RMFSOLRHS2 =  0.00000E+00
+ RMFCFL2 =  0.10000E+01
+ RCAPDCYCL2 =  0.20000E+01
+ LMFCFL2_SHSTEP =     F
+  SUGWD: NGWDLIM=          49
+  SUGWD: GTENLIM=   2.2222222222222223E-002  SUGWD: LRDIFF_STRATO= F
+  SUGWD: NDIFF_STRATO=           5 SUGWD: GKWAKE=   2.0000000000000000      SUGWD: GKDRAG=  0.14999999999999999     
+ SUGWWMS: ZLAUNCHP = 45000.0 GFLUXLAUN = 0.00375 GCSTAR =   1.0 GTPHYGWWMS =  3600.
+ SUGWWMS: LOZPR = T NGAUSS = 2 GGAUSSA =    20.0 GGAUSSB =   -0.25
+ SUVDF: LWDS= F  NSUBST=           1  RVDIFTS=   1.5000000000000000       RLAM=   150.00000000000000       RTOFDALPHA=   35.000000000000000     
+YOE_SPECTRAL_PLANCK: Generating Planck look-up table with 201 temperatures from 150.0 to 350.0 K:
+  Band 1: 0.00-8.00 13.00-Inf microns
+  Band 2: 8.00-13.00 microns
+SUECRAD: NRADINT=0 REQUESTED, NRADRES RESET TO NSMAX
+SRTM Configuration       T  14  14 112
+ INBLW,NTSW,NSW SET EQUAL TO: 16 14  6
+NAERO= 0 NACTAERO= 0
+ COMMON YOERAD 
+ LERADI  =     T LERAD1H =     F LHGHG =     T NLNGR1H = 12 NRADSFR =  1
+ LEPO3RA  =     F YO3%LGP =     F
+ NRADFR  =  1 NRADPFR =   0 NRADE1H =   4 NRADE3H =  12 NRADELG =   0 NRADPLA = 15 NRPROMA =     1
+ NLOOPLWO=     0 NPROMALW=     1 NLASTLW =     0
+ LRRTM =     T LSRTM =     T NMODE = 0 NOZOCL= 1 NAER  = 1 NAERMACC=1 LAER3D=      F NHINCSOL= 4 NSOLARSPECTRUM= 0 NSWWVCONTINUUM= 0 NDUMPBADINPUTS= 0 NDUMPINPUTS= 0 NLWEMISS= 2 NLWOUT= 1 LINTERPINCLOUDMEAN=    F TRBKG=    0.053 STBKG=    0.004
+ CGHGCLIMFILE =         greenhouse_gas_climatology_46r1.nc
+ CGHGTIMESERIESFILE =   greenhouse_gas_timeseries_CMIP6_SSP370_CFC11equiv_47r1.nc
+ CSOLARIRRADIANCEFILE = total_solar_irradiance_CMIP6_47r1.nc
+ NMCLAT =   61 NMCLON =  120 NMCLEV =    1 NMCVAR =   12 LAERADCLI= T
+ LAERADJDU = F NAERADJDU = 0 RDUMULF  =   1.0 RWGHTDU1 =   1.0 RWGHTDU2 =   1.0 RWGHTDU3 =   1.0
+ LDUSEASON =     T RAESHSS =  1000.0 RAESHDU =  3000.0 RAESHOM =  2000.0 RAESHBC =  1000.0 RAESHSU =  4000.0
+ NINHOM = 0 NLAYINH=0 RLWINHF=1.00 RSWINHF=1.00
+ NRADINT =  0
+ NRADRES =  799
+ YDRI%LSLONDEM =     T
+ YDRO%LSLONDEM =     T
+ NO3CMIP =  0 NGHGCMIP =  6 NRCP =  3
+ GHGDATADIR = ./
+ LCCNL =     T LCCNO =     T RCCNLND=  900. RCCNSEA=   50. LAERCLIM= F LAERVISI= T
+ NGHGRAD=  21 LETRACGMS=  T
+ HISTORY OF SO4 AEROSOLS, LESO4HIS     F
+ LDIAGFORCING =        F
+ LApproxLwUpdate =     T
+ LApproxSwUpdate =     T
+ LMannersSwUpdate=     T
+ LCentredTimeSZA =     T
+ LAverageSZA     =     T
+ LUsePre2017Rad  =     F
+ NLwScattering   = 1
+ NLwSolver       = 0
+ NSwSolver       = 0
+ NCloudOverlap   = 3
+ RCLOUD_SEPARATION_SCALE_TOA  = 14000.0
+ RCLOUD_SEPARATION_SCALE_SURF = 2500.0
+ RCLOUD_FRAC_STD =  1.00
+ LFU_LW_ICE_OPTICS_BUG =     F
+ LONEWSW=     T NRADIP = 3 NRADLP = 2 NICEOPT= 3 NLIQOPT= 4 LDIFFC =     F
+ NLWICEOPT= 3 NLWLIQOPT= 4 NSWICEOPT= 3 NSWLIQOPT= 4 NSW      = 6 NSWB_MNH = 0
+ NMINICE= 1 NDECOLAT=  2
+ NOVLP   =  1
+ NMCICA=  2 NREDGLW=  1 NREDGSW=  1
+ RSUN  FROM YOESW =    0.00192   0.13571   0.32214   0.32616   0.18061   0.03347
+ RSUN2 FROM YOESW =    0.00000   0.11490   0.38130   0.35090   0.14870   0.00420
+Reading NetCDF file total_solar_irradiance_CMIP6_47r1.nc
+  Reading time(450)
+  Reading tsi(450)
+Closing NetCDF file total_solar_irradiance_CMIP6_47r1.nc
+Reading NetCDF file greenhouse_gas_climatology_46r1.nc
+  Reading pressure(91)
+  Reading latitude(64)
+  Reading co2_vmr(64,91,12)
+  Reading ch4_vmr(64,91,12)
+  Reading n2o_vmr(64,91,12)
+  Reading cfc11_vmr(64,91,12)
+  Reading cfc12_vmr(64,91,12)
+  Reading o3_vmr(64,91,12)
+  Reading hcfc22_vmr(64,91,12)
+  Reading ccl4_vmr(64,91,12)
+Closing NetCDF file greenhouse_gas_climatology_46r1.nc
+Reading NetCDF file greenhouse_gas_timeseries_CMIP6_SSP370_CFC11equiv_47r1.nc
+  Reading time(2501)
+  Reading co2_vmr(2501)
+  Reading ch4_vmr(2501)
+  Reading n2o_vmr(2501)
+  Reading cfc11_vmr(2501)
+  Reading cfc12_vmr(2501)
+  hcfc22_vmr not present: setting concentration to zero
+  ccl4_vmr not present: setting concentration to zero
+Closing NetCDF file greenhouse_gas_timeseries_CMIP6_SSP370_CFC11equiv_47r1.nc
+-------------------------------------------------------------------------------
+RADIATION_SETUP: ecRad 1.1.10
+Radiation scheme settings:
+General settings:
+  Data files expected in "."
+  Clear-sky calculations are ON                              (do_clear=T)
+  Saving intermediate radiative properties OFF               (do_save_radiative_properties=F)
+  Saving spectral flux profiles OFF                          (do_save_spectral_flux=F)
+  Gas model is "RRTMG-IFS"                                   (i_gas_model=1)
+  Aerosols are ON                                            (use_aerosols=T)
+  Clouds are ON                                              (do_clouds=T)
+Surface settings:
+  Saving surface shortwave spectral fluxes ON                (do_surface_sw_spectral_flux=T)
+  Saving surface shortwave fluxes in abledo bands ON         (do_canopy_fluxes_sw=T)
+  Saving surface longwave fluxes in emissivity bands OFF     (do_canopy_fluxes_lw=F)
+  Longwave derivative calculation is ON                      (do_lw_derivatives=T)
+  Nearest-neighbour spectral albedo mapping OFF              (do_nearest_spectral_sw_albedo=F)
+  Nearest-neighbour spectral emissivity mapping ON           (do_nearest_spectral_lw_emiss=T)
+Cloud settings:
+  Cloud fraction threshold = .100E-05                        (cloud_fraction_threshold)
+  Cloud mixing-ratio threshold = .100E-08                    (cloud_mixing_ratio_threshold)
+  Liquid optics scheme is "SOCRATES"                         (i_liq_model=2)
+  Ice optics scheme is "Fu-IFS"                              (i_ice_model=2)
+  Longwave ice optics bug in Fu scheme is OFF                (do_fu_lw_ice_optics_bug=F)
+  Cloud overlap scheme is "Exp-Ran"                          (i_overlap_scheme=1)
+  Use "beta" overlap parameter is OFF                        (use_beta_overlap=F)
+  Cloud PDF shape is "Gamma"                                 (i_cloud_pdf_shape=1)
+  Cloud inhom decorrelation scaling = .500                   (cloud_inhom_decorr_scaling)
+Solver settings:
+  Shortwave solver is "McICA"                                (i_solver_sw=2)
+  Shortwave delta scaling after merge with gases OFF         (do_sw_delta_scaling_with_gases=F)
+  Longwave solver is "McICA"                                 (i_solver_lw=2)
+  Longwave cloud scattering is ON                            (do_lw_cloud_scattering=T)
+  Longwave aerosol scattering is OFF                         (do_lw_aerosol_scattering=F)
+Weighting of 6 albedo values in 14 shortwave bands (wavenumber ranges in cm-1):
+  2600 to  3250: 0.00 0.00 0.00 0.00 0.00 1.00
+  3250 to  4000: 0.00 0.00 0.00 0.00 0.00 1.00
+  4000 to  4650: 0.00 0.00 0.00 0.00 0.69 0.31
+  4650 to  5150: 0.00 0.00 0.00 0.00 1.00 0.00
+  5150 to  6150: 0.00 0.00 0.00 0.00 1.00 0.00
+  6150 to  7700: 0.00 0.00 0.00 0.00 1.00 0.00
+  7700 to  8050: 0.00 0.00 0.00 0.00 1.00 0.00
+  8050 to 12850: 0.00 0.00 0.00 0.93 0.07 0.00
+ 12850 to 16000: 0.00 0.00 0.48 0.52 0.00 0.00
+ 16000 to 22650: 0.00 0.00 1.00 0.00 0.00 0.00
+ 22650 to 29000: 0.00 0.99 0.01 0.00 0.00 0.00
+ 29000 to 38000: 0.00 1.00 0.00 0.00 0.00 0.00
+ 38000 to 50000: 0.83 0.17 0.00 0.00 0.00 0.00
+   820 to  2600: 0.00 0.00 0.00 0.00 0.00 1.00
+Mapping from 16 longwave bands to emissivity intervals: 1 1 1 1 1 2 2 2 1 1 1 1 1 1 1 1
+Reading NetCDF file ./socrates_droplet_scattering_rrtm.nc
+  Reading coeff_lw(16,16)
+  Reading coeff_sw(14,16)
+Closing NetCDF file ./socrates_droplet_scattering_rrtm.nc
+Reading NetCDF file ./fu_ice_scattering_rrtm.nc
+  Reading coeff_lw(16,11)
+  Reading coeff_sw(14,10)
+Closing NetCDF file ./fu_ice_scattering_rrtm.nc
+Reading NetCDF file ./aerosol_ifs_rrtm_46R1_with_NI_AM.nc
+  Reading mass_ext_sw_hydrophobic(14,14)
+  Reading ssa_sw_hydrophobic(14,14)
+  Reading asymmetry_sw_hydrophobic(14,14)
+  Reading mass_ext_lw_hydrophobic(16,14)
+  Reading ssa_lw_hydrophobic(16,14)
+  Reading asymmetry_lw_hydrophobic(16,14)
+  Reading mass_ext_sw_hydrophilic(14,12,10)
+  Reading ssa_sw_hydrophilic(14,12,10)
+  Reading asymmetry_sw_hydrophilic(14,12,10)
+  Reading mass_ext_lw_hydrophilic(16,12,10)
+  Reading ssa_lw_hydrophilic(16,12,10)
+  Reading asymmetry_lw_hydrophilic(16,12,10)
+  Reading relative_humidity1(12)
+  Reading mass_ext_mono_hydrophobic(20,14)
+  Reading ssa_mono_hydrophobic(20,14)
+  Reading asymmetry_mono_hydrophobic(20,14)
+  Reading lidar_ratio_mono_hydrophobic(20,14)
+  Reading mass_ext_mono_hydrophilic(20,12,10)
+  Reading ssa_mono_hydrophilic(20,12,10)
+  Reading asymmetry_mono_hydrophilic(20,12,10)
+  Reading lidar_ratio_mono_hydrophilic(20,12,10)
+Closing NetCDF file ./aerosol_ifs_rrtm_46R1_with_NI_AM.nc
+Aerosol mapping:
+   1 -> hydrophilic type 1: Sea salt, bin 1, 0.03-0.5 micron, OPAC
+   2 -> hydrophilic type 2: Sea salt, bin 2, 0.50-5.0 micron, OPAC
+   3 -> hydrophilic type 3: Sea salt, bin 3, 5.0-20.0 micron, OPAC
+   4 -> hydrophobic type 7: Desert dust, bin 1, 0.03-0.55 micron, Woodward 2001, Table 2
+   5 -> hydrophobic type 8: Desert dust, bin 2, 0.55-0.90 micron, Woodward 2001, Table 2
+   6 -> hydrophobic type 9: Desert dust, bin 3, 0.90-20.0 micron, Woodward 2001, Table 2
+   7 -> hydrophilic type 4: Hydrophilic organic matter, OPAC
+   8 -> hydrophobic type 10: Hydrophobic organic matter, OPAC (hydrophilic at RH=20%)
+   9 -> hydrophobic type 11: Black carbon, OPAC
+  10 -> hydrophobic type 11: Black carbon, OPAC
+  11 -> hydrophilic type 5: Ammonium sulfate (for sulfate), GACP Lacis et al https://gacp.giss.nasa.gov/data_sets/
+  12 -> hydrophobic type 14: Stratospheric sulfate (hydrophilic ammonium sulfate at RH 20%-30%)
+Reading NetCDF file ./mcica_gamma.nc
+  Reading fsd(81)
+  Reading x(1000,81)
+Closing NetCDF file ./mcica_gamma.nc
+Spectral weights for ultraviolet (22650. to 50000. cm-1):
+  Shortwave band 11 (22650. to 29000. cm-1):   1.0000
+  Shortwave band 12 (29000. to 38000. cm-1):   1.0000
+  Shortwave band 13 (38000. to 50000. cm-1):   1.0000
+Spectral weights for photosynthetically active radiation, PAR (14286. to 25000. cm-1):
+  Shortwave band 9 (12850. to 16000. cm-1):   0.5442
+  Shortwave band 10 (16000. to 22650. cm-1):   1.0000
+  Shortwave band 11 (22650. to 29000. cm-1):   0.3701
+Tropospheric background uses aerosol type 8
+Stratospheric background uses aerosol type 12
+-------------------------------------------------------------------------------
+RESERVE_LUN reserves unit  57
+FREE_LUN returns unit  57 to the pool
+SUECAEC: INLEV,ISYEAR,IEYEAR=  0  1957  2010
+ SUECRAD TEGEN AEROSOL CLIMATOLOGY IS LOADED
+Reading NetCDF file aerosol_cams_climatology_43R3a.nc
+  Reading Black_Carbon_hydrophilic(120,61,12)
+  Reading Black_Carbon_hydrophobic(120,61,12)
+  Reading Organic_Matter_hydrophilic(120,61,12)
+  Reading Organic_Matter_hydrophobic(120,61,12)
+  Reading Mineral_Dust_bin1(120,61,12)
+  Reading Mineral_Dust_bin2(120,61,12)
+  Reading Mineral_Dust_bin3(120,61,12)
+  Reading Sea_Salt_bin1(120,61,12)
+  Reading Sea_Salt_bin2(120,61,12)
+  Reading Sea_Salt_bin3(120,61,12)
+  Reading Sulfates(120,61,12)
+Closing NetCDF file aerosol_cams_climatology_43R3a.nc
+ 2D CAMS AEROSOL CLIMATOLOGY IS LOADED
+SUPHEC: Minimum ice fraction is  0.0200
+SUCLDP: RCLDIFF =  0.6000E-05
+SUCLDP: RCLCRIT =  0.4000E-03
+SUCLDP: RCLCRIT_SEA =  0.2500E-03
+SUCLDP: RCLCRIT_LAND =  0.5500E-03
+SUCLDP: RKCONV =  0.1667E-03
+SUCLDP: RLCRITSNOW =  0.2000E-04
+SUCLDP: RSNOWLIN1 =  0.1000E-02
+SUCLDP: RSNOWLIN2 =  0.3000E-01
+SUCLDP: RVICE =  0.1000E+00
+SUCLDP: RVRAIN =  0.4000E+01
+SUCLDP: RVSNOW =  0.1000E+01
+SUCLDP: RICEHI1 =  0.3333E-04
+SUCLDP: RICEHI2 =  0.4292E-02
+SUCLDP: RICEINIT =  0.1000E-11
+SUCLDP: RTHOMO =  0.2352E+03
+SUCLDP: RCOVPMIN =  0.1000E+00
+SUCLDP: RPECONS =  0.5547E-04
+SUCLDP: RTAUMEL =  0.7200E+04
+SUCLDP: RKOOPTAU =  0.1080E+05
+SUCLDP: RSSICEFACTOR =  0.0000E+00
+SUCLDP: RPRECRHMAX =  0.7000E+00
+SUCLDP: RCLDTOPCF =  0.1000E-01
+SUCLDP: RDEPLIQREFRATE =  0.5000E+00
+SUCLDP: RDEPLIQREFDEPTH =  0.5000E+03
+SUCLDP: NSSOPT =     1
+SUCLDP: NCLDDIAG =     0
+SUCLDP: LCLDBUD_TIMEINT IS TRUE
+SUCLDP: NAERCLD= 0
+SUCLDP: NCCNOM=   0.130  NCCNSS=   0.050  NCCNSU=   0.500
+SUCLDP: NAECLBC= 9 NAECLDU= 4 NAECLOM= 7 NAECLSS= 1 NAECLSU=11
+ COMMON YOEMETH 
+ RQLIM=  0.48100E-05
+ SUPHEC IS OVER 
+ STEP=           0
+ISTEP=       0 RSOLINC= 1366.0000 RI0= 1366.0000 ZI0= 1366.0000 RIP0= 1412.5089
+ISTEP=       0 ZI0= 1366.0000 ZSEASON= 1.034047496 REA=149597870000.00 RDEASO=147114393768.16
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       0: Reset RSOLINC= 1360.7067 RIP0= 1407.0354
+ STEP=       0 UPDTIM: IUPGHG=   1 RCARDI= 0.57746E-03
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117           8        1850        1850   0.0000000000000000     
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ TIME-VARYING LAT/LON
+ TIME-VARYING LARGE-SCALE FORCING
+ TIME-VARYING RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           0
+ CPG1C SST    301.88589477539062     
+ CPG1C TL0    301.88589477539062     
+ STEP=           1
+ISTEP=       1 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0357
+ISTEP=       1 ZI0= 1360.7067 ZSEASON= 1.034047750 REA=149597870000.00 RDEASO=147114375703.54
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       1: Reset RSOLINC= 1360.7067 RIP0= 1407.0357
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          23        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           1
+ CPG1C SST    302.00437927246094     
+ CPG1C TL0    302.00437927246094     
+ STEP=           2
+ISTEP=       2 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0360
+ISTEP=       2 ZI0= 1360.7067 ZSEASON= 1.034048002 REA=149597870000.00 RDEASO=147114357719.14
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       2: Reset RSOLINC= 1360.7067 RIP0= 1407.0360
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          38        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           2
+ CPG1C SST    302.12286376953125     
+ CPG1C TL0    302.12286376953125     
+ STEP=           3
+ISTEP=       3 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0364
+ISTEP=       3 ZI0= 1360.7067 ZSEASON= 1.034048254 REA=149597870000.00 RDEASO=147114339814.96
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       3: Reset RSOLINC= 1360.7067 RIP0= 1407.0364
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          53        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           3
+ CPG1C SST    302.24134826660156     
+ CPG1C TL0    302.24134826660156     
+ STEP=           4
+ISTEP=       4 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0367
+ISTEP=       4 ZI0= 1360.7067 ZSEASON= 1.034048505 REA=149597870000.00 RDEASO=147114321991.01
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       4: Reset RSOLINC= 1360.7067 RIP0= 1407.0367
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          68        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           4
+ CPG1C SST    302.35983276367188     
+ CPG1C TL0    302.35983276367188     
+ STEP=           5
+ISTEP=       5 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0371
+ISTEP=       5 ZI0= 1360.7067 ZSEASON= 1.034048754 REA=149597870000.00 RDEASO=147114304247.27
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       5: Reset RSOLINC= 1360.7067 RIP0= 1407.0371
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          83        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           5
+ CPG1C SST    302.47831726074219     
+ CPG1C TL0    302.47831726074219     
+ STEP=           6
+ISTEP=       6 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0374
+ISTEP=       6 ZI0= 1360.7067 ZSEASON= 1.034049002 REA=149597870000.00 RDEASO=147114286583.77
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       6: Reset RSOLINC= 1360.7067 RIP0= 1407.0374
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117          98        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           6
+ CPG1C SST    302.59680175781250     
+ CPG1C TL0    302.59680175781250     
+ STEP=           7
+ISTEP=       7 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0377
+ISTEP=       7 ZI0= 1360.7067 ZSEASON= 1.034049250 REA=149597870000.00 RDEASO=147114269000.49
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       7: Reset RSOLINC= 1360.7067 RIP0= 1407.0377
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         113        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           7
+ CPG1C SST    302.71528625488281     
+ CPG1C TL0    302.71528625488281     
+ STEP=           8
+ISTEP=       8 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0381
+ISTEP=       8 ZI0= 1360.7067 ZSEASON= 1.034049496 REA=149597870000.00 RDEASO=147114251497.43
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       8: Reset RSOLINC= 1360.7067 RIP0= 1407.0381
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         128        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           8
+ CPG1C SST    302.83377075195312     
+ CPG1C TL0    302.83377075195312     
+ STEP=           9
+ISTEP=       9 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0384
+ISTEP=       9 ZI0= 1360.7067 ZSEASON= 1.034049741 REA=149597870000.00 RDEASO=147114234074.60
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=       9: Reset RSOLINC= 1360.7067 RIP0= 1407.0384
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         143        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP           9
+ CPG1C SST    302.95225524902344     
+ CPG1C TL0    302.95225524902344     
+ STEP=          10
+ISTEP=      10 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0387
+ISTEP=      10 ZI0= 1360.7067 ZSEASON= 1.034049984 REA=149597870000.00 RDEASO=147114216731.99
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      10: Reset RSOLINC= 1360.7067 RIP0= 1407.0387
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         158        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          10
+ CPG1C SST    303.07073974609375     
+ CPG1C TL0    303.07073974609375     
+ STEP=          11
+ISTEP=      11 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0391
+ISTEP=      11 ZI0= 1360.7067 ZSEASON= 1.034050227 REA=149597870000.00 RDEASO=147114199469.62
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      11: Reset RSOLINC= 1360.7067 RIP0= 1407.0391
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         173        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          11
+ CPG1C SST    303.18922424316406     
+ CPG1C TL0    303.18922424316406     
+ STEP=          12
+ISTEP=      12 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0394
+ISTEP=      12 ZI0= 1360.7067 ZSEASON= 1.034050469 REA=149597870000.00 RDEASO=147114182287.47
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      12: Reset RSOLINC= 1360.7067 RIP0= 1407.0394
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         188        1850        1850   0.0000000000000000     
+ TIME-VARYING LAT/LON
+ TIME-VARYING LARGE-SCALE FORCING
+ TIME-VARYING RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          12
+ CPG1C SST    303.30770874023438     
+ CPG1C TL0    303.30770874023438     
+ STEP=          13
+ISTEP=      13 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0397
+ISTEP=      13 ZI0= 1360.7067 ZSEASON= 1.034050709 REA=149597870000.00 RDEASO=147114165185.55
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      13: Reset RSOLINC= 1360.7067 RIP0= 1407.0397
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         203        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          13
+ CPG1C SST    303.24693298339844     
+ CPG1C TL0    303.24693298339844     
+ STEP=          14
+ISTEP=      14 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0401
+ISTEP=      14 ZI0= 1360.7067 ZSEASON= 1.034050948 REA=149597870000.00 RDEASO=147114148163.85
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      14: Reset RSOLINC= 1360.7067 RIP0= 1407.0401
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         218        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          14
+ CPG1C SST    303.18615722656250     
+ CPG1C TL0    303.18615722656250     
+ STEP=          15
+ISTEP=      15 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0404
+ISTEP=      15 ZI0= 1360.7067 ZSEASON= 1.034051186 REA=149597870000.00 RDEASO=147114131222.39
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      15: Reset RSOLINC= 1360.7067 RIP0= 1407.0404
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         233        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          15
+ CPG1C SST    303.12538146972656     
+ CPG1C TL0    303.12538146972656     
+ STEP=          16
+ISTEP=      16 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0407
+ISTEP=      16 ZI0= 1360.7067 ZSEASON= 1.034051423 REA=149597870000.00 RDEASO=147114114361.16
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      16: Reset RSOLINC= 1360.7067 RIP0= 1407.0407
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         248        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          16
+ CPG1C SST    303.06460571289062     
+ CPG1C TL0    303.06460571289062     
+ STEP=          17
+ISTEP=      17 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0410
+ISTEP=      17 ZI0= 1360.7067 ZSEASON= 1.034051659 REA=149597870000.00 RDEASO=147114097580.15
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      17: Reset RSOLINC= 1360.7067 RIP0= 1407.0410
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         263        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          17
+ CPG1C SST    303.00382995605469     
+ CPG1C TL0    303.00382995605469     
+ STEP=          18
+ISTEP=      18 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0413
+ISTEP=      18 ZI0= 1360.7067 ZSEASON= 1.034051894 REA=149597870000.00 RDEASO=147114080879.38
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      18: Reset RSOLINC= 1360.7067 RIP0= 1407.0413
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         278        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          18
+ CPG1C SST    302.94305419921875     
+ CPG1C TL0    302.94305419921875     
+ STEP=          19
+ISTEP=      19 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0417
+ISTEP=      19 ZI0= 1360.7067 ZSEASON= 1.034052128 REA=149597870000.00 RDEASO=147114064258.84
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      19: Reset RSOLINC= 1360.7067 RIP0= 1407.0417
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         293        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          19
+ CPG1C SST    302.88227844238281     
+ CPG1C TL0    302.88227844238281     
+ STEP=          20
+ISTEP=      20 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0420
+ISTEP=      20 ZI0= 1360.7067 ZSEASON= 1.034052360 REA=149597870000.00 RDEASO=147114047718.53
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      20: Reset RSOLINC= 1360.7067 RIP0= 1407.0420
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         308        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          20
+ CPG1C SST    302.82150268554688     
+ CPG1C TL0    302.82150268554688     
+ STEP=          21
+ISTEP=      21 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0423
+ISTEP=      21 ZI0= 1360.7067 ZSEASON= 1.034052592 REA=149597870000.00 RDEASO=147114031258.45
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      21: Reset RSOLINC= 1360.7067 RIP0= 1407.0423
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         323        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          21
+ CPG1C SST    302.76072692871094     
+ CPG1C TL0    302.76072692871094     
+ STEP=          22
+ISTEP=      22 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0426
+ISTEP=      22 ZI0= 1360.7067 ZSEASON= 1.034052822 REA=149597870000.00 RDEASO=147114014878.61
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      22: Reset RSOLINC= 1360.7067 RIP0= 1407.0426
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         338        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          22
+ CPG1C SST    302.69995117187500     
+ CPG1C TL0    302.69995117187500     
+ STEP=          23
+ISTEP=      23 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0429
+ISTEP=      23 ZI0= 1360.7067 ZSEASON= 1.034053051 REA=149597870000.00 RDEASO=147113998579.00
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      23: Reset RSOLINC= 1360.7067 RIP0= 1407.0429
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         353        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          23
+ CPG1C SST    302.63917541503906     
+ CPG1C TL0    302.63917541503906     
+ STEP=          24
+ISTEP=      24 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0432
+ISTEP=      24 ZI0= 1360.7067 ZSEASON= 1.034053279 REA=149597870000.00 RDEASO=147113982359.62
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      24: Reset RSOLINC= 1360.7067 RIP0= 1407.0432
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         368        1850        1850   0.0000000000000000     
+ TIME-VARYING LAT/LON
+ TIME-VARYING LARGE-SCALE FORCING
+ TIME-VARYING RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          24
+ CPG1C SST    302.57839965820312     
+ CPG1C TL0    302.57839965820312     
+ STEP=          25
+ISTEP=      25 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0435
+ISTEP=      25 ZI0= 1360.7067 ZSEASON= 1.034053506 REA=149597870000.00 RDEASO=147113966220.48
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      25: Reset RSOLINC= 1360.7067 RIP0= 1407.0435
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         383        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          25
+ CPG1C SST    302.50823211669922     
+ CPG1C TL0    302.50823211669922     
+ STEP=          26
+ISTEP=      26 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0438
+ISTEP=      26 ZI0= 1360.7067 ZSEASON= 1.034053732 REA=149597870000.00 RDEASO=147113950161.57
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      26: Reset RSOLINC= 1360.7067 RIP0= 1407.0438
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         398        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          26
+ CPG1C SST    302.43806457519531     
+ CPG1C TL0    302.43806457519531     
+ STEP=          27
+ISTEP=      27 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0441
+ISTEP=      27 ZI0= 1360.7067 ZSEASON= 1.034053956 REA=149597870000.00 RDEASO=147113934182.90
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      27: Reset RSOLINC= 1360.7067 RIP0= 1407.0441
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         413        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          27
+ CPG1C SST    302.36789703369141     
+ CPG1C TL0    302.36789703369141     
+ STEP=          28
+ISTEP=      28 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0444
+ISTEP=      28 ZI0= 1360.7067 ZSEASON= 1.034054180 REA=149597870000.00 RDEASO=147113918284.47
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      28: Reset RSOLINC= 1360.7067 RIP0= 1407.0444
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         428        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          28
+ CPG1C SST    302.29772949218750     
+ CPG1C TL0    302.29772949218750     
+ STEP=          29
+ISTEP=      29 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0448
+ISTEP=      29 ZI0= 1360.7067 ZSEASON= 1.034054402 REA=149597870000.00 RDEASO=147113902466.27
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      29: Reset RSOLINC= 1360.7067 RIP0= 1407.0448
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         443        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          29
+ CPG1C SST    302.22756195068359     
+ CPG1C TL0    302.22756195068359     
+ STEP=          30
+ISTEP=      30 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0451
+ISTEP=      30 ZI0= 1360.7067 ZSEASON= 1.034054623 REA=149597870000.00 RDEASO=147113886728.31
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      30: Reset RSOLINC= 1360.7067 RIP0= 1407.0451
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         458        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          30
+ CPG1C SST    302.15739440917969     
+ CPG1C TL0    302.15739440917969     
+ STEP=          31
+ISTEP=      31 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0454
+ISTEP=      31 ZI0= 1360.7067 ZSEASON= 1.034054844 REA=149597870000.00 RDEASO=147113871070.58
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      31: Reset RSOLINC= 1360.7067 RIP0= 1407.0454
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         473        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          31
+ CPG1C SST    302.08722686767578     
+ CPG1C TL0    302.08722686767578     
+ STEP=          32
+ISTEP=      32 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0456
+ISTEP=      32 ZI0= 1360.7067 ZSEASON= 1.034055063 REA=149597870000.00 RDEASO=147113855493.10
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      32: Reset RSOLINC= 1360.7067 RIP0= 1407.0456
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         488        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          32
+ CPG1C SST    302.01705932617188     
+ CPG1C TL0    302.01705932617188     
+ STEP=          33
+ISTEP=      33 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0459
+ISTEP=      33 ZI0= 1360.7067 ZSEASON= 1.034055280 REA=149597870000.00 RDEASO=147113839995.85
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      33: Reset RSOLINC= 1360.7067 RIP0= 1407.0459
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         503        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          33
+ CPG1C SST    301.94689178466797     
+ CPG1C TL0    301.94689178466797     
+ STEP=          34
+ISTEP=      34 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0462
+ISTEP=      34 ZI0= 1360.7067 ZSEASON= 1.034055497 REA=149597870000.00 RDEASO=147113824578.84
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      34: Reset RSOLINC= 1360.7067 RIP0= 1407.0462
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         518        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          34
+ CPG1C SST    301.87672424316406     
+ CPG1C TL0    301.87672424316406     
+ STEP=          35
+ISTEP=      35 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0465
+ISTEP=      35 ZI0= 1360.7067 ZSEASON= 1.034055713 REA=149597870000.00 RDEASO=147113809242.08
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      35: Reset RSOLINC= 1360.7067 RIP0= 1407.0465
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         533        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          35
+ CPG1C SST    301.80655670166016     
+ CPG1C TL0    301.80655670166016     
+ STEP=          36
+ISTEP=      36 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0468
+ISTEP=      36 ZI0= 1360.7067 ZSEASON= 1.034055927 REA=149597870000.00 RDEASO=147113793985.55
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      36: Reset RSOLINC= 1360.7067 RIP0= 1407.0468
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         548        1850        1850   0.0000000000000000     
+ TIME-VARYING LAT/LON
+ TIME-VARYING LARGE-SCALE FORCING
+ TIME-VARYING RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          36
+ CPG1C SST    301.73638916015625     
+ CPG1C TL0    301.73638916015625     
+ STEP=          37
+ISTEP=      37 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0471
+ISTEP=      37 ZI0= 1360.7067 ZSEASON= 1.034056141 REA=149597870000.00 RDEASO=147113778809.26
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      37: Reset RSOLINC= 1360.7067 RIP0= 1407.0471
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         563        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          37
+ CPG1C SST    301.72019958496094     
+ CPG1C TL0    301.72019958496094     
+ STEP=          38
+ISTEP=      38 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0474
+ISTEP=      38 ZI0= 1360.7067 ZSEASON= 1.034056353 REA=149597870000.00 RDEASO=147113763713.21
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      38: Reset RSOLINC= 1360.7067 RIP0= 1407.0474
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         578        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          38
+ CPG1C SST    301.70401000976562     
+ CPG1C TL0    301.70401000976562     
+ STEP=          39
+ISTEP=      39 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0477
+ISTEP=      39 ZI0= 1360.7067 ZSEASON= 1.034056564 REA=149597870000.00 RDEASO=147113748697.41
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      39: Reset RSOLINC= 1360.7067 RIP0= 1407.0477
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         593        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          39
+ CPG1C SST    301.68782043457031     
+ CPG1C TL0    301.68782043457031     
+ STEP=          40
+ISTEP=      40 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0480
+ISTEP=      40 ZI0= 1360.7067 ZSEASON= 1.034056774 REA=149597870000.00 RDEASO=147113733761.85
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      40: Reset RSOLINC= 1360.7067 RIP0= 1407.0480
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         608        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          40
+ CPG1C SST    301.67163085937500     
+ CPG1C TL0    301.67163085937500     
+ STEP=          41
+ISTEP=      41 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0483
+ISTEP=      41 ZI0= 1360.7067 ZSEASON= 1.034056983 REA=149597870000.00 RDEASO=147113718906.53
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      41: Reset RSOLINC= 1360.7067 RIP0= 1407.0483
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         623        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          41
+ CPG1C SST    301.65544128417969     
+ CPG1C TL0    301.65544128417969     
+ STEP=          42
+ISTEP=      42 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0485
+ISTEP=      42 ZI0= 1360.7067 ZSEASON= 1.034057190 REA=149597870000.00 RDEASO=147113704131.45
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      42: Reset RSOLINC= 1360.7067 RIP0= 1407.0485
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         638        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          42
+ CPG1C SST    301.63925170898438     
+ CPG1C TL0    301.63925170898438     
+ STEP=          43
+ISTEP=      43 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0488
+ISTEP=      43 ZI0= 1360.7067 ZSEASON= 1.034057397 REA=149597870000.00 RDEASO=147113689436.62
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      43: Reset RSOLINC= 1360.7067 RIP0= 1407.0488
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         653        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          43
+ CPG1C SST    301.62306213378906     
+ CPG1C TL0    301.62306213378906     
+ STEP=          44
+ISTEP=      44 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0491
+ISTEP=      44 ZI0= 1360.7067 ZSEASON= 1.034057602 REA=149597870000.00 RDEASO=147113674822.03
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      44: Reset RSOLINC= 1360.7067 RIP0= 1407.0491
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         668        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          44
+ CPG1C SST    301.60687255859375     
+ CPG1C TL0    301.60687255859375     
+ STEP=          45
+ISTEP=      45 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0494
+ISTEP=      45 ZI0= 1360.7067 ZSEASON= 1.034057807 REA=149597870000.00 RDEASO=147113660287.68
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      45: Reset RSOLINC= 1360.7067 RIP0= 1407.0494
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         683        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          45
+ CPG1C SST    301.59068298339844     
+ CPG1C TL0    301.59068298339844     
+ STEP=          46
+ISTEP=      46 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0497
+ISTEP=      46 ZI0= 1360.7067 ZSEASON= 1.034058010 REA=149597870000.00 RDEASO=147113645833.58
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      46: Reset RSOLINC= 1360.7067 RIP0= 1407.0497
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         698        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          46
+ CPG1C SST    301.57449340820312     
+ CPG1C TL0    301.57449340820312     
+ STEP=          47
+ISTEP=      47 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0499
+ISTEP=      47 ZI0= 1360.7067 ZSEASON= 1.034058212 REA=149597870000.00 RDEASO=147113631459.73
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      47: Reset RSOLINC= 1360.7067 RIP0= 1407.0499
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         713        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          47
+ CPG1C SST    301.55830383300781     
+ CPG1C TL0    301.55830383300781     
+ STEP=          48
+ISTEP=      48 RSOLINC= 1360.7067 RI0= 1366.0000 ZI0= 1360.7067 RIP0= 1407.0502
+ISTEP=      48 ZI0= 1360.7067 ZSEASON= 1.034058413 REA=149597870000.00 RDEASO=147113617166.12
+UPDRGAS: Surface greenhouse gas concentrations for decimal year 2006.044:
+UPDRGAS:   CO2 = 380.05 ppmv, CH4 = 1783.39 ppbv, N2O = 319.57 ppbv, CFC11 = 726.46 pptv, CFC12 = 541.33 pptv, HCFC22 = .00 pptv, CCl4 = .00 pptv
+UPDRGAS:   Total Solar Irradiance: 1360.707 W m-2
+ISTEP=      48: Reset RSOLINC= 1360.7067 RIP0= 1407.0502
+ UPDECAEC NAERMACC =  1
+ UPDT RAESHDU =  1000.0
+ UPDECAEC: GLOBAL AVERAGE VOLCANIC SULPHATE FOR (KINDAT,KMINUT,IYR1,IYR2)     20060117         728        1850        1850   0.0000000000000000     
+ INTERPOLATED LAT/LON
+ INTERPOLATION OR LAST TIME STEP
+ INTERPOLATED RELAXATION
+Calling radiation scheme (RADINTG)
+RADINTG: IFLDSIN   =        1947
+RADINTG: IFLDSOUT  =         715
+RADINTG: IFLDSTOT  =        6361
+ CPC1C NSTEP          48
+ CPG1C SST    301.54211425781250     
+ CPG1C TL0    301.54211425781250     
+ Last reference to tegen storage arrays being destroyed, so deallocating main storage

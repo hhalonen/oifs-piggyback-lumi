@@ -1,0 +1,109 @@
+
+ECMWF OpenIFS - CHANGES
+=======================
+
+This file contains a brief overview of the changes in OpenIFS releases since 43r1. 
+At 48r1 and beyond, the version naming has changed, so that releases are defined 
+by the tag name used in git, with the format oifs48r1_<year><month><day>. This
+name is replicated in the name of the download tar file.  
+
+OpenIFS User Guide (48r1):
+https://confluence.ecmwf.int/display/OIFS/OpenIFS+48r1+User+Guide
+
+openifs-48r1 release - tag oifs48r1_20240209
+--------------------
+- bug fix for the SCM radiation time 
+- updates to openifs-test scripts and oifs-config.edit_me.sh 
+    - allow user to define system host and platform 
+
+openifs-48r1 release - tag oifs48r1_20240105
+--------------------
+- restructure of scripts directory so it includes directories
+   - build_test - with a rewrite of openifs-test, which is closer to ifstest
+   - scm - with the single column model run scripts
+   - exp_3 - with the experiment configs and run scripts
+   - docker - with a re-written Dockerfile to include the SCM
+- Enhancement of oifs-config.edit_me.sh so that it includes environment 
+  variables for OpenIFS build, experiment data, SCM data and SCM structure
+
+openifs-48R1.1 beta
+-------------------
+- Fixes that change scientific answers compared to 48r1.0
+- Chemistry changes, which are operational in CAMS
+- Addition of DockerFile (scripts/docker) as an example of setting up OpenIFS 48r1.1 in a container 
+  - this works on a Mac
+- The datahub has been updated so that it generates data for 48r1.1
+
+openifs-48R1.0 beta
+-------------------
+- Major Science upgrade consitenting of 5 cycles
+  - for all changes from CY43R3 to CY48R1 see
+   https://www.ecmwf.int/en/forecasts/documentation-and-support/changes-ecmwf-model
+  - here is a veru brief overview of the upgrades
+    - 45r1 - Cloud microphysics, soil physics 
+    - 46r1 - updates to radiation and aerosol, changes to convection
+    - 47r1 - Albedo, ocean waves drag, quintic interpolation
+    - 47r3 - Moist physics upgrade with a more consistent formulation of 
+             boundary layer turbulence, shallow convection and sub-grid cloud
+    - 48r1 - Multi-layer snow, improved water and energy conservation, climate fields
+             interactive ozone, freezing drizzle
+
+- Major change in structure of OpenIFS so more aligned with IFS - for example
+  - ifs-source contains all the IFS code (was src in 43R3)
+  - src/ifs (43R3) now ifs-source/arpifs
+  - Includes chemistry (ifs-source/arpifs/chem), so this release represents
+    a consolidation of oifs43r3v2 and OpenIFS/AC into 1 code base
+  - Includes the single column model so the SCM can be built alongside the 3D model
+  - Includes ifs-test, which is 21 t21 tests, which include chemistry test and 1 SCM tests, 
+    which once run can be used to test against known good outputs to validate an installation
+    or test any code changes or development. This local test capability is a significant 
+    extension of the 1 t21 test in 43R3
+
+- Build system has moved from FCM (43R3) to cmake/ecbundle
+  - As a result, OpenIFS now uses the same build system as the IFS  
+  - OpenIFS uses ecbundle and bundle.yml to define, obtain and install 
+    any external library dependencies (e.g. eccodes, atlas)
+
+oifs43r3v2: OpenIFS cycle 43 release 3 version 2
+------------------------------------------------
+
+- added Coddington solar spectrum option in radiation code. When enabled, removes strat
+  warm bias (but may introduce cooling bias instead).
+- improved tracer mass fixers using new schemes from later IFS version. Disabled by default.
+- added missing file surand2.F90, called if SKEB (stochastic backscatter) scheme enabled.
+- replaced DARWIN preprocessor symbol with posix standard __APPLE__ so model builds on macOS.
+- implementation of FFTW library fixed. OpenIFS can now use FFTW for faster transforms.
+- fixed memory leak if FFTW is used.
+- included missing source files required when OpenIFS is run as part of fullpos 
+  interpolation (for generating initial files).
+- included coupling code interface (CPLNG) to OASIS-MCT. Default is 'disabled', to enable set
+  export OIFS_CPLNG=enable and ensure library names and include paths are correct in the 
+  FCM configuration files. Code from and thanks to Uwe Fladrich, (SMHI).
+- fixed deadlock when using XIOS. With thanks to: Xavier Yepes (Barcelona Supercomputer Centre),
+  Joakim Kjellsson, Sebastian Wahl (GEOMAR), Jan Streffing (AWI), Uwe Fladrich (SMHI).
+- fixed issue in XIOS config where linking would fail if fcm make only uses 1 thread.
+- fixed missing 25th pextra field in XIOS code and configuration. With thanks to Joakim Kjellsson.
+- improved reporting of floating point exceptions in DrHook. Model will now report
+  exactly which signal caused the floating point exception.
+- added missing code which caused OpenIFS to fail when specifying variable model output per
+  output instance (using the 'postins' feature).
+- fixed bug where CFPATH does not affect output of ICMUA file.
+- OpenIFS now compiles and runs correctly with a dummy MPI library (note: this is not recommended
+  except for specific applications where MPI cannot be used).
+- OpenIFS now runs in serial (non-MPI) mode; issues disabling MPI in WAM have been fixed. This
+  configuration is not recommended except for specific applications.
+- removed extraneous fields in t21test/ICM files.
+- improvements to oifs_run script.
+- removed ecmwf-api from tools/python. It is better for users to download the python ecmwf-api
+  themselves from either the Copernicus or ECMWF websites to ensure they get latest versions.
+- improved bin/exptid to work with wam grib files.
+- version number updated.
+- various typos corrected.
+
+
+
+oifs43r3v1: OpenIFS cycle 43 release 3 version 1
+------------------------------------------------
+First release. See Release Notes for more details of changes between this release and previous
+OpenIFS 40r1 release on the OpenIFS website.
+

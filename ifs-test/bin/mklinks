@@ -1,0 +1,93 @@
+:
+#mklinks
+#=======================================================================
+#
+#    Script mklinks                                                     
+#    -------------                                                     
+#    creates necessary links
+#                                                                
+#    Usage  :   mklinks 
+#    -----                                                             
+#  
+#                                    
+#=======================================================================
+set -eux
+
+echo start $0
+
+set -v
+#=======================================================================
+#
+#  1.0 setup
+#
+#=======================================================================
+set +v
+
+if [[ ! -d $XDATA ]] ; then 
+  echo "$XDATA does not exist"
+  exit 1
+fi
+
+#=======================================================================
+# RTTOV coefficient files (also needed for image simulation for forecasts)
+#=======================================================================
+
+  [[ -d $DATA/sat ]]  ||  mkdir -p $DATA/sat
+
+#=======================================================================
+#  ifsvar
+#=======================================================================
+
+# Background error files
+# ----------------------
+
+  ln -f -s $XDATA/correl  correl
+  ln -f -s $XDATA/sigmab  sigmab
+  [[ -f correl ]]  ||  exit 1
+  [[ -f sigmab ]]  ||  exit 1
+
+
+# SSM/I fixed scan-bias correction
+# --------------------------------
+
+  ln -f -s $XDATA/scanbias.ssmi       $DATA/sat/scanbias.ssmi
+  [[ -f $DATA/sat/scanbias.ssmi ]]      ||  exit 1
+
+
+# Channel specification files
+# ---------------------------
+
+  ln -f -s $XDATA/iasichannels  iasichannels
+  ln -f -s $XDATA/iasichannels_allskymask  iasichannels_allskymask
+  ln -f -s $XDATA/crischannels  crischannels
+  [[ -f iasichannels ]]   ||  exit 1
+  [[ -f iasichannels_allskymask ]]   ||  exit 1
+  [[ -f crischannels ]]   ||  exit 1
+
+# Measurement error files
+# -----------------------
+
+  ln -f -s $XDATA/amv_p_and_tracking_error  amv_p_and_tracking_error
+  [[ -f amv_p_and_tracking_error ]]   ||  exit 1
+
+  
+# RTTOV coefficient files 
+# -----------------------
+
+  ln -f -s $XDATA/rttov/UWirbfemis_COEF_V2.1_0.1deg_200710_mask.nc .
+  ln -f -s $XDATA/rttov/UWiremis_labeigvects.nc  .
+  ln -f -s $XDATA/rttov/rtcoef_metop_2_iasi.dat .
+  ln -f -s $XDATA/rttov/rtcoef_jpss_0_cris.dat .
+  [[ -f UWirbfemis_COEF_V2.1_0.1deg_200710_mask.nc ]]   ||  exit 1
+  [[ -f UWiremis_labeigvects.nc ]]   ||  exit 1
+  [[ -f rtcoef_metop_2_iasi.dat ]]   ||  exit 1
+  [[ -f rtcoef_jpss_0_cris.dat ]]   ||  exit 1
+  
+#=======================================================================
+#  move ifsdata 
+#=======================================================================
+
+  cd $DATA
+  ln -s -f ../ifs .
+  ln -s -f ../ifsdata .
+  cd ../

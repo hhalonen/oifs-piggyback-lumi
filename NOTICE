@@ -1,0 +1,31 @@
+
+ECMWF OpenIFS
+=============
+
+Use of this software is not permitted without a valid license.
+
+This product includes software owned in part by ECMWF (http://www.ecmwf.int/)
+and Meteo-France (http://www.meteo.fr/).
+
+The DDH and FULLPOS software are owned by Meteo-France and used with permission.
+
+The Fortran IFS and Arpege Toolkit (FIAT) in OpenIFS, found in ifs-source/contrib/fiat, 
+is distributed under the Apache License Version 2.0. For details see 
+https://github.com/ecmwf-ifs/fiat/blob/main/LICENSE
+
+ecTrans in OpenIFS, which is the global spherical harmonics transforms library 
+underpinning the IFS and OpenIFS, found in ifs-source/contrib/ectrans, is 
+distributed under the Apache License Version 2.0. For details see 
+https://github.com/ecmwf-ifs/ectrans/blob/main/LICENSE
+
+The Rapid Radiative Transfer Model for GCMs (RRTMG) in OpenIFS was developed at 
+Atmospheric & Environmental Research (AER), Inc., Lexington, Massachusetts 
+and is available under the "3-clause BSD" license. For details see 
+https://github.com/ecmwf-ifs/ecrad/blob/master/ifsrrtm/AER-BSD3-LICENSE. 
+The RRTMG long-wave code is contained in files beginning with the prefix rrtm. 
+The RRTMG short-wave code is contained in files beginning with the prefix srtm. 
+RRTMG distributed in OpenIFS forms part of ecRad (https://confluence.ecmwf.int/display/ECRAD) 
+which is distributed under the Apache License Version 2.0. For details see
+https://github.com/ecmwf-ifs/ecrad/blob/master/LICENSE
+
+

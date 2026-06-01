@@ -1,0 +1,3 @@
+SUBROUTINE read_surfgrid_traj_fromfa
+call abor1("read_surfgrid_traj_fromfa should never be called")
+END SUBROUTINE read_surfgrid_traj_fromfa

@@ -1,0 +1,23 @@
+      FUNCTION ISRCHFGE(N,ARRAY,INC,TARGET)
+      USE PARKIND1, ONLY : JPIM, JPRB
+      IMPLICIT NONE
+      INTEGER(KIND=JPIM) :: ISRCHFGE
+      INTEGER(KIND=JPIM) :: N
+      INTEGER(KIND=JPIM) :: INC
+      REAL(KIND=JPRB) :: ARRAY(1+INC*(N-1))
+      REAL(KIND=JPRB) :: TARGET
+      INTEGER(KIND=JPIM) :: I
+!
+      IF (N.LE.0) THEN
+        ISRCHFGE=0
+        RETURN
+      ELSE
+        DO 1 I=1,N
+          IF ( ARRAY(1+INC*(I-1)).GE.TARGET ) THEN
+            ISRCHFGE=I
+            RETURN
+          ENDIF
+ 1      CONTINUE
+        ISRCHFGE=N+1
+      ENDIF
+      ENDFUNCTION ISRCHFGE

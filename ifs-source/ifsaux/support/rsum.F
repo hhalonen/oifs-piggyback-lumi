@@ -1,0 +1,19 @@
+      FUNCTION RSUM(N,X,INCX)
+      USE PARKIND1, ONLY : JPIM, JPRB
+      IMPLICIT NONE
+      INTEGER(KIND=JPIM) :: N
+      INTEGER(KIND=JPIM) :: INCX
+      REAL(KIND=JPRB) :: X(N*INCX)
+      REAL(KIND=JPRB) :: RSUM
+      INTEGER(KIND=JPIM) :: I, J
+      REAL(KIND=JPRB) :: ZSUM
+!
+      ZSUM=0.0_JPRB
+      I=1
+      DO J=1,N
+        ZSUM=ZSUM+X(I)
+        I=I+INCX
+      ENDDO
+      RSUM=ZSUM
+      RETURN
+      ENDFUNCTION RSUM

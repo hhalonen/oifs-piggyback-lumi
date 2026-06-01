@@ -1,0 +1,14 @@
+MODULE YOMSP_PTRS
+
+USE PARKIND1  ,ONLY : JPIM
+
+IMPLICIT NONE
+
+SAVE
+
+! Pointers (offsets) for individual fields in spectral arrays
+
+INTEGER(KIND=JPIM) :: MSPTR_T
+INTEGER(KIND=JPIM) :: MSPTR_SP
+
+END MODULE YOMSP_PTRS

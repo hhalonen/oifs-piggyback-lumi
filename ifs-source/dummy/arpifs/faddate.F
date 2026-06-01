@@ -1,0 +1,4 @@
+      SUBROUTINE faddate
+      CALL ABOR1('FADDATE  SHOULD NEVER BE CALLED')
+      RETURN
+      END

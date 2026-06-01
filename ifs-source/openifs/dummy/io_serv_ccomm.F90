@@ -1,0 +1,8 @@
+SUBROUTINE IO_SERV_CCOMM (KRANK, KCOMMI, KCOMMO)
+use parkind1, only:&
+ & jpim
+INTEGER(KIND=JPIM), INTENT (IN) :: KRANK (:)
+INTEGER(KIND=JPIM), INTENT (IN) :: KCOMMI
+INTEGER(KIND=JPIM), INTENT (OUT) :: KCOMMO
+call abor1("io_serv_ccomm.F90 should never be called with OpenIFS - EXITING")
+END SUBROUTINE IO_SERV_CCOMM

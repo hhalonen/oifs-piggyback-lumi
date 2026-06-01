@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+set -x 
+
+module load forge
+
+if [[ $1 == "gdb" ]]; then
+ 
+  if [[ ${ECPLATFORM:-unset} == "hpc2020" ]]; then
+     ./ifs-run --launcher='gdb'
+  else
+     ./ifs-run --launcher=gdb
+  fi     
+
+else
+
+  if [[ ${ECPLATFORM:-unset} == "hpc2020" ]]; then
+     ./ifs-run --launcher='ddt srun --qos=np '
+  else
+     ./ifs-run --launcher=ddt
+  fi
+
+fi

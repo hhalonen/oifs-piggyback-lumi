@@ -1,0 +1,9 @@
+! subversion Id for THIS file : $Id: crs_no.dat 1592 2009-10-07 15:11:14Z yvesc $
+! $URL: http://svn-ae/ae/COMMON/atmos/bascop/data_in/tags/03.00/tuv_midatm/crs_sb15a/crs_no.dat $
+!-----------------------------------------------------------------------
+! iproc = 43 : NO+hv->N+O . CRS NOT USED
+! J's computed DIRECTLY in subroutine MINSCH, file minsch.f,
+! from Minschwaner & Siskind 1993
+ Begins at wl interval :         1 | Finishes at wl interval :     1
+! no  from(nm) to(nm) | crs (cm2)  | qyield (0->1)
+   1   116.30   117.00     9.99E-04      1.000

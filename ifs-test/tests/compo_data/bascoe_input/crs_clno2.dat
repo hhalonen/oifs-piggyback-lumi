@@ -1,0 +1,76 @@
+! History:ch_wlgrid.py -t ../data_in/solflux.dat -o ../data_in/crs/ ../data_in/crs/orig_data_2015/crs_br2.dat ../data_in/crs/orig_data_2015/crs_brcl.dat ../data_in/crs/orig_data_2015/crs_bro.dat ../data_in/crs/orig_data_2015/crs_brono2.dat ../data_in/crs/orig_data_2015/crs_ccl4.dat ../data_in/crs/orig_data_2015/crs_cfc113.dat ../data_in/crs/orig_data_2015/crs_cfc114.dat ../data_in/crs/orig_data_2015/crs_cfc115.dat ../data_in/crs/orig_data_2015/crs_cfc11.dat ../data_in/crs/orig_data_2015/crs_ch2br2.dat ../data_in/crs/orig_data_2015/crs_ch2o.dat ../data_in/crs/orig_data_2015/crs_ch3br.dat ../data_in/crs/orig_data_2015/crs_ch3ccl3.dat ../data_in/crs/orig_data_2015/crs_ch3ooh.dat ../data_in/crs/orig_data_2015/crs_clno2.dat ../data_in/crs/orig_data_2015/crs_clono2.dat ../data_in/crs/orig_data_2015/crs_h2o.dat ../data_in/crs/orig_data_2015/crs_n2o5.dat
+!        : version ch_wlgrid.py 7535 2015-01-26 16:10:49Z quentin
+!        : source  http://svn-ae/ae/COMMON/atmos/writej/branches/ss01.03.03/src/ch_wlgrid.py
+! Orig data found in ../data_in/crs/orig_data_2015/crs_clno2.dat
+! Cross-section data for ClNO2:
+!   ClNO2 + hv  --> Cl + NO2
+! source :  updated to JPL-2011 (JPL_10-6_Final_15June2011.pdf)
+! page :    4F-21 (387)
+! url :     http://satellite.mpic.de/spectral_atlas/cross_sections/Halogenated%20N-compounds%28inorg%29/ClNO2_JPL-2010%282011%29_298K_195-400nm%28rec%29.txt
+! Rem1: T Indep
+! Rem2: Quantum yield = 1, although some studies also showed the production of ClNO + O.
+!   However, the q. y. of this reaction may be negligible.
+!
+! Only one branch for current reaction -> qy set to 1 !
+! Temperature-independent cross-section
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        57| Finishes at wl interval :    112
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) 
+!-----------------------------------------------------------------------------------------------
+  57   194.20   196.10     5.75E-18           1.000
+  58   196.10   198.00     8.08E-18           1.000
+  59   198.00   200.00     5.68E-18           1.000
+  60   200.00   202.00     4.18E-18           1.000
+  61   202.00   204.10     3.63E-18           1.000
+  62   204.10   206.20     3.16E-18           1.000
+  63   206.20   208.30     3.15E-18           1.000
+  64   208.30   210.50     3.20E-18           1.000
+  65   210.50   212.80     3.27E-18           1.000
+  66   212.80   215.00     3.35E-18           1.000
+  67   215.00   217.40     3.36E-18           1.000
+  68   217.40   219.80     3.29E-18           1.000
+  69   219.80   222.20     3.16E-18           1.000
+  70   222.20   224.70     2.93E-18           1.000
+  71   224.70   227.30     2.67E-18           1.000
+  72   227.30   229.90     2.37E-18           1.000
+  73   229.90   232.60     2.08E-18           1.000
+  74   232.60   235.30     1.80E-18           1.000
+  75   235.30   238.10     1.56E-18           1.000
+  76   238.10   241.00     1.36E-18           1.000
+  77   241.00   243.90     1.22E-18           1.000
+  78   243.90   246.90     1.10E-18           1.000
+  79   246.90   250.00     9.73E-19           1.000
+  80   250.00   253.20     8.57E-19           1.000
+  81   253.20   256.40     7.54E-19           1.000
+  82   256.40   259.70     6.50E-19           1.000
+  83   259.70   263.20     5.51E-19           1.000
+  84   263.20   266.70     4.63E-19           1.000
+  85   266.70   270.30     3.75E-19           1.000
+  86   270.30   274.00     3.09E-19           1.000
+  87   274.00   277.80     2.60E-19           1.000
+  88   277.80   281.70     2.13E-19           1.000
+  89   281.70   285.70     1.91E-19           1.000
+  90   285.70   289.90     1.73E-19           1.000
+  91   289.90   294.10     1.59E-19           1.000
+  92   294.10   298.50     1.49E-19           1.000
+  93   298.50   303.00     1.40E-19           1.000
+  94   303.00   307.70     1.30E-19           1.000
+  95   307.70   312.50     1.20E-19           1.000
+  96   312.50   317.50     1.07E-19           1.000
+  97   317.50   322.50     9.41E-20           1.000
+  98   322.50   327.50     8.10E-20           1.000
+  99   327.50   332.50     6.82E-20           1.000
+ 100   332.50   337.50     5.71E-20           1.000
+ 101   337.50   342.50     4.66E-20           1.000
+ 102   342.50   347.50     3.83E-20           1.000
+ 103   347.50   352.50     3.07E-20           1.000
+ 104   352.50   357.50     2.46E-20           1.000
+ 105   357.50   362.50     1.89E-20           1.000
+ 106   362.50   367.50     1.49E-20           1.000
+ 107   367.50   372.50     1.14E-20           1.000
+ 108   372.50   377.50     9.46E-21           1.000
+ 109   377.50   382.50     7.75E-21           1.000
+ 110   382.50   387.50     6.23E-21           1.000
+ 111   387.50   392.50     4.84E-21           1.000
+ 112   392.50   397.50     4.01E-21           1.000

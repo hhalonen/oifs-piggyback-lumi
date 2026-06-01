@@ -1,0 +1,43 @@
+! subversion Id for THIS file : $Id: crs_ch3cl.dat 1592 2009-10-07 15:11:14Z yvesc $
+! $URL: http://svn-ae/ae/COMMON/atmos/bascop/data_in/tags/03.00/tuv_midatm/crs_sb15a/crs_ch3cl.dat $
+!-----------------------------------------------------------------------
+!
+! Absorption cross-section CH3Cl: CH3Cl + hv --> products
+! source : JPL-2006 (no change with respect to JPL-2002)
+! http://www.atmosphere.mpg.de/enid/2295
+! -> Catalogue -> "Halogeno-alkanes, -alkyl radicals" -> "C+H+Cl" -> "CH3Cl" -> "JPL-2002"
+! Rem1: Quantum yield = 1 (no explicit information).
+! Rem2: Temperature influence:
+!   i) 174-216nm: T dep. according to the formula:
+!           log10 crs = sum An*wl^n + (T-273)*sum Bn*wl^n
+!       where An and Bn are parameters introduced in CRS_CFC.
+!       The cross sections are computed in subroutine CRS_TDEP.
+!   ii) JPL-2006 (=JPL-2002) provides crs for wl > 216nm without mentioning
+!       whether there are only available for T=295-298K. Assuming this is the case,
+!       I did not take them.
+!-----------------------------------------------------------------------------------------------
+ Begins at wl interval :        46  | Finishes at wl interval :   66
+!-----------------------------------------------------------------------------------------------
+!  no  from(nm) to(nm)  | crs (cm2) | qyield (0->1) |   Tdep_param1 |   Tdep_param2
+!-----------------------------------------------------------------------------------------------
+  46   175.40   177.00     9.24E-19           1.000
+  47   177.00   178.60     7.98E-19           1.000
+  48   178.60   180.20     6.80E-19           1.000
+  49   180.20   181.80     5.51E-19           1.000
+  50   181.80   183.50     4.28E-19           1.000
+  51   183.50   185.20     3.35E-19           1.000
+  52   185.20   186.90     2.58E-19           1.000
+  53   186.90   188.70     1.93E-19           1.000
+  54   188.70   190.50     1.40E-19           1.000
+  55   190.50   192.30     1.00E-19           1.000
+  56   192.30   194.20     6.96E-20           1.000
+  57   194.20   196.10     4.76E-20           1.000
+  58   196.10   198.00     3.29E-20           1.000
+  59   198.00   200.00     2.22E-20           1.000
+  60   200.00   202.00     1.45E-20           1.000
+  61   202.00   204.10     9.21E-21           1.000
+  62   204.10   206.20     5.88E-21           1.000
+  63   206.20   208.30     3.77E-21           1.000
+  64   208.30   210.50     2.35E-21           1.000
+  65   210.50   212.80     1.42E-21           1.000
+  66   212.80   215.00     8.90E-22           1.000

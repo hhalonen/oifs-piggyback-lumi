@@ -1,0 +1,64 @@
+Acknowledgement
+===============
+In papers arising from OpenIFS, please add an acknowledgement
+indicating the contribution from ECMWF and the OpenIFS team
+as appropriate.
+
+Citations for publications arising from OpenIFS
+===============================================
+
+Please cite the following 2 papers in any publications
+arising from OpenIFS in recognition of their
+contribution.
+
+1. Temperton, C., Hortal, M. and Simmons, A., 2001, 
+   A two-time-level semi-Lagrangian global spectral model, 
+   Q.J.R. Meteorol. Soc., 127: 111–127
+
+2. Cariolle, D. and H. Teyssèdre, 2007,
+   A revised linear ozone photochemistry parameterization 
+   for use in transport and general circulation models: 
+   multi-annual simulations, 
+   Atmos. Chem. Phys., 7, 2183–2196, 2007.
+
+
+
+Other references for OpenIFS/IFS are:
+-------------------------------------
+
+Hortal M., 2002, 
+  The development and testing of a new two-time-level 
+  semi-Lagrangian scheme (SETTLS) in the ECMWF forecast model, 
+  Q. J. R. Meteorol. Soc, 128, 1671–1687.
+
+Hortal M. and Simmons A. J., 1991, 
+  Use of reduced Gaussian grids in spectral models, 
+  Mon. Wea. Rev., 119, 1057–1074.
+
+Ritchie H., Temperton C., Simmons A., Hortal M., 
+  Davies T., Dent D. and Hamrud M., 1995, 
+  Implementation of the semi-Lagrangian method in a 
+  high-resolution version of the ECMWF forecast model, 
+  Mon. Wea. Rev., 123, 489–514.
+
+Simmons, A. J. and Burridge, D. M., 1981, 
+  An energy and angular momentum conserving vertical 
+  finite difference scheme and hybrid vertical coordinates, 
+  Mon. Wea. Rev., 109, 758–766.
+
+Simmons, A. J., Burridge, D. M., Jarraud, M., 
+  Girard, C. and Wergen, W., 1989, 
+  The ECMWF medium-range prediction models: development 
+  of the numerical formulations and the impact of
+  increased resolution, 
+  Meteorol. Atmos. Phys., 40, 28–60.
+
+Temperton, C. 1991, 
+  On scalar and vector transform methods for global 
+  spectral models, 
+  Mon. Wea. Rev., 119, 1303–1307.
+
+Untch, A. and Hortal, M.,2004, 
+  A finite-element scheme for the vertical discretisation 
+  of the semi-Lagrangian version of the ECMWF forecast model, 
+  Q. J. R. Meteorol. Soc., 130, 1505–1530.
