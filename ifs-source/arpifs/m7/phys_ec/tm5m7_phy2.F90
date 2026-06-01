@@ -108,13 +108,15 @@ USE TYPE_MODEL   , ONLY : MODEL
 USE PARKIND1 , ONLY : JPIM, JPRB
 USE TM5M7_DATA, ONLY : MODAL_DATA,NMOD, NRDEP
 USE YOMHOOK  , ONLY : LHOOK, DR_HOOK, JPHOOK
-USE YOMCST   , ONLY : RD, RG
+USE YOMCST   , ONLY : RD, RG, RPI
 USE YOMCT3   , ONLY : NSTEP
 USE YOMLUN   , ONLY : NULOUT
 USE YOMCHEM  , ONLY : IEXTR_EM, IEXTR_DD!,YRCHEM
 !USE YOMCOMPO , ONLY : YRCOMPO
 USE YOMMP0    , ONLY : MYPROC, NPROC
 USE OIFS_TO_HAM, ONLY:  ind_oifs_ham!%ind_gas_OIFS
+USE OIFS_TO_HAMLITE, ONLY: ind_oifs_hamlite
+USE mo_ham_lite_seasalt, ONLY: emi_seasalt_long, emi_seasalt_gong
 
 !-----------------------------------------------------------------------
 
@@ -195,12 +197,28 @@ REAL(KIND=JPHOOK) :: ZHOOK_HANDLE
 
 REAL(KIND=JPRB)  :: ZEMIDIAG(KLON,YDMODEL%YRML_GCONF%YGFL%NACTAERO)
 
+!     HAMlite emission variables
+REAL(KIND=JPRB) :: ZSS_MFLUX(KLON), ZDU_MFLUX(KLON), ZSS_NFLUX(KLON)
+REAL(KIND=JPRB) :: ZTEMP(KLON)
+REAL(KIND=JPRB) :: ZCONV, ZMP_DU, ZMP_SS
+INTEGER(KIND=JPIM) :: JDU_N, JSS_N, JDU_M, JSS_M
+!     HAMlite particle properties for mass-to-number conversion
+!     These MUST match the values set in ham_lite_start()
+REAL(KIND=JPRB), PARAMETER :: ZRDUST = 0.75E-6_JPRB   ! DU eff. radius [m]
+REAL(KIND=JPRB), PARAMETER :: ZDDUST = 2650.0_JPRB     ! DU density [kg/m3]
+REAL(KIND=JPRB), PARAMETER :: ZRSEAS = 0.50E-6_JPRB    ! SS eff. radius [m]
+REAL(KIND=JPRB), PARAMETER :: ZDSEAS = 2165.0_JPRB     ! SS density [kg/m3]
+REAL(KIND=JPRB), PARAMETER :: ZSIGSEAS = 2.0_JPRB      ! SS mode width
+REAL(KIND=JPRB), PARAMETER :: ZSIGDUST = 2.0_JPRB      ! DU mode width
+
 !-----------------------------------------------------------------------
 
 !#include "tm5m7_drydep.intfb.h"
 !#include "tm5m7_sediment.intfb.h"
 #include "chem_inext.intfb.h"
 #include "tm5m7_src.intfb.h"
+#include "hamlite_src_ss.intfb.h"
+#include "hamlite_src_dust.intfb.h"
 !#include "satur.intfb.h"
 
 !-----------------------------------------------------------------------
@@ -305,17 +323,92 @@ ELSEIF (LAERSURF) THEN
     !write(3334,*)jtile,jl,PFRTI(JL,JTILE),PAHFSTI(JL,JTILE)
 !end DO
 
-  CALL TM5M7_SRC &
-    &( YDGEOMETRY, YDMODEL,  KIDIA  , KFDIA , KLON , KTDIA, KLEV , KTILES, NSTART, NSTEP , KSTGLO, &
-    &  KSW    , KTRAC , KAERO, & 
-    &  PALB   , PALBD , PAPHI , &
-    &  PAERDEP,PAERLTS, PAERSCC, PAERGUST, ZALT, &
-    &  PRS1   , PRSF1 , PCI  , PCLAKE, ZINJF, PBLH, ZDP, PGELAM, PGELAT, PGEMU, PFRTI, PHSDFOR, &
-    &  PLSM   , PSST  , PQP   , ZRHO , PSNS , PTP  , PTL  , PTSPHY, PZ0M, KCHEM, &
-    &  ZWND   , PWSA1 , PSOIL_TYPE, &
-    &  PCVL  , PCVH, KTVL, KTVH, &
-    &  PLDAY  , PAERFLX, PCFLX, PCEN , PTENC, ZEMIDIAG, PSO2SRC,PSO4SRC, GPGAW)  
-  
+  ! ======= HAMlite vs M7 emission pathway selection =======
+  IF (TRIM(YDMODEL%YRML_CHEM%YRCOMPO%AERO_SCHEME) == 'hamlite') THEN
+
+    ! Compute sea salt and dust mass fluxes
+    !CALL HAMLITE_SRC_SS(KIDIA, KFDIA, KLON, PCI, PCLAKE, PLSM, PSST, &
+    !  & ZWND, ZSS_MFLUX, YDMODEL%YRML_PHY_AER%YREAERSRC)
+    !Alaak: Now we are using just mass from the emissions
+    CALL EMI_SEASALT_GONG(KIDIA, KFDIA, KLON,PLSM, PCLAKE,  PCI, ZWND, &
+      &  PSST, ZSS_MFLUX, ZSS_NFLUX)
+    CALL HAMLITE_SRC_DUST(KIDIA, KFDIA, KLON, KTILES, KSW, &
+      & PGELAM, PGELAT, PLSM, PSNS, &
+      & ZWND, PWSA1, PALB, PALBD, PFRTI, PHSDFOR, ZDU_MFLUX)
+
+    ! Mass-to-number conversion: N = M / (rho * 4/3 * pi * r^3 * exp((9/2) * ln(sigma) ** 2))
+    ZMP_DU = ZDDUST * 4.0_JPRB/3.0_JPRB * RPI * ZRDUST**3 * exp(4.5_JPRB * log(ZSIGDUST)**2)
+    ZMP_SS = ZDSEAS * 4.0_JPRB/3.0_JPRB * RPI * ZRSEAS**3 * exp(4.5_JPRB * log(ZSIGSEAS)**2)
+
+    ! HAMlite tracer indices in YAERO array
+    JDU_N = ind_oifs_hamlite%ind_class_OIFS(1)
+    JSS_N = ind_oifs_hamlite%ind_class_OIFS(2)
+    JDU_M = ind_oifs_hamlite%ind_mass_OIFS(1)
+    JSS_M = ind_oifs_hamlite%ind_mass_OIFS(2)
+
+    ! Zero diagnostic emission array
+    ZEMIDIAG(:,:) = 0.0_JPRB
+
+    ! Inject emissions into lowest model level as tendencies
+    DO JL = KIDIA, KFDIA
+      ZCONV = RG / ZDP(JL, KLEV)   ! kg/m2/s -> kg/kg/s
+
+      ! --- Dust mass ---
+      ZTEMP(JL) = 0._JPRB
+      IF (JDU_M > 0) THEN
+        !eehol: threshold emissions so they can not be negative
+        ZTEMP(JL) = MAX( 0._JPRB, (ZDU_MFLUX(JL) * ZCONV) )
+        PTENC(JL, KLEV, KAERO(JDU_M)) = PTENC(JL, KLEV, KAERO(JDU_M)) &
+          & + ZTEMP(JL)
+        ZEMIDIAG(JL, JDU_M) = ZDU_MFLUX(JL)
+      ENDIF
+
+      ! --- Dust number ---
+      ZTEMP(JL) = 0._JPRB
+      IF (JDU_N > 0 .AND. ZMP_DU > 0.0_JPRB) THEN
+        !eehol: threshold emissions so they can not be negative
+        ZTEMP(JL) = MAX( 0._JPRB, ((ZDU_MFLUX(JL) / ZMP_DU) * ZCONV) )
+        PTENC(JL, KLEV, KAERO(JDU_N)) = PTENC(JL, KLEV, KAERO(JDU_N)) &
+          & + ZTEMP(JL)
+        ZEMIDIAG(JL, JDU_N) = ZDU_MFLUX(JL) / ZMP_DU
+      ENDIF
+
+      ! --- Sea salt mass ---
+      ZTEMP(JL) = 0._JPRB
+      IF (JSS_M > 0) THEN
+        !eehol: threshold emissions so they can not be negative
+        ZTEMP(JL) = MAX( 0._JPRB, (ZSS_MFLUX(JL) * ZCONV) )
+        PTENC(JL, KLEV, KAERO(JSS_M)) = PTENC(JL, KLEV, KAERO(JSS_M)) &
+          & + ZTEMP(JL)
+        ZEMIDIAG(JL, JSS_M) = ZSS_MFLUX(JL)
+      ENDIF
+
+      ! --- Sea salt number ---
+      ZTEMP(JL) = 0._JPRB
+      IF (JSS_N > 0 .AND. ZMP_SS > 0.0_JPRB) THEN
+        !eehol: threshold emissions so they can not be negative
+        ZTEMP(JL) = MAX( 0._JPRB, ((ZSS_MFLUX(JL) / ZMP_SS) * ZCONV) )
+        PTENC(JL, KLEV, KAERO(JSS_N)) = PTENC(JL, KLEV, KAERO(JSS_N)) &
+          & + ZTEMP(JL)
+        ZEMIDIAG(JL, JSS_N) = ZSS_MFLUX(JL) / ZMP_SS
+      ENDIF
+    ENDDO
+
+  ELSE
+  ! ======= Original M7 emission pathway =======
+    CALL TM5M7_SRC &
+      &( YDGEOMETRY, YDMODEL,  KIDIA  , KFDIA , KLON , KTDIA, KLEV , KTILES, NSTART, NSTEP , KSTGLO, &
+      &  KSW    , KTRAC , KAERO, &
+      &  PALB   , PALBD , PAPHI , &
+      &  PAERDEP,PAERLTS, PAERSCC, PAERGUST, ZALT, &
+      &  PRS1   , PRSF1 , PCI  , PCLAKE, ZINJF, PBLH, ZDP, PGELAM, PGELAT, PGEMU, PFRTI, PHSDFOR, &
+      &  PLSM   , PSST  , PQP   , ZRHO , PSNS , PTP  , PTL  , PTSPHY, PZ0M, KCHEM, &
+      &  ZWND   , PWSA1 , PSOIL_TYPE, &
+      &  PCVL  , PCVH, KTVL, KTVH, &
+      &  PLDAY  , PAERFLX, PCFLX, PCEN , PTENC, ZEMIDIAG, PSO2SRC,PSO4SRC, GPGAW)
+
+  ENDIF  ! hamlite vs M7 emission selection
+
 
 ! sea salt and desert dust fluxes in kg m-2 s-1, thus:
 ! dynamics, vert.diff, convection see mixing ratio in kg kg-1 (PCEN, ZAEROP) 

@@ -88,9 +88,9 @@ SELECT CASE (TRIM(AERO_SCHEME))
     IF (LHOOK) CALL DR_HOOK('TM5M7_INIT',1,ZHOOK_HANDLE)    
     RETURN
              
-  CASE ("hamm7")
-    
-    ! Initialization of tm5m7 aerosol tracer indices is handled in hamm7_init 
+  CASE ("hamm7", "hamlite")
+
+    ! Initialization of tm5m7 aerosol tracer indices is handled in hamm7_init
 
     ! Initialize various dust properties
     CALL TM5M7_SRC_DUST_INIT

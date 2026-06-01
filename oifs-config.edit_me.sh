@@ -13,8 +13,10 @@
 #
 #--- set machine specific settings -----------------------------
 
-export OIFS_HOST="ecmwf"
-export OIFS_PLATFORM="hpc2020"
+export OIFS_HOST="csc"
+export OIFS_PLATFORM="puhti"
+
+source /fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new/hpc-csc-config.edit_me.sh
 
 #--- if OIFS_DEBUGGER is set, oifs-run can use it to activate debugger ---------
 export OIFS_DEBUGGER="DDT"
@@ -25,12 +27,12 @@ export OIFS_CYCLE=48r1
 
 #---Base code assumes openifs-48r1 and openifs-expt are installed
 #---in $HOME. Either these can be changed by the user------------
-export OIFS_HOME="${PERM}/openifs-48r1"
+export OIFS_HOME="/fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new"
 
 #---It is recommended that the openifs-expt and oifs_data dir
 #---exist in a location designed for permanent storage-----------
-export OIFS_EXPT="${HOME}/openifs-expt"
-export OIFS_DATA_DIR="${OIFS_HOME}/openifs-data"
+export OIFS_EXPT="/fmi/scratch/project_2003011/${USER}/48r1_hamlite"
+export OIFS_DATA_DIR="/fmi/projappl/project_2003011/oifs_data/48r1/"
 
 #---Set the path for the arch directory. Depending on system,i.e.,
 #---all libs are installed on the sytem, this is not required,

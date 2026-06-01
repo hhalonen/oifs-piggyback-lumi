@@ -37,7 +37,7 @@ module_load hdf5/1.12.2-mpi
 module_load cmake/3.23.1
 
 #module_load geoconda
-source /fmi/projappl/project_2003011/bergmant/openifs-48r1-pls/.oifspy/bin/activate
+source /fmi/projappl/project_2003011/arsarkar/openifs-48r1/openifs-48r1-new/.oifspy/bin/activate
 lspack="/appl/spack/v018/install-tree/intel-2021.6.0"
 llibaec=$lspack/libaec-1.0.6-txsq2w
 

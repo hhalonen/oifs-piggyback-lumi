@@ -248,7 +248,7 @@ ASSOCIATE(LADER=>YDDIMF%LADER, &
   INCR=INCR+1
 
   !--> eehol: added cdnc,icnc,liq and ice eff rad
-  IF(TRIM(AERO_SCHEME)=="hamm7") THEN
+  IF(TRIM(AERO_SCHEME)=="hamm7" .OR. TRIM(AERO_SCHEME)=="hamlite") THEN
       YGFL%YCDNC   => YGFL%YCOMP(JPGFL-INCR)
       INCR = INCR+1
       YGFL%YICNC   => YGFL%YCOMP(JPGFL-INCR)
@@ -767,7 +767,7 @@ ASSOCIATE(LADER=>YDDIMF%LADER, &
 
 
   !eehol: define cloud properties
-  IF(TRIM(AERO_SCHEME)=="hamm7") THEN
+  IF(TRIM(AERO_SCHEME)=="hamm7" .OR. TRIM(AERO_SCHEME)=="hamlite") THEN
   IF (YCDNC_NL%LGP) THEN
     IGFLPTR=NUMFLDS+1
     YGFL%YCDNC=>YGFL%YCOMP(IGFLPTR)

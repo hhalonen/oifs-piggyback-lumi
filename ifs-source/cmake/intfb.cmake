@@ -42,6 +42,8 @@ if( NOT TARGET arpifs_intfb )
         arpifs/fullpos
         arpifs/gbrad
         arpifs/glomap_mode
+        arpifs/hamlite
+        arpifs/hamlite/phys_ec
         arpifs/interpol
         arpifs/kalman
         arpifs/m7

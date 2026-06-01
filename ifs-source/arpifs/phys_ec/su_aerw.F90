@@ -385,7 +385,7 @@ ELSE
   ! HAM-M7 only solves micro-physics, all other processes are handled
   ! by the TM5-M7 routines. We therefore set all TM5-M7 switches, but
   ! use HAM-M7-specific switches in the micro-physics routines.
-  CASE ("hamm7")
+  CASE ("hamm7", "hamlite")
 
   LEPAERO  =.FALSE.
   LAERRAD  =.FALSE.

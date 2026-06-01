@@ -21,7 +21,7 @@ unset HPC_FLAGS
 
 #--- set HPC architecture specific settings -----------------------------
 
-if [[ $HPC_PLATFORM == "hpc2020" ]]; then
+if [[ $OIFS_PLATFORM == "hpc2020" ]]; then
     #--- HPC2020 SPECIFIC SETTINGS
 
     #--- global variables
@@ -29,7 +29,7 @@ if [[ $HPC_PLATFORM == "hpc2020" ]]; then
 
     #---
     
-elif [[ $HPC_PLATFORM == "puhti" ]]; then
+elif [[ $OIFS_PLATFORM == "puhti" ]]; then
     #--- PUHTI SPECIFIC SETTINGS
     #--- local variables
     PARTITION="--partition=fmi"
@@ -46,15 +46,15 @@ elif [[ $HPC_PLATFORM == "puhti" ]]; then
     export DEFAULT_NUM_THREADS=40
 
     # Make sure GIT is loaded
-    module load git
+    #module load git
 
     # Overwrite compile flags. There's a bug in Puhti installed libxml
     # resulting in floating point exception due to the use of -ffpe-trap=
-    cp -f /fmi/projappl/project_2003011/bergmant/openifs-48r1-pls/arch/csc/puhti/compile_flags_puhti.cmake /fmi/projappl/project_2003011/bergmant/openifs-48r1-pls/ifs-source/cmake/compile_flags.cmake
+    cp -f /fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new/arch/csc/puhti/compile_flags_puhti.cmake /fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new/ifs-source/cmake/compile_flags.cmake
 
     #---
     
-elif [[ $HPC_PLATFORM == "lumi" ]]; then
+elif [[ $OIFS_PLATFORM == "lumi" ]]; then
     #--- LUMI SPECIFIC SETTINGS
     #--- local variables
     PARTITION="--partition=small"
@@ -67,7 +67,7 @@ elif [[ $HPC_PLATFORM == "lumi" ]]; then
 
     #---
 
-elif [[ $HPC_PLATFORM == "mahti" ]]; then
+elif [[ $OIFS_PLATFORM == "mahti" ]]; then
     #--- MAHTI SPECIFIC SETTINGS
     #--- local variables
     PARTITION="--partition=medium"
@@ -91,7 +91,7 @@ else
 fi
 
 #--- set non-default launcher options
-if [[ $HPC_HOST == "csc" ]]; then
+if [[ $OIFS_HOST == "csc" ]]; then
     export IGT_BUILD_LAUNCHER="srun $HPC_FLAGS -c ${DEFAULT_NUM_THREADS} ${MEM} --time=60 $ACCOUNT $PARTITION"
     export IGT_TEST_LAUNCHER="salloc -n 8 --mem=20GB --time=60 $ACCOUNT $PARTITION"
 fi

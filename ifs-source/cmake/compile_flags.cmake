@@ -304,9 +304,10 @@ elseif(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
   endif()
 
   string(CONCAT IFS_Fortran_FLAGS "${IFS_Fortran_FLAGS} ${IFS_GNU64_FLAG} "
-      "-fconvert=big-endian -fPIC -fopenmp -Wunused "
+      "-fconvert=big-endian -fPIC -fopenmp "
       "-fno-range-check -ffree-line-length-none -fbacktrace -fno-second-underscore "
-      "-ffpe-trap=invalid,zero,overflow -fconvert=swap")
+      "-fconvert=swap")
+      #"-ffpe-trap=invalid,zero,overflow -fconvert=swap")
   
   # gfortran 10 has become stricter with argument matching
   if( NOT CMAKE_Fortran_COMPILER_VERSION VERSION_LESS 10 )

@@ -678,7 +678,7 @@ DO JSTGLO=1,NGPTOT,NPROMA
       ENDDO
     ENDDO
   
-    IF (TRIM(AERO_SCHEME) == "hamm7" ) THEN
+    IF (TRIM(AERO_SCHEME) == "hamm7" .OR. TRIM(AERO_SCHEME) == "hamlite") THEN
 
       DO JAER=1,14
         DO JK=1,NFLEVG

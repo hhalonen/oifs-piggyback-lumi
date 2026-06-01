@@ -330,7 +330,7 @@ IF (YDEAERATM%LAERCCN .OR. YDEAERATM%LAERRRTM .OR. YRERAD%NAERMACC == 1) THEN
   !  For "aer" and MACC clim. -> allocates arrays  mixing-ratio -> used to calc. opt. prop.
   !  For "hamm7" -> allocates directly arrays of optical properties if used by RRTM
   !                 else we fallback on MACC clim.
-  IF ( TRIM(AERO_SCHEME) == "hamm7" .AND. YDEAERATM%LAERRRTM ) THEN
+  IF ( (TRIM(AERO_SCHEME) == "hamm7" .OR. TRIM(AERO_SCHEME) == "hamlite") .AND. YDEAERATM%LAERRRTM ) THEN
     CALL AEROSOL%ALLOCATE_DIRECT(RAD_CONFIG, KLON, 1, KLEV) 
   ELSE
     CALL AEROSOL%ALLOCATE(KLON, 1, KLEV, KAEROSOL)

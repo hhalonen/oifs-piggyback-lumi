@@ -1104,7 +1104,7 @@ YSD_VF%YFCA2  => YSD_VF%YVF(JPMAXSFLDS)
 YSD_VF%YSO2DD => YSD_VF%YVF(JPMAXSFLDS)
 !
 
-IF ( TRIM(AERO_SCHEME)=="hamm7" ) THEN
+IF ( TRIM(AERO_SCHEME)=="hamm7" .OR. TRIM(AERO_SCHEME)=="hamlite" ) THEN
      YSD_VF%YSOILTYPE=> YSD_VF%YVF(JPMAXSFLDS)
 ENDIF
 
@@ -1312,7 +1312,7 @@ IF(LECMWF) THEN
 
  
   !HAM_M7 ancillary data
-  IF ( TRIM(AERO_SCHEME) == "hamm7" ) THEN
+  IF ( TRIM(AERO_SCHEME) == "hamm7" .OR. TRIM(AERO_SCHEME) == "hamlite" ) THEN
     YSD_VF%YSOILTYPE => YSD_VF%YVF(YSD_VFD%IPTR)
     IREQIN=-1 ! This is relevant for dust emission in Tegen scheme (nddust=4), Lianghai Wu
     CALL SETUP_SFLP2(YSD_VFD,YSD_VF%YSOILTYPE, &

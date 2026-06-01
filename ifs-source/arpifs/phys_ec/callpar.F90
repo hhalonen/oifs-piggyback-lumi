@@ -1116,7 +1116,7 @@ IF (LUSEKF_REF) CALL UPDATE_FIELDS(YDPHY2, 2,KDIM%KIDIA, KDIM%KFDIA, KDIM%KLON, 
 !                  ------------------------------------------------------
 
 IF (NAERCLD > 0) THEN
-  IF ( NACTAERO /= 0 .AND. TRIM(AERO_SCHEME) == "hamm7") THEN
+  IF ( NACTAERO /= 0 .AND. (TRIM(AERO_SCHEME) == "hamm7" .OR. TRIM(AERO_SCHEME) == "hamlite")) THEN
     ! To avoid modification within cloud_layer.F90
     AUXL%ZCCN(KDIM%KIDIA:KDIM%KFDIA,1:KDIM%KLEV)  = PGFL(KDIM%KIDIA:KDIM%KFDIA,1:KDIM%KLEV,YGFL%YCDNC%MP9_PH) ! liquid cloud condensation nuclei
     AUXL%ZNICE(KDIM%KIDIA:KDIM%KFDIA,1:KDIM%KLEV) = PGFL(KDIM%KIDIA:KDIM%KFDIA,1:KDIM%KLEV,YGFL%YICNC%MP9_PH) ! ice number concentration (cf. CCN)
