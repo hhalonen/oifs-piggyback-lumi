@@ -55,15 +55,20 @@ elif [[ $OIFS_PLATFORM == "puhti" ]]; then
     #---
     
 elif [[ $OIFS_PLATFORM == "lumi" ]]; then
-    #--- LUMI SPECIFIC SETTINGS
+    #--- LUMI-C SPECIFIC SETTINGS
     #--- local variables
     PARTITION="--partition=small"
-    ACCOUNT="--account=project_462000178"
-    MEM="--mem=60GB"
+    ACCOUNT="--account=${OIFS_ACCOUNT:-project_462001382}"
+    MEM="--mem=0"
+
+    # One task with a whole LUMI-C node to itself (128 cores, 256 GB).
+    # The default TMPDIR on LUMI is tiny, so keep build temporaries in
+    # the node-local ramdisk.
+    HPC_FLAGS="-n 1 --exclusive --export=ALL,MY_TMP=/dev/shm"
 
     #--- global variables
-    export DEFAULT_NUM_THREADS=16
-    export EBU_USER_PREFIX=/project/project_462000178/EasyBuild
+    # LUMI-C nodes are 2x64-core AMD Milan
+    export DEFAULT_NUM_THREADS=64
 
     #---
 
@@ -91,7 +96,10 @@ else
 fi
 
 #--- set non-default launcher options
+#--- A full bundle build (eccodes/eckit/atlas/multio/fdb + IFS dp & sp)
+#--- takes well over an hour, so do not use the old 60 minute limit.
+BUILD_TIME="${OIFS_BUILD_TIME:-03:00:00}"
 if [[ $OIFS_HOST == "csc" ]]; then
-    export IGT_BUILD_LAUNCHER="srun $HPC_FLAGS -c ${DEFAULT_NUM_THREADS} ${MEM} --time=60 $ACCOUNT $PARTITION"
+    export IGT_BUILD_LAUNCHER="srun $HPC_FLAGS -c ${DEFAULT_NUM_THREADS} ${MEM} --time=${BUILD_TIME} $ACCOUNT $PARTITION"
     export IGT_TEST_LAUNCHER="salloc -n 8 --mem=20GB --time=60 $ACCOUNT $PARTITION"
 fi

@@ -3,8 +3,9 @@
 #   oifs-config.edit_me.sh
 #
 #
-#   This script sets the environment for OpenIFS 48r1
+#   This script sets the environment for OpenIFS 48r1 + HAMlite
 #
+#   Configured for LUMI-C (EuroHPC/CSC).
 #
 #   Read this script using the command:
 #
@@ -14,9 +15,18 @@
 #--- set machine specific settings -----------------------------
 
 export OIFS_HOST="csc"
-export OIFS_PLATFORM="puhti"
+export OIFS_PLATFORM="lumi"
 
-source /fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new/hpc-csc-config.edit_me.sh
+#---Base code assumes openifs-48r1 and openifs-expt are installed
+#---in $HOME. Either these can be changed by the user------------
+export OIFS_HOME="/scratch/project_462000807/${USER}/test/oifs-hamlite-coupling"
+
+#---Slurm project used for the build and test allocations.
+#---Storage lives under project_462000807; CPU billing units are on
+#---project_462001382 (same as the IFS-FESOM builds in this tree).
+export OIFS_ACCOUNT="${OIFS_ACCOUNT:-project_462001382}"
+
+source ${OIFS_HOME}/hpc-csc-config.edit_me.sh
 
 #--- if OIFS_DEBUGGER is set, oifs-run can use it to activate debugger ---------
 export OIFS_DEBUGGER="DDT"
@@ -25,19 +35,16 @@ export OIFS_DEBUGGER="DDT"
 
 export OIFS_CYCLE=48r1
 
-#---Base code assumes openifs-48r1 and openifs-expt are installed
-#---in $HOME. Either these can be changed by the user------------
-export OIFS_HOME="/fmi/projappl/project_2003011/${USER}/openifs-48r1/openifs-48r1-new"
-
 #---It is recommended that the openifs-expt and oifs_data dir
 #---exist in a location designed for permanent storage-----------
-export OIFS_EXPT="/fmi/scratch/project_2003011/${USER}/48r1_hamlite"
-export OIFS_DATA_DIR="/fmi/projappl/project_2003011/oifs_data/48r1/"
+export OIFS_EXPT="/scratch/project_462000807/${USER}/test/48r1_hamlite"
+export OIFS_DATA_DIR="/scratch/project_462000807/${USER}/test/oifs-hamlite-coupling/openifs-data"
 
 #---Set the path for the arch directory. Depending on system,i.e.,
 #---all libs are installed on the sytem, this is not required,
 #---so set to an empty string OIFS_ARCH=""
-export OIFS_ARCH="./arch/${OIFS_HOST}/${OIFS_PLATFORM}"
+#export OIFS_ARCH="./arch/${OIFS_HOST}/${OIFS_PLATFORM}/gnu/12.2.0"   # LUMI/23.09: its cray-mpich no longer works on the LUMI network
+export OIFS_ARCH="./arch/${OIFS_HOST}/${OIFS_PLATFORM}/gnu/13.3.0"
 
 #---Path to the executable for 3d global model. This is the
 #---default path for the exe, produced by openifs-test.sh.
