@@ -364,8 +364,8 @@ CONTAINS
       END DO 
       tmean = tsum/inum 
 
-      write(*,*) sname, '   ', tname 
-      write(*,'(a,5x,i10,i10,i10)') 'min, max, mean', tmin, tmax, tmean
+      !write(*,*) sname, '   ', tname 
+      !write(*,'(a,5x,i10,i10,i10)') 'min, max, mean', tmin, tmax, tmean
 
     END IF
 

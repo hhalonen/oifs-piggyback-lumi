@@ -30,7 +30,7 @@ source ./oifs-config.edit_me.sh
 # already inside an allocation.
 export IGT_BUILD_LAUNCHER=""
 
-./scripts/build_test/openifs-test.sh -b \
+./scripts/build_test/openifs-test.sh -cb \
     -j "${SLURM_CPUS_ON_NODE:-64}" \
     --arch="${OIFS_ARCH}" \
     --clean \

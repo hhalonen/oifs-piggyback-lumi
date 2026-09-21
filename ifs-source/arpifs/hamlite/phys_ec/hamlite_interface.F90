@@ -439,7 +439,7 @@ IF ( lwetdep ) THEN
       & ZTEND(KIDIA:KFDIA,1:KLEV,:)
 
    CALL xt_borrow_lite(KFDIA, KLON,  KLEV, KLEV+1, NCLASS, &
-        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN, ZDPG)
+        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN)
 
 END IF
 
@@ -458,7 +458,7 @@ IF ( lsedimentation ) THEN
       & ZTEND(KIDIA:KFDIA,1:KLEV,:)
 
    CALL xt_borrow_lite(KFDIA, KLON,  KLEV, KLEV+1, NCLASS, &
-        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN, ZDPG)
+        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN)
 
 END IF
 
@@ -512,7 +512,7 @@ IF ( ldrydep ) THEN
       ZTEND(KIDIA:KFDIA,1:KLEV,:) !eehol: add tendency to total tendency
 
    CALL xt_borrow_lite(KFDIA, KLON,  KLEV, KLEV+1, NCLASS, &
-        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN,ZDPG)
+        PRSF1, PRS1, ZXTM1, ZTEND_TOT, TIME_STEP_LEN)
  
 END IF
 !-------End dry deposition------------------------
@@ -546,7 +546,7 @@ ZXTTE(KIDIA:KFDIA,1:KLEV,:) = ZXTTE(KIDIA:KFDIA,1:KLEV,:) + &
    & ZTEND_TOT(KIDIA:KFDIA,1:KLEV,:)
 
 CALL xt_borrow_lite(KFDIA, KLON,  KLEV, KLEV+1, NCLASS, &
-     PRSF1, PRS1, ZXTM1, ZXTTE, TIME_STEP_LEN, ZDPG)
+     PRSF1, PRS1, ZXTM1, ZXTTE, TIME_STEP_LEN)
 
 !arups add to tendency
 DO JM = 1, NCLASS
@@ -614,38 +614,60 @@ END DO
 ! 8. Outputs
 ! =======================================================================
 
-DO JL = 1,NCLASS !output removal fluxes for tracer numbers
-   PGFL(KIDIA:KFDIA,JL,YAEROUT(1)%MP)=ZFLUX_DDEP(KIDIA:KFDIA,JL)
-   PGFL(KIDIA:KFDIA,JL,YAEROUT(2)%MP)=ZFLUX_WDEP(KIDIA:KFDIA,JL)
-   PGFL(KIDIA:KFDIA,JL,YAEROUT(3)%MP)=ZFLUX_SEDI(KIDIA:KFDIA,JL)
-END DO
+!DO JL = 1,NCLASS !output removal fluxes for tracer numbers
+!   PGFL(KIDIA:KFDIA,JL,YAEROUT(1)%MP)=ZFLUX_DDEP(KIDIA:KFDIA,JL)
+!   PGFL(KIDIA:KFDIA,JL,YAEROUT(2)%MP)=ZFLUX_WDEP(KIDIA:KFDIA,JL)
+!   PGFL(KIDIA:KFDIA,JL,YAEROUT(3)%MP)=ZFLUX_SEDI(KIDIA:KFDIA,JL)
+!END DO
+!
+!IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
+!  !** YAEROUT(1) : RADIATIVE PROPERTIES
+!  
+!  ! AOD/SSA/ASY of one internal (short) wavelengths - 533 nm
+!  PGFL(KIDIA:KFDIA,1,YAEROUT(4)%MP)=PAOD(KIDIA:KFDIA,10)
+!  PGFL(KIDIA:KFDIA,2,YAEROUT(4)%MP)=PSSA(KIDIA:KFDIA,10)
+!  PGFL(KIDIA:KFDIA,3,YAEROUT(4)%MP)=PASY(KIDIA:KFDIA,10)
+! 
+!  !** YAEROUT(5-6) : Total column number concentration and burdens
+!  DO JM=1,NCLASS
+!   
+!    ZTMP(KIDIA:KFDIA)=0.0_JPRB
+!    DO JK=1,KLEV
+!      ZTMP(KIDIA:KFDIA)= ZTMP(KIDIA:KFDIA) + (ZXTM1(KIDIA:KFDIA,JK,JM)+(ZXTTE(KIDIA:KFDIA,JK,JM)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
+!    END DO
+!    !Total column number concentration
+!    PGFL(KIDIA:KFDIA,JM,YAEROUT(5)%MP) = ZTMP(KIDIA:KFDIA)
+!
+!    !Burden mass
+!    PGFL(KIDIA:KFDIA,JM,YAEROUT(6)%MP) = ZTMP(KIDIA:KFDIA) * speclist(JM)%density&
+!    & * (RPI / 6.0_JPRB) * (sizeclass(JM)%lite_radi*2.0_JPRB)**3 * exp(4.5_JPRB * log(sigma_mode(JM))**2)
+!
+!  END DO
+!  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP)=PAER_TAU(KIDIA:KFDIA,1:KLEV,10)
+!ENDIF
 
 IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
-  !** YAEROUT(1) : RADIATIVE PROPERTIES
+  !---------------------------------------
+  !-->hhermann: ML data
+
+  ! HAM-Lite tracer number concentrations
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(1)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,1)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(2)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,2)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(3)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,3)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(4)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,4)
   
-  ! AOD/SSA/ASY of one internal (short) wavelengths - 533 nm
-  PGFL(KIDIA:KFDIA,1,YAEROUT(4)%MP)=PAOD(KIDIA:KFDIA,10)
-  PGFL(KIDIA:KFDIA,2,YAEROUT(4)%MP)=PSSA(KIDIA:KFDIA,10)
-  PGFL(KIDIA:KFDIA,3,YAEROUT(4)%MP)=PASY(KIDIA:KFDIA,10)
- 
-  !** YAEROUT(5-6) : Total column number concentration and burdens
-  DO JM=1,NCLASS
-   
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA)= ZTMP(KIDIA:KFDIA) + (ZXTM1(KIDIA:KFDIA,JK,JM)+(ZXTTE(KIDIA:KFDIA,JK,JM)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
-    END DO
-    !Total column number concentration
-    PGFL(KIDIA:KFDIA,JM,YAEROUT(5)%MP) = ZTMP(KIDIA:KFDIA)
-
-    !Burden mass
-    PGFL(KIDIA:KFDIA,JM,YAEROUT(6)%MP) = ZTMP(KIDIA:KFDIA) * speclist(JM)%density&
-    & * (RPI / 6.0_JPRB) * (sizeclass(JM)%lite_radi*2.0_JPRB)**3 * exp(4.5_JPRB * log(sigma_mode(JM))**2)
-
-  END DO
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP)=PAER_TAU(KIDIA:KFDIA,1:KLEV,10)
+  ! HAM-Lite 550nm extinction coefficient
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(5)%MP) = PAER_TAU(KIDIA:KFDIA,1:KLEV,10)
+  
+  ! HAM-Lite SSA
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(6)%MP) = PAER_SSA(KIDIA:KFDIA,1:KLEV,10)
+  
+  ! HAM-Lite asymmetry factor
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = PAER_ASYM(KIDIA:KFDIA,1:KLEV,11)
+  
+  !<--hhermann: ML data
+  !---------------------------------------
 ENDIF
-
 
 END ASSOCIATE
 END ASSOCIATE

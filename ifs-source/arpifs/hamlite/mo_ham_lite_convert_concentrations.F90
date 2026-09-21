@@ -21,14 +21,17 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 MODULE mo_ham_lite_convert_concentrations
 
-	! Self-contained kind and constants to avoid external module dependency
-	INTEGER, PARAMETER :: dp = SELECTED_REAL_KIND(15, 307)
-	REAL(dp), PARAMETER :: pi = 3.1415926535897932384626433832795_dp
+    USE mo_kind_lite, ONLY : wp, dp
+    USE PARKIND1,     ONLY: JPRB
 
-  PUBLIC :: conc2mmr
-  PUBLIC :: mmr2conc
+    ! Self-contained kind and constants to avoid external module dependency
+    !INTEGER, PARAMETER :: dp = SELECTED_REAL_KIND(15, 307)
+    REAL(dp), PARAMETER :: pi = 3.1415926535897932384626433832795_dp
 
-CONTAINS
+    PUBLIC :: conc2mmr
+    PUBLIC :: mmr2conc
+
+    CONTAINS
 
   !--------------------------------------------------------------------
   ! Convert number-concentration tendency to mass-mixing-ratio tendency
@@ -45,81 +48,81 @@ CONTAINS
   !   - Optional rhop_modes can override default particle densities.
   !--------------------------------------------------------------------
   SUBROUTINE conc2mmr(kproma, klev, &
-		 kmodes, ktrac, pxtte, ptend_tot, pxtm1, prhoa, pprad, modefrac, rhop_modes)
+        kmodes, ktrac, pxtte, ptend_tot, pxtm1, prhoa, pprad, modefrac_num, rhop_modes)
 
-	 INTEGER, INTENT(in) :: kproma, klev, kmodes, ktrac
+    INTEGER, INTENT(IN)  :: kproma, klev, kmodes, ktrac
 
-	 REAL(dp), INTENT(INOUT) :: pxtte(kproma,klev,kmodes)
-	 REAL(dp), INTENT(INOUT) :: modefrac(kmodes)
+    REAL(wp), INTENT(OUT):: pxtte(kproma,klev,kmodes)
+    REAL(wp), INTENT(INOUT) :: modefrac_num(kproma,klev,kmodes)
+         
+    REAL(KIND=JPRB), INTENT(IN) :: prhoa(kproma,klev)       ! Air density [kg/m^3] (not used in mass; kept for interface)
+    REAL(dp), INTENT(IN) :: pprad(ktrac)                    ! Representative radius (dry) [m]
+    REAL(dp), INTENT(IN) :: pxtm1(kproma,klev,ktrac)        ! Unused here, kept for interface
+    REAL(dp), INTENT(IN) :: ptend_tot(kproma,klev,ktrac)    ! [#/kg/s]
+    
+    REAL(dp), INTENT(IN), OPTIONAL :: rhop_modes(kmodes)    ! Particle densities [kg/m^3] per mode
+    
+    !-- locals
+    INTEGER :: i, k, m
+    REAL(dp), PARAMETER :: one_third = 1.0_dp/3.0_dp
+    REAL(dp), PARAMETER :: four_thirds = 4.0_dp*one_third
+    REAL(dp), PARAMETER :: epsD = 1.0e-20_dp
+    REAL(dp) :: D, vol, mp
+    REAL(dp) :: rho_p_mode
+    INTEGER :: grp_of_mode(kmodes)
+    INTEGER :: grp_of_tracer(kmodes)
+    REAL(dp) :: rho_p_defaults(kmodes)
+    
+    ! Map tracers
+    grp_of_tracer = (/ 1,1,1,1, 2,2, 3,3,3,3,4,4,4,3, 4,4,4 /)
+    ! Map modes
+    grp_of_mode = (/ 3,4,3,4, 3,4, 2,3,4,2,2,3,4,2, 2,3,4 /)
+    
+    ! Default particle material densities per mode [kg/m^3]
+    rho_p_defaults = (/ &
+        2600.0_dp, 2600.0_dp, 2600.0_dp, 2600.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
+        2160.0_dp, 2160.0_dp,  &                        ! SS AS, SS CS
+        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
+        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
+        1770.0_dp, 1770.0_dp, 1770.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
 
-	 REAL(dp), INTENT(IN) :: prhoa(kproma,klev)       ! Air density [kg/m^3] (not used in mass; kept for interface)
-	 REAL(dp), INTENT(IN) :: pprad(ktrac)   ! Representative radius [m]
-	 REAL(dp), INTENT(IN) :: pxtm1(kproma,klev,ktrac) ! Unused here, kept for interface
-	 REAL(dp), INTENT(IN) :: ptend_tot(kproma,klev,ktrac) ! [#/kg/s]
+    pxtte = 0.0_dp
 
-	 REAL(dp), INTENT(IN), OPTIONAL :: rhop_modes(kmodes) ! Particle densities [kg/m^3] per mode
+    DO m = 1, kmodes
+        DO i = kidia, kfdia
+            DO k = 1, klev
+                SELECT CASE (grp_of_mode(m))
+                    CASE (1)
+                        D = MAX(pprad(1), epsD)
+                    CASE (2)
+                        D = MAX(pprad(2), epsD)
+                    CASE (3)
+                        D = MAX(pprad(3), epsD)
+                    CASE (4)
+                        D = MAX(pprad(4), epsD)
+                    END SELECT
+                    vol = four_thirds * pi * D**3
+                    if (present(rhop_modes)) then
+                        rho_p_mode = rhop_modes(m)
+                    else
+                        rho_p_mode = rho_p_defaults(m)
+                    end if
+                    mp = rho_p_mode * vol
+                    SELECT CASE (grp_of_tracer(m))
+                    CASE (1)
+                        pxtte(i,k,m) = modefrac_num(i,k,m) * ptend_tot(i,k,1) * mp
+                    CASE (2)
+                        pxtte(i,k,m) = modefrac_num(i,k,m) * ptend_tot(i,k,2) * mp
+                    CASE (3)
+                        pxtte(i,k,m) = modefrac_num(i,k,m) * ptend_tot(i,k,3) * mp
+                    CASE (4)
+                        pxtte(i,k,m) = modefrac_num(i,k,m) * ptend_tot(i,k,4) * mp
+                    END SELECT
+                END DO
+            END DO
+        END DO
 
-	 !-- locals
-	 INTEGER :: i, k, m
-	 REAL(dp), PARAMETER :: one_third = 1.0_dp/3.0_dp
-	 REAL(dp), PARAMETER :: four_thirds = 4.0_dp*one_third
-	 REAL(dp), PARAMETER :: epsD = 1.0e-30_dp
-	 REAL(dp) :: D, vol, mp
-	 REAL(dp) :: rho_p_mode
-	 INTEGER :: grp_of_mode(11)
-
-	 REAL(dp) :: rho_p_defaults(11)
-
-	 ! Map modes -> groups (1: Dust, 2: SS, 3: BC, 4: SO4)
-	 grp_of_mode = (/ 1,1, 2,2, 3,3,3, 4,4,4,4 /)
-
-	 ! Default particle material densities per mode [kg/m^3]
-	 !   Dust ~2600, SeaSalt ~2160, BC ~1500, Sulfate ~1770
-	 rho_p_defaults = (/ &
-			2600.0_dp, 2600.0_dp,  & ! DU AS, DU CS
-			2160.0_dp, 2160.0_dp,  & ! SS AS, SS CS
-			1500.0_dp, 1500.0_dp, 1500.0_dp, & ! BC KS, BC AS, BC CS
-			1770.0_dp, 1770.0_dp, 1770.0_dp, 1770.0_dp /) ! SO4 NS, KS, AS, CS
-
-	 pxtte = 0.0_dp
-
-	 DO m = 1, kmodes
-		 DO i = 1, kproma
-			 DO k = 1, klev
-		     SELECT CASE (grp_of_mode(m))
-				 CASE (1)
-					 D = MAX(pprad(1), epsD)
-				 CASE (2)
-					 D = MAX(pprad(2), epsD)
-				 CASE (3)
-					 D = MAX(pprad(3), epsD)
-				 CASE (4)
-					 D = MAX(pprad(4), epsD)
-			     END SELECT
-				 vol = four_thirds * pi * D**3
-				 !hhermann: MERGE didn't work for me
-				 !rho_p_mode = MERGE(rhop_modes(m), rho_p_defaults(m), PRESENT(rhop_modes))
-				 if (present(rhop_modes)) then
-					 rho_p_mode = rhop_modes(m)
-				 else
-				     rho_p_mode = rho_p_defaults(m)
-				 end if
-				 mp = rho_p_mode * vol
-				 SELECT CASE (grp_of_mode(m))
-				 CASE (1)
-					 pxtte(i,k,m) = modefrac(m) * ptend_tot(i,k,1) * mp
-				 CASE (2)
-					 pxtte(i,k,m) = modefrac(m) * ptend_tot(i,k,2) * mp
-				 CASE (3)
-					 pxtte(i,k,m) = modefrac(m) * ptend_tot(i,k,3) * mp
-				 CASE (4)
-					 pxtte(i,k,m) = modefrac(m) * ptend_tot(i,k,4) * mp
-				 END SELECT
-			 END DO
-		 END DO
-	 END DO
-
-  END SUBROUTINE conc2mmr
+    END SUBROUTINE conc2mmr
 
 
   !--------------------------------------------------------------------
@@ -134,122 +137,104 @@ CONTAINS
   ! Notes:
   !   - pxtm1 per group is computed as sum over modes in that group:
   !       N/kg = sum_m ( pmmr_mode / m_p_mode ).
-  !   - modefrac is computed from (1,1) by default to match prior behavior,
-  !     with guards to avoid a divide-by-zero.
   !   - Optional rhop_modes can override default particle densities.
   !--------------------------------------------------------------------
   SUBROUTINE mmr2conc(kidia, kfdia, kproma, klev, &
-		 kmodes, ktrac, pmmr_modes, pmmr, pxtm1, prhoa, pprad, modefrac, rhop_modes)
+            kmodes, ktrac, pmmr_modes, pxtm1, prhoa, pprad, modefrac_num, rhop_modes)
+    
+    INTEGER, INTENT(IN) :: kidia, kfdia, kproma, klev, kmodes, ktrac
+    
+    REAL(dp), INTENT(INOUT) :: pxtm1(kproma,klev,ktrac)  ! [#/kg]
+    REAL(wp), INTENT(INOUT) :: modefrac_num(kproma,klev,kmodes)
+    
+    REAL(wp), INTENT(IN) :: pmmr_modes(kproma,klev,kmodes)
+    REAL(KIND=JPRB), INTENT(IN) :: prhoa(kproma,klev)    ! Air density [kg/m^3] (not used in mass; kept for interface)
+    REAL(dp), INTENT(IN) :: pprad(ktrac)                 ! Representative radius (dry) [m]
+    
+    REAL(dp), INTENT(IN), OPTIONAL :: rhop_modes(kmodes) ! Particle densities [kg/m^3] per mode
+    
+    !-- locals
+    INTEGER :: i, k, m
+    REAL(dp), PARAMETER :: one_third = 1.0_dp/3.0_dp
+    REAL(dp), PARAMETER :: four_thirds = 4.0_dp*one_third
+    REAL(dp), PARAMETER :: epsD = 1.0e-20_dp
+    REAL(wp), PARAMETER :: eps = 1.0e-20_wp
+    REAL(dp), PARAMETER :: minfrac = 1.e-20_dp   ! Minimum modefrac
+    REAL(dp) :: D, vol, mp
+    REAL(dp) :: rho_p_mode
+    INTEGER :: grp_of_mode(kmodes)
+    INTEGER :: grp_of_tracer(kmodes)
+    REAL(dp) :: rho_p_defaults(kmodes)
+    REAL(dp) :: denom
+    REAL(wp) :: pxtm1_mode(kproma,klev,kmodes)
+    REAL(wp) :: pxtm1_group(kproma,klev,ktrac)
+    
+    ! Map tracers
+    grp_of_tracer = (/ 1,1,1,1, 2,2, 3,3,3,3,4,4,4,3, 4,4,4 /)
+    ! Map modes
+    grp_of_mode = (/ 3,4,3,4, 3,4, 2,3,4,2,2,3,4,2, 2,3,4 /)
+    
+    ! Default particle material densities per mode [kg/m^3]
+    rho_p_defaults = (/ &
+        2600.0_dp, 2600.0_dp, 2600.0_dp, 2600.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
+        2160.0_dp, 2160.0_dp,  &                        ! SS AS, SS CS
+        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
+        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
+        1770.0_dp, 1770.0_dp, 1770.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
+    
+    ! Compute number concentrations per kg: sum over modes of (mmr_mode / m_p_mode)
+    pxtm1 = 0.0_dp
+    pxtm1_mode = 0.0_dp
+    pxtm1_group = 0.0_dp
 
-	 INTEGER, INTENT(IN) :: kidia, kfdia, kproma, klev, kmodes, ktrac
+    DO m = 1, kmodes
+        if (present(rhop_modes)) then
+            rho_p_mode = rhop_modes(m)
+        else
+            rho_p_mode = rho_p_defaults(m)
+        end if
 
-	 REAL(dp), INTENT(INOUT) :: pmmr(kproma,klev,ktrac)
-	 REAL(dp), INTENT(INOUT) :: pxtm1(kproma,klev,ktrac)  ! [#/kg]
-	 REAL(dp), INTENT(INOUT) :: modefrac(kmodes) ! Proportion of each tracer mode in the total tracer concentration
+        SELECT CASE (grp_of_mode(m))
+            CASE (1)
+                D = MAX(pprad(1), epsD)
+            CASE (2)
+                D = MAX(pprad(2), epsD)
+            CASE (3)
+                D = MAX(pprad(3), epsD)
+            CASE (4)
+                D = MAX(pprad(4), epsD)
+        END SELECT
+        vol = four_thirds * pi * D**3
+        mp = rho_p_mode * vol
+        DO i = kidia, kfdia
+            DO k = 1, klev
+                !-->hhermann: Number fractions
+                ! Modes separately
+                pxtm1_mode(i,k,m) = pmmr_modes(i,k,m) / MAX(mp, eps)
+                ! Modes lumped
+                pxtm1_group(i,k,grp_of_tracer(m)) = pxtm1_group(i,k,grp_of_tracer(m)) + pxtm1_mode(i,k,m)
+                !<--hhermann
+            END DO
+        END DO
+    END DO
 
-	 REAL(dp), INTENT(IN) :: pmmr_modes(kproma,klev,kmodes)
-	 REAL(dp), INTENT(IN) :: prhoa(kproma,klev)   ! Air density [kg/m^3] (not used in mass; kept for interface)
-	 REAL(dp), INTENT(IN) :: pprad(ktrac)  ! Representative radius [m]
+    !-->hhermann: Number fractions
+    DO m = 1, kmodes
+        DO i = kidia, kfdia
+            DO k = 1, klev
+                IF (pxtm1_group(i,k,grp_of_tracer(m)) > eps) THEN
+                    modefrac_num(i,k,m) = pxtm1_mode(i,k,m) / pxtm1_group(i,k,grp_of_tracer(m))
+                ELSE
+                    modefrac_num(i,k,m) = 0.0_dp
+                END IF
+            END DO
+        END DO
+    END DO
+    !<--hhermann
 
-	 REAL(dp), INTENT(IN), OPTIONAL :: rhop_modes(kmodes) ! Particle densities [kg/m^3] per mode
+    ! Non-negativity guard
+    pxtm1 = MAX(pxtm1_group, 0.0_dp)
 
-	!-- locals
-	INTEGER :: i, k, m
-	REAL(dp), PARAMETER :: one_third = 1.0_dp/3.0_dp
-	REAL(dp), PARAMETER :: four_thirds = 4.0_dp*one_third
-	REAL(dp), PARAMETER :: epsD = 1.0e-30_dp
-	REAL(dp), PARAMETER :: eps = 1.0e-30_dp
-	REAL(dp) :: D, vol, mp
-	REAL(dp) :: rho_p_mode
-	INTEGER :: grp_of_mode(11)
-	REAL(dp) :: rho_p_defaults(11)
-	REAL(dp) :: denom
-
-	 ! Map modes -> groups (1: Dust, 2: SS, 3: BC, 4: SO4)
-	grp_of_mode = (/ 1,1, 2,2, 3,3,3, 4,4,4,4 /)
-
-	 ! Default particle material densities per mode [kg/m^3]
-	rho_p_defaults = (/ &
-		 2600.0_dp, 2600.0_dp,  & ! DU AS, DU CS
-		 2160.0_dp, 2160.0_dp,  & ! SS AS, SS CS
-		 1500.0_dp, 1500.0_dp, 1500.0_dp, & ! BC KS, BC AS, BC CS
-		 1770.0_dp, 1770.0_dp, 1770.0_dp, 1770.0_dp /) ! SO4 NS, KS, AS, CS
-
-	 ! Combine modes -> group totals (mass mixing ratios)
-	pmmr(:,:,1) = pmmr_modes(kidia:kfdia, 1:klev,1) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,2)
-	pmmr(:,:,2) = pmmr_modes(kidia:kfdia, 1:klev,3) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,4)
-	pmmr(:,:,3) = pmmr_modes(kidia:kfdia, 1:klev,5) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,6) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,7)
-	pmmr(:,:,4) = pmmr_modes(kidia:kfdia, 1:klev,8) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,9) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,10) + &
-		& pmmr_modes(kidia:kfdia, 1:klev,11)
-
-	 ! modefrac from point (1,1) with guards
-	denom = MAX(pmmr(1,1,1), eps)
-	modefrac(1) = pmmr_modes(1,1,1) / denom
-	modefrac(2) = pmmr_modes(1,1,2) / denom
-
-	denom = MAX(pmmr(1,1,2), eps)
-	modefrac(3) = pmmr_modes(1,1,3) / denom
-	modefrac(4) = pmmr_modes(1,1,4) / denom
-
-	denom = MAX(pmmr(1,1,3), eps)
-	modefrac(5) = pmmr_modes(1,1,5) / denom
-	modefrac(6) = pmmr_modes(1,1,6) / denom
-	modefrac(7) = pmmr_modes(1,1,7) / denom
-
-	denom = MAX(pmmr(1,1,4), eps)
-	modefrac(8)  = pmmr_modes(1,1,8)  / denom
-	modefrac(9)  = pmmr_modes(1,1,9)  / denom
-	modefrac(10) = pmmr_modes(1,1,10) / denom
-	modefrac(11) = pmmr_modes(1,1,11) / denom
-
-	 ! Compute number concentrations per kg: sum over modes of (mmr_mode / m_p_mode)
-	pxtm1 = 0.0_dp
-
-		DO m = 1, kmodes
-			!hhermann: MERGE didn't work for me
-			!rho_p_mode = MERGE(rhop_modes(m), rho_p_defaults(m), PRESENT(rhop_modes))
-			if (present(rhop_modes)) then
-				rho_p_mode = rhop_modes(m)
-			else
-				rho_p_mode = rho_p_defaults(m)
-			end if
-			DO i = 1, kproma
-				DO k = 1, klev
-				    !hhermann: fixed dimensions of pprad -> different cases for each mode
-					SELECT CASE (grp_of_mode(m))
-					CASE (1)
-						D = MAX(pprad(1), epsD)
-					CASE (2)
-						D = MAX(pprad(2), epsD)
-					CASE (3)
-						D = MAX(pprad(3), epsD)
-					CASE (4)
-						D = MAX(pprad(4), epsD)
-					END SELECT
-					vol = four_thirds * pi * D**3
-					mp = rho_p_mode * vol
-					SELECT CASE (grp_of_mode(m))
-					CASE (1)
-						pxtm1(i,k,1) = pxtm1(i,k,1) + pmmr_modes(i,k,m) / MAX(mp, eps)
-					CASE (2)
-						pxtm1(i,k,2) = pxtm1(i,k,2) + pmmr_modes(i,k,m) / MAX(mp, eps)
-					CASE (3)
-						pxtm1(i,k,3) = pxtm1(i,k,3) + pmmr_modes(i,k,m) / MAX(mp, eps)
-					CASE (4)
-						pxtm1(i,k,4) = pxtm1(i,k,4) + pmmr_modes(i,k,m) / MAX(mp, eps)
-					END SELECT
-				END DO
-			END DO
-		END DO
-
-	 ! Non-negativity guard
-	 pxtm1 = MAX(pxtm1, 0.0_dp)
-
-  END SUBROUTINE mmr2conc
+    END SUBROUTINE mmr2conc
+  
 END MODULE mo_ham_lite_convert_concentrations

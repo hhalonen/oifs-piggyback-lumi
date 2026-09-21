@@ -266,7 +266,7 @@ REAL(KIND=JPRB),INTENT(OUT)     :: PAEPM10(KLON)
 !*   0.5    LOCAL VARIABLES
 !           ---------------
 
-INTEGER(KIND=JPIM) :: JAER, JK, JL, JWAVL, JT, JB, JN
+INTEGER(KIND=JPIM) :: JAER, JK, JL, JWAVL, JT, JB, JN, JM
 INTEGER(KIND=JPIM) :: JEXT, ITRC, IKLEVTROP(KLON), IW
 INTEGER(KIND=JPIM) :: JO, JH, JY                         ! inside loop index for OIFS contex, HAM context and YAEROUT 
 INTEGER(KIND=JPIM) :: JCLASS, JTILE, JMASS, JGAS, JCLOUD ! local loop indice for activation and dry deposition and tracer indexing
@@ -1830,280 +1830,70 @@ CALL HAMM7_DIAG_PM &
 ! resolution trajectory integration) are both assimilation flags
 IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
 
-  !** YAEROUT(1) : RADIATIVE PROPERTIES
-  
-  ! AOD/SSA/ASY of one internal (short) wavelengths - 533 nm
-  PGFL(KIDIA:KFDIA,1,YAEROUT(1)%MP)=PAOD(KIDIA:KFDIA,10)
-  PGFL(KIDIA:KFDIA,2,YAEROUT(1)%MP)=PSSA(KIDIA:KFDIA,10)
-  PGFL(KIDIA:KFDIA,3,YAEROUT(1)%MP)=PASY(KIDIA:KFDIA,10)
+!-->hhermann: Output for ML
 
-  ! AOD of 14 internal (short) wavelengths
-  PGFL(KIDIA:KFDIA,4:17,YAEROUT(1)%MP)=PAOD(KIDIA:KFDIA,1:14)
-
-  ! AOD of 16 internal (long) wavelengths
-  PGFL(KIDIA:KFDIA,18:33,YAEROUT(1)%MP)= PAOD_LW(KIDIA:KFDIA,1:16)
-
-  !** YAEROUT(2) : DRY DEPOSITION
-
-  DO JN=1,NAEROCOMP
-    PGFL(KIDIA:KFDIA,ind_oifs_ham%ind_mass_OIFS(JN),YAEROUT(2)%MP)=ZDDEPFLUX(KIDIA:KFDIA,ind_oifs_ham%IND_mass_HAM(JN))
+  ! HAM-M7 mode aerosol number emissions
+  DO JM = 1, NCLASS
+    JO = ind_oifs_ham%ind_class_OIFS(JM)
+    IF (JO > 0) PGFL(KIDIA:KFDIA, JM, YAEROUT(1)%MP) = PAERSRC(KIDIA:KFDIA, JO)
   END DO
-  DO JN=1,NCLASS
-    PGFL(KIDIA:KFDIA,ind_oifs_ham%ind_class_OIFS(JN),YAEROUT(2)%MP)=ZDDEPFLUX(KIDIA:KFDIA,ind_oifs_ham%IND_class_HAM(JN))
-  END DO
+  PGFL(KIDIA:KFDIA,NCLASS+1:KLEV,YAEROUT(1)%MP) = 0.0_JPRB
   
-  !** YAEROUT(3) : COLUMN INTEGRATED WET-DEPOSITION
-
-  DO JN=1,NACTAERO
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(3)%MP)  = WDEPOUT_2D(KIDIA:KFDIA,KAERO(JN))
-  END DO
+  ! HAM-Lite tracer number concentrations
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(2)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,1)
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(3)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,2)
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(4)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,3)
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(5)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,4)
   
-  !** YAEROUT(4) : SEDIMENTATION
-
-  DO JN=1,NAEROCOMP
-    PGFL(KIDIA:KFDIA,ind_oifs_ham%ind_mass_OIFS(JN),YAEROUT(4)%MP)  = ZSEDIFLUXSURF(KIDIA:KFDIA,ind_oifs_ham%IND_mass_HAM(JN))
-  END DO
-  DO JN=1,NCLASS
-    PGFL(KIDIA:KFDIA,ind_oifs_ham%ind_class_OIFS(JN),YAEROUT(4)%MP) = ZSEDIFLUXSURF(KIDIA:KFDIA,ind_oifs_ham%IND_class_HAM(JN))
-  END DO
-
-  !** YAEROUT(5) : NET AEROSOLS FLUXES (EMISSIONS - ???) ; level index of top of boundary layer ; boundary layer height
+  ! HAM-M7 550nm extinction coefficient
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(6)%MP) = PAER_TAU(KIDIA:KFDIA,1:KLEV,10)
   
-  DO JN=1,NACTAERO
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(5)%MP)  = PAERSRC(KIDIA:KFDIA,KAERO(JN)) - PCFLX(KIDIA:KFDIA,KAERO(JN))* ZDPG(KIDIA:KFDIA,KLEV)
-  END DO
-  PGFL(KIDIA:KFDIA,NACTAERO+2,YAEROUT(5)%MP)  = ZBLHIDX(KIDIA:KFDIA)
-  PGFL(KIDIA:KFDIA,NACTAERO+3,YAEROUT(5)%MP)  = PBLH(KIDIA:KFDIA)
-
-  !** YAEROUT(6:10) : Store all requested AOP at selected (diagnostic) wavelengths
+  ! HAM-Lite 550nm extinction coefficient
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = aer_tau_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
-  IF(MOD(NSTEP,NRADFR) == 0) THEN
-    IF (YGFL%NAERO_WVL_DIAG_TYPES >= JPAERO_WVL_AOD) THEN
-      PGFL(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, YAEROUT(6)%MP) = PAERO_WVL_DIAG(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, JPAERO_WVL_AOD)
-    ENDIF
-    IF (YGFL%NAERO_WVL_DIAG_TYPES >= JPAERO_WVL_AODABS) THEN
-      PGFL(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, YAEROUT(7)%MP) = PAERO_WVL_DIAG(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, JPAERO_WVL_AODABS)
-    ENDIF
-    IF (YGFL%NAERO_WVL_DIAG_TYPES >= JPAERO_WVL_AODFM) THEN
-      PGFL(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, YAEROUT(8)%MP) = PAERO_WVL_DIAG(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, JPAERO_WVL_AODFM)
-    ENDIF
-    IF (YGFL%NAERO_WVL_DIAG_TYPES >= JPAERO_WVL_SSA) THEN
-      PGFL(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, YAEROUT(9)%MP) = PAERO_WVL_DIAG(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, JPAERO_WVL_SSA)
-    ENDIF
-    IF (YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG_TYPES >= JPAERO_WVL_ASSIMETRY) THEN
-      PGFL(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, YAEROUT(10)%MP) = PAERO_WVL_DIAG(KIDIA:KFDIA, 1:NAERO_WVL_DIAG, JPAERO_WVL_ASSIMETRY)
-    ENDIF
-  ENDIF
+  ! HAM-M7 SSA
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(8)%MP) = PAER_SSA(KIDIA:KFDIA,1:KLEV,10)
   
-  !** YAEROUT(11) : Total column mass and number concentration
+  ! HAM-M7 aerosol asymmetry factor
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(9)%MP) = PAER_ASYM(KIDIA:KFDIA,1:KLEV,10)
   
-  DO JN=1,NAEROCOMP
-    JO=ind_oifs_ham%ind_mass_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_mass_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(11)%MP
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA)= ZTMP(KIDIA:KFDIA) + (ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
-    END DO
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  DO JN=1,NCLASS
-    JO=ind_oifs_ham%ind_class_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_class_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(11)%MP
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA) = ZTMP(KIDIA:KFDIA) + (ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
-    END DO
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  !** YAEROUT(12) : mass and number tendency
-  ! kg/kg -> kg/m2 N/kg-> N/m2
-  DO JN=1,NAEROCOMP    !ntrac!NACTAERO   
-    JO=ind_oifs_ham%ind_mass_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_mass_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(12)%MP
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA) = ZTMP(KIDIA:KFDIA) + ZXTTE(KIDIA:KFDIA,JK,JH)
-    END DO
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  DO JN=1,NCLASS
-    JO=ind_oifs_ham%ind_class_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_class_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(12)%MP
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA) = ZTMP(KIDIA:KFDIA) + ZXTTE(KIDIA:KFDIA,JK,JH)
-    END DO
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  !** YAEROUT(13) : Surface fluxes of tracers (not emissions)
+  ! HAM-Lite SSA
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(10)%MP) = aer_ssa_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
-  DO JN=1,NACTAERO
-    !ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    !DO JK=1,KLEV
-    !  ZTMP(KIDIA:KFDIA)=ZTMP(KIDIA:KFDIA)+PCEN(KIDIA:KFDIA,JK,KAERO(JN))
-    !END DO
-    !PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(13)%MP)  = ZTMP(KIDIA:KFDIA)
-    PGFL(KIDIA:KFDIA,KAERO(JN),YGFL%YAEROUT(13)%MP)= - PCFLX(KIDIA:KFDIA,KAERO(JN))* ZDPG(KIDIA:KFDIA,KLEV)
-  END DO
-
-  !** YAEROUT(14) : Total column tracer/number PREVIOUS (before call to M7) concentration
+  ! HAM-Lite asymmetry factor
+  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = aer_asy_sw_vr(KIDIA:KFDIA,1:KLEV,11)
   
-  DO JN=1,NACTAERO
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA)=ZTMP(KIDIA:KFDIA)+ZCEN(KIDIA:KFDIA,JK,KAERO(JN))
-    END DO
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(14)%MP)  = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  !** YAEROUT(15) : Total column UPDATED TENDENCIES tracer
+  ! HAM-M7 CDNC
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(12)%MP) = ZCDNCACT(KIDIA:KFDIA,1:KLEV)
   
-  DO JN=1,NACTAERO
-    ZTMP(KIDIA:KFDIA)=0.0_JPRB
-    DO JK=1,KLEV
-      ZTMP(KIDIA:KFDIA)=ZTMP(KIDIA:KFDIA)+PTENC(KIDIA:KFDIA,JK,KAERO(JN))
-    END DO
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(15)%MP)  = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  !** YAEROUT(16) : M7 mass and number mixing ratio at surface
+  ! HAM-M7 ICNC
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(13)%MP) = ZICNC(KIDIA:KFDIA,1:KLEV)
   
-  DO JN=1,NAEROCOMP    !ntrac!NACTAERO   
-    JO=ind_oifs_ham%ind_mass_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_mass_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(16)%MP
-    ZTMP(KIDIA:KFDIA)= ZXTM1(KIDIA:KFDIA,KLEV,JH)+(ZXTTE(KIDIA:KFDIA,KLEV,JH)*TIME_STEP_LEN)!*ZDPG(KIDIA:KFDIA,KLEV)
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
-
-  DO JN=1,NCLASS
-    JO=ind_oifs_ham%ind_class_OIFS(JN)  ! JO -> index context OIFS 
-    JH=ind_oifs_ham%IND_class_HAM(JN)   ! JH -> index context HAM 
-    JY=YAEROUT(16)%MP
-    ZTMP(KIDIA:KFDIA) =  ZXTM1(KIDIA:KFDIA,KLEV,JH)+(ZXTTE(KIDIA:KFDIA,KLEV,JH)*TIME_STEP_LEN)!*PRHO(KIDIA:KFDIA,KLEV)
-    PGFL(KIDIA:KFDIA,JO,JY) = ZTMP(KIDIA:KFDIA)
-  END DO
+  ! HAM-M7 550nm AOD
+  PGFL(KIDIA:KFDIA,1,YAEROUT(14)%MP) = PAOD(KIDIA:KFDIA,10)
   
-  !** YAEROUT(17-18) : IN-CLOUD & BELOW CLOUD WET DEPOSITION
+  ! Tendency NUM_KS ham after update surface
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(15)%MP) = ZXTTE(KIDIA:KFDIA,1:KLEV,23)
   
-  DO JN=1,NACTAERO
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(17)%MP) = WDEPOUT_IC_2D(KIDIA:KFDIA,KAERO(JN))
-    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(18)%MP) = WDEPOUT_BC_2D(KIDIA:KFDIA,KAERO(JN))
-  END DO
-
-  !** YAEROUT(19-20) : 
+  ! Tendency NUM_AS ham after update surface
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(16)%MP) = ZXTTE(KIDIA:KFDIA,1:KLEV,24)
   
-  PGFL(KIDIA:KFDIA,KLEV,YAEROUT(19)%MP)   = ZXTTE(KIDIA:KFDIA,KLEV,3)      ! tendency SS CS ham after update surface
-  PGFL(KIDIA:KFDIA,KLEV-1,YAEROUT(20)%MP) = ZTENCIH(KIDIA:KFDIA,KLEV,17)   ! tendency SS CS ham before update surface
+  ! HAM-Lite mode emissions
+  PGFL(KIDIA:KFDIA,1,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(8)) + PAERSRC(KIDIA:KFDIA,KAERO(31))    	       ! SS
+  PGFL(KIDIA:KFDIA,2,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(9))  + PAERSRC(KIDIA:KFDIA,KAERO(32)) + &
+                                                  & PAERSRC(KIDIA:KFDIA,KAERO(20)) + PAERSRC(KIDIA:KFDIA,KAERO(26))    ! Dust
+  PGFL(KIDIA:KFDIA,3,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(23)) + PAERSRC(KIDIA:KFDIA,KAERO(6))  + &
+                                                  & PAERSRC(KIDIA:KFDIA,KAERO(29)) + PAERSRC(KIDIA:KFDIA,KAERO(17)) + &
+                                                  & PAERSRC(KIDIA:KFDIA,KAERO(18))                                     ! Carbonaceous
+  PGFL(KIDIA:KFDIA,4,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(24)) + PAERSRC(KIDIA:KFDIA,KAERO(7))  + &
+                                                  & PAERSRC(KIDIA:KFDIA,KAERO(30)) + PAERSRC(KIDIA:KFDIA,KAERO(22)) + &
+                                                  & PAERSRC(KIDIA:KFDIA,KAERO(5))  + PAERSRC(KIDIA:KFDIA,KAERO(28))    ! Sulfuric
+  PGFL(KIDIA:KFDIA,5:KLEV,YAEROUT(17)%MP) = 0.0_JPRB
 
-  !** YAEROUT(21) :  height of each level top
-  
-  DO JK=1,KLEV
-    PGFL(KIDIA:KFDIA,JK,YAEROUT(21)%MP) = (PGEOH(KIDIA:KFDIA,JK-1)-PGEOH(KIDIA:KFDIA,KLEV))*ZRG
-  END DO
-  
-  !** YAEROUT(22-26) : Nucleation diagnostics
-  
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(22)%MP) = ZOUT_dnuc(KIDIA:KFDIA,1:KLEV,1)  ! NS-mass production kg/s from nucleatiom (limited by amount of SO4)
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(23)%MP) = ZOUT_dnuc(KIDIA:KFDIA,1:KLEV,2)  ! NS-number production rate #/s from nucleatiom (limited by amount of SO4 vs original #/s)
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(24)%MP) = ZOUT_dnuc(KIDIA:KFDIA,1:KLEV,3)  ! original #/s  from H2SO4/H2O nucleatiom
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(25)%MP) = ZOUT_dnuc(KIDIA:KFDIA,1:KLEV,4)  ! original #/s from organic nucleatiom
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(26)%MP) = ZOUT_dnuc(KIDIA:KFDIA,1:KLEV,5)  ! original #/s sum from organic and vehkamäki nucleation schemes
-
-  !** YAEROUT(27) : M7 GAS MIXING RATIOS at SURFACE
-
-  DO JN=1,SUBM_NGASSPEC
-    PGFL(KIDIA:KFDIA,JN,YAEROUT(27)%MP)=zxtm1(KIDIA:KFDIA,KLEV,ind_oifs_ham%ind_gas_HAM(JN))
-  END DO
-
-  !** YAEROUT(28) :  EMISSIONS
-  
-  DO JN=1,NACTAERO
-    PGFL(KIDIA:KFDIA, JN, YAEROUT(28)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(JN))
-  END DO
-
-  !** YAEROUT(29) : SURFACE EMISSIONS MODIFIED BY DRY DEPOSITION
-  
-  DO JN=1,NTRAC
-    PGFL(KIDIA:KFDIA,JN,YAEROUT(39)%MP)=ZXTEMS(KIDIA:KFDIA,JN)
-  END DO
-
-  !** YAEROUT(30) : --
-  !** YAEROUT(31) : --
-  !** YAEROUT(32) : --
-  !** YAEROUT(33) : --
-  !** YAEROUT(34) : --
-  !** YAEROUT(35) : --
-  !** YAEROUT(36) : --
-  !** YAEROUT(37) : --
-  !** YAEROUT(38) : --
-  !** YAEROUT(39) : --
-  !** YAEROUT(46) 
-  !   !---------------DUST FIELDS DIAGNOSTICS-----------------------
-  ! !** YAEROUT(47) : --
-  ! !3D Dust DU_AI in KG/M3
-  !  JO=  20 ! JO -> index context OIFS``
-  !  JH=  20  ! JH -> index context HAM
-  !  JY=YAEROUT(47)%MP
-  !  DO JK=1,KLEV
-  !    PGFL(KIDIA:KFDIA,JK,JY)=  (ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
-  !  END DO
-   
-
-  !  ! ** YAEROUT(48) : -- 
-  ! !DU_CI
-  !  JO=  26 ! JO -> index context OIFS``
-  !  JH=  21  ! JH -> index context HAM
-  !  JY=YAEROUT(48)%MP
-  !  DO JK=1,KLEV
-  !    PGFL(KIDIA:KFDIA,JK,JY)=  (ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)) * ZDPG(KIDIA:KFDIA,JK)
-  !  END DO
-
-  ! ! **YAEROUT(49)
-  !  !DU_AI NUM
-  !  JO=  19 ! JO -> index context OIFS``
-  !  JH=  27  ! JH -> index context HAM
-  !  JY=YAEROUT(49)%MP
-  !  DO JK=1,KLEV
-  !    PGFL(KIDIA:KFDIA,JK,JY)=  ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)
-  !  END DO
-  
-  !  ! **YAEROUT(50)
-  !  !DU_CI NUM
-  !  JO=  25 ! JO -> index context OIFS``
-  !  JH=  28  ! JH -> index context HAM
-  !  JY=YAEROUT(50)%MP
-  !  DO JK=1,KLEV
-  !    PGFL(KIDIA:KFDIA,JK,JY)=  ZXTM1(KIDIA:KFDIA,JK,JH)+(ZXTTE(KIDIA:KFDIA,JK,JH)*TIME_STEP_LEN)
-  !  END DO
-   
-!Commented because of overlap      DO JGAS=1,SUBM_NGASSPEC
-!Commented because of overlap    !!! BUG: JL? JK? !!!    PGFL(KIDIA:KFDIA,JGAS,YAEROUT(28+JGAS)%MP)=ZCEN(JL,JK,KCHEM(ind_oifs_ham%ind_gas_OIFS(JGAS)))
-!Commented because of overlap        PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(29+JGAS)%MP)= PTENC(KIDIA:KFDIA,1:KLEV,KCHEM(ind_oifs_ham%ind_gas_OIFS(JGAS)))
-!Commented because of overlap      END DO
-!Commented because of overlap    
-!Commented because of overlap    DO IMODE=1,NMOD
-!Commented because of overlap      PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(30+IMODE)%MP)=RW_MODE(IMODE)%d2(KIDIA:KFDIA,1:KLEV) ! m
-!Commented because of overlap    ENDDO
-
-  !IF (TRIM(CHEM_SCHEME)=="SimChem")THEN
-  !  PGFL(KIDIA:KFDIA,KLEV,YAEROUT(40)%MP)   = ZFSO2(KIDIA:KFDIA)           ! tendency SS CS ham after update surface
-  !  PGFL(KIDIA:KFDIA,KLEV,YAEROUT(41)%MP)   = ZFSO4(KIDIA:KFDIA)           ! tendency SS CS ham after update surfac
-  !  PGFL(KIDIA:KFDIA,KLEV,YAEROUT(42)%MP)   = ZFSO4_AQ(KIDIA:KFDIA)        ! tendency SS CS ham after update surface
-  !  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(43)%MP) = ZTSO4(KIDIA:KFDIA,1:KLEV,1)  ! tendency SS CS ham after update surface
-  !  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(44)%MP) = ZTSO4_AQ(KIDIA:KFDIA,1:KLEV) ! tendency SS CS ham after update surface
-  !  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(45)%MP) = ZTSO2(KIDIA:KFDIA,1:KLEV)    ! tendency SS CS ham after update surface
-  !END IF
+!<--hhermann
 
 ENDIF
+
 
 !------------------------------------------------------------------------------
 !*         9.       RELEASE LOCAL MEMORY

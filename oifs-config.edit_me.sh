@@ -19,7 +19,7 @@ export OIFS_PLATFORM="lumi"
 
 #---Base code assumes openifs-48r1 and openifs-expt are installed
 #---in $HOME. Either these can be changed by the user------------
-export OIFS_HOME="/scratch/project_462000807/${USER}/test/oifs-hamlite-coupling"
+export OIFS_HOME="/scratch/project_462000807/${USER}/oifs-hamlite-coupling"
 
 #---Slurm project used for the build and test allocations.
 #---Storage lives under project_462000807; CPU billing units are on
@@ -38,7 +38,9 @@ export OIFS_CYCLE=48r1
 #---It is recommended that the openifs-expt and oifs_data dir
 #---exist in a location designed for permanent storage-----------
 export OIFS_EXPT="/scratch/project_462000807/${USER}/test/48r1_hamlite"
-export OIFS_DATA_DIR="/scratch/project_462000807/${USER}/test/oifs-hamlite-coupling/openifs-data"
+#export OIFS_DATA_DIR="/scratch/project_462000807/${USER}/test/oifs-hamlite-coupling/openifs-data"
+#export OIFS_DATA_DIR="/scratch/project_462001382/hhermann/oifs_data/48r1"
+export OIFS_DATA_DIR="/scratch/project_462000807/hhermann/hamlite-coupling-data/oifs_data/48r1"
 
 #---Set the path for the arch directory. Depending on system,i.e.,
 #---all libs are installed on the sytem, this is not required,

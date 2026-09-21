@@ -283,6 +283,7 @@ REAL(KIND=JPHOOK) :: ZHOOK_HANDLE
 #include "hamm7_init.intfb.h"!m7
 #include "hamlite_init.intfb.h"
 
+
 #include "chem_massdia.intfb.h"
 #include "couplnemo.intfb.h"
 #include "updnemoocean.intfb.h"
@@ -503,7 +504,6 @@ IF (NAERO > 0 .AND. NCONF /= 131 ) THEN
       ! therefore we also have to initialize TM5-M7
       CALL TM5M7_INIT(YDGEOMETRY, YDMODEL%YRML_CHEM, YGFL, YDMODEL%YRML_PHY_RAD%YRERAD)
       CALL HAMM7_INIT(YGFL, YDRIP, YDMODEL%YRML_CHEM%YRCHEM%CHEM_SCHEME) !requires stuff which is defined in TM5M7_INIT
-
 
    CASE ("hamlite")
       CALL HAMLITE_INIT(YGFL, YDRIP, YDGEOMETRY, YDMODEL%YRML_CHEM%YRCHEM%CHEM_SCHEME)

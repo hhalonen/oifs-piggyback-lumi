@@ -6,7 +6,7 @@ MODULE mo_xt_borrow_lite
   
   SUBROUTINE xt_borrow_lite(kproma, kbdim,  klev,  klevp1, ktrac,       &
                        papp1,  paphp1,                             &
-                       pxtm1,  pxtte, pdtime, pdpg                               )
+                       pxtm1,  pxtte, pdtime                               )
 
     ! *xt_borrow_lite* borrowing scheme to correct for negative
     !             tracer masses conserveing mass within the
@@ -39,11 +39,6 @@ MODULE mo_xt_borrow_lite
     USE mo_subm_trac_lite,          ONLY: trlist
     USE mo_subm_trac_para_lite,     ONLY: GAS, AEROSOLMASS, AEROSOLNUMBER
     USE mo_kind_lite,               ONLY: dp, wp
-    
-    ! -->hhermann: How to get these from HAM-Lite??
-    USE mo_advection,               ONLY: no_advection !SF #246
-    USE mo_submodel,                ONLY: lmoz  !csld #330
-    ! <--hhermann
 
     IMPLICIT NONE
 
@@ -52,8 +47,6 @@ MODULE mo_xt_borrow_lite
     REAL(wp),INTENT(IN)    :: papp1(kbdim,klev), paphp1(kbdim,klevp1)
     REAL(wp),INTENT(IN)    :: pxtm1(kbdim,klev,ktrac)
     REAL(wp),INTENT(INOUT) :: pxtte(kbdim,klev,ktrac)
-    REAL(wp),INTENT(IN)    :: pdpg(kbdim,klev)
-    
 
     !--- Local variables:
 
@@ -75,17 +68,15 @@ MODULE mo_xt_borrow_lite
 
     !--- Uppermost level:
 
-   !  zdpg(1:kproma,1)=2._wp*(paphp1(1:kproma,2)-papp1(1:kproma,1))/grav
+    zdpg(1:kproma,1)=2._wp*(paphp1(1:kproma,2)-papp1(1:kproma,1))/grav
 
-   !  !--- Other levels:
+    !--- Other levels:
 
-   !  DO jk=2, klev
+    DO jk=2, klev
 
-   !     zdpg(1:kproma,jk)=(paphp1(1:kproma,jk+1)-paphp1(1:kproma,jk))/grav
+       zdpg(1:kproma,jk)=(paphp1(1:kproma,jk+1)-paphp1(1:kproma,jk))/grav
 
-   !  END DO
-
-    zdpg(1:kproma,1:klev) = pdpg(1:kproma,1:klev)
+    END DO
 
     !--- 2) Borrowing scheme:
     
@@ -94,15 +85,7 @@ MODULE mo_xt_borrow_lite
        !>>csld #330
        ! use xt_borrow on all aerosols species
        lborrtrac = trlist%ti(jt)%nphase == AEROSOLMASS .OR. trlist%ti(jt)%nphase == AEROSOLNUMBER
-
-       IF (.NOT. lmoz) THEN    ! in case of "ham only" runs, use of xt_borrow on gaz species as well
-          lborrtrac = lborrtrac .OR. (trlist%ti(jt)%nphase == GAS)
-       END IF
         
-       !-->hhermann: I guess IF statement is not necessary
-       !IF ( (trlist%ti(jt)%ntran /= no_advection)       .AND. &  !SF #246 exclude non-advected tracers
-       !    lborrtrac) THEN
-       !<--hhermann
        !<<csld #330
 
           !--- Start borrowing scheme:
@@ -190,9 +173,6 @@ MODULE mo_xt_borrow_lite
              END DO 
           END DO
        
-       !-->hhermann
-       !END IF 
-       !<--hhermann
     END DO
           
   END SUBROUTINE xt_borrow_lite
