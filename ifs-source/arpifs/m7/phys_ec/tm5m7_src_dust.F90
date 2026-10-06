@@ -3,7 +3,7 @@ SUBROUTINE TM5M7_SRC_DUST( YDEPHY, YDEAERMAP, YDEAERSRC,                 &
                          & PLSM , PWIND, PSNS, PZ0M,                     &
                          & SP, PTL, PSOIL_TYPE,                          &
                          & PFRTI, PCVL, PCVH, KTVL, KTVH,                &
-                         & EMIS_MASS, EMIS_NUMBER ,PAERFLX,PGLON, PGLAT, &
+                         & EMIS_MASS, EMIS_NUMBER ,PGLON, PGLAT, &
                          & PRWPWP,PRWSAT,PAERMAP,PALB,PALBD,PWS1,PHSDFOR,&
                          & IMM,ISOILPH1, ISOILPH2, ISOILPH3, ISOILPH4, ISOILPH5, &       !Tegen scheme only - not all used yet
                          & IZ0AM, IPOTSRC, ISOILTYPE, IAREA, ICULT,IZ0M, IFPAR, GPGAW,&  !Tegen scheme only - not all used yet
@@ -195,7 +195,7 @@ INTEGER(KIND=JPIM),    INTENT(IN)    :: KTVL(KLON), KTVH(KLON) ! Low/High vegeta
 ! M7 
 TYPE(MODAL_EMISSIONS), INTENT(INOUT) :: emis_mass(NMOD)
 TYPE(MODAL_EMISSIONS), INTENT(INOUT) :: emis_number(NMOD)
-REAL(KIND=JPRB),       INTENT(INOUT) :: PAERFLX(KLON,12,9) !diagnostic array/not used.
+!REAL(KIND=JPRB),       INTENT(INOUT) :: PAERFLX(KLON,12,9) !diagnostic array/not used.
 REAL(KIND=JPRB),       INTENT(IN)    :: PGLON(KLON),PGLAT(KLON)
 REAL(KIND=JPRB),       INTENT(INOUT) :: PRWPWP, PRWSAT, PAERMAP(KLON,5)
 REAL(KIND=JPRB),       INTENT(IN)    :: PALB(KLON), PALBD(KLON,KSW)

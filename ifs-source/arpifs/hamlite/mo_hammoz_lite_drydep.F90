@@ -1,4 +1,3 @@
-
 ! 
 ! based on mo_hammoz_drydep.f90 
 ! in https://git.iac.ethz.ch/hammoz/icon-hammoz.git (hammoz/gpu/master)

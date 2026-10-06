@@ -356,89 +356,89 @@ MODULE mo_hammoz_lite_emi_vol
   ! END SUBROUTINE read_emi_volcano
 
 !---------------------------------------------------------------------------------------------------
- 
-  SUBROUTINE read_ascii_file( filename, ncols, maxcount, ncount,        &
-                              buffer, formatstr, calling_routine, units )
-    
-    ! open and read from an ascii file
-    ! file may contain comment lines (starting with '#')  
-  
-    USE mo_exception_lite,     ONLY: finish
-    USE mo_io_units_lite,      ONLY: find_next_free_unit
-    USE mo_mpi_lite,           ONLY: p_pe, p_io
-
-    IMPLICIT NONE
- 
-    CHARACTER(LEN=*), INTENT(IN)    :: filename, formatstr, calling_routine
-    INTEGER, INTENT(IN)             :: ncols, maxcount
-    INTEGER, INTENT(OUT)            :: ncount
-    REAL(dp), INTENT(INOUT)         :: buffer(maxcount,ncols)
-    CHARACTER(len=*), INTENT(INOUT) :: units
- 
-    INTEGER             :: iunit, ierr, ilines, jl, jc
-    LOGICAL             :: lex
-    REAL(dp)            :: zvalbuf(ncmax)
-    CHARACTER(LEN=255)  :: linebuf
-
-    ncount = 0           ! number of lines infile
-    ilines = 0           ! number of lines in file (including comments)
-    linebuf = '                                                                                      '
-
-    DO jc = 1,ncols
-      DO jl = 1,maxcount
-        buffer(jl,jc) = 0._dp
-      END DO
-    END DO
-
-    DO jc = 1,ncmax
-      zvalbuf = missv 
-    END DO
-
-    IF (p_pe == p_io ) THEN
-
-      iunit = find_next_free_unit (20, 99)
-      INQUIRE (file=filename,exist=lex)
-      IF (.NOT. lex) THEN
-        CALL finish( calling_routine, 'failed to open file '//TRIM(filename)//'. file does not exist.' )
-      END IF
-      ! open file
-      OPEN (iunit,file=TRIM(filename),form='FORMATTED',iostat=ierr)
-      IF (ierr /= 0) CALL finish('read_ascii_file', 'could not open file '//TRIM(filename))
-      REWIND(iunit)
-      DO WHILE (ierr == 0)
-        READ(iunit,FMT='(a)',IOSTAT=ierr) linebuf
-        ilines = ilines + 1
-        IF (ierr < 0) EXIT     
-        IF (ierr > 0) THEN
-          write(linebuf,'(i0)') ilines
-          CALL finish( calling_routine, 'failed to read line '//TRIM(linebuf)//' in file '//TRIM(filename) )
-        END IF
-        ! analyze line
-        IF (linebuf(1:1) == '#') CYCLE   
-        IF (linebuf(1:6) == 'units:') THEN
-          units=TRIM(linebuf(7:))
-          CYCLE
-        ENDIF 
-        READ(linebuf,FMT=*,IOSTAT=ierr) zvalbuf(1:ncols)
-        IF (ierr /= 0) THEN
-          write(linebuf,'(i0)') ilines
-          CALL finish( calling_routine, 'failed to read data in line '//TRIM(linebuf)//' in file '//TRIM(filename) )
-        END IF
-        ncount = ncount + 1
-        IF (ncount > maxcount) THEN
-          write(linebuf,'(i0)') maxcount
-          CALL finish( calling_routine, 'error reading file '//TRIM(filename)//': number of lines exceeds '//linebuf )
-        END IF
-        DO jc = 1,ncols
-          buffer(ncount,jc) = zvalbuf(jc)
-        END DO
-      END DO
-
-      CLOSE(iunit)
-
-    END IF
-
-  END SUBROUTINE read_ascii_file
+  ! hhalonen: not used
+  !SUBROUTINE read_ascii_file( filename, ncols, maxcount, ncount,        &
+  !                            buffer, formatstr, calling_routine, units )
+  !  
+  !  ! open and read from an ascii file
+  !  ! file may contain comment lines (starting with '#')  
+  ! 
+  !  USE mo_exception_lite,     ONLY: finish
+  !  USE mo_io_units_lite,      ONLY: find_next_free_unit
+  !  USE mo_mpi_lite,           ONLY: p_pe, p_io
+  !
+  !  IMPLICIT NONE
+  !
+  !  CHARACTER(LEN=*), INTENT(IN)    :: filename, formatstr, calling_routine
+  !  INTEGER, INTENT(IN)             :: ncols, maxcount
+  !  INTEGER, INTENT(OUT)            :: ncount
+  !  REAL(dp), INTENT(INOUT)         :: buffer(maxcount,ncols)
+  !  CHARACTER(len=*), INTENT(INOUT) :: units
+  !
+  !  INTEGER             :: iunit, ierr, ilines, jl, jc
+  !  LOGICAL             :: lex
+  !  REAL(dp)            :: zvalbuf(ncmax)
+  !  CHARACTER(LEN=255)  :: linebuf
+  !
+  !  ncount = 0           ! number of lines infile
+  !  ilines = 0           ! number of lines in file (including comments)
+  !  linebuf = '                                                                                      '
+  !
+  !  DO jc = 1,ncols
+  !    DO jl = 1,maxcount
+  !      buffer(jl,jc) = 0._dp
+  !    END DO
+  !  END DO
+  !
+  !  DO jc = 1,ncmax
+  !    zvalbuf = missv 
+  !  END DO
+  !
+  !  IF (p_pe == p_io ) THEN
+  !
+  !    iunit = find_next_free_unit (20, 99)
+  !    INQUIRE (file=filename,exist=lex)
+  !    IF (.NOT. lex) THEN
+  !      CALL finish( calling_routine, 'failed to open file '//TRIM(filename)//'. file does not exist.' )
+  !    END IF
+  !    ! open file
+  !    OPEN (iunit,file=TRIM(filename),form='FORMATTED',iostat=ierr)
+  !    IF (ierr /= 0) CALL finish('read_ascii_file', 'could not open file '//TRIM(filename))
+  !    REWIND(iunit)
+  !    DO WHILE (ierr == 0)
+  !      READ(iunit,FMT='(a)',IOSTAT=ierr) linebuf
+  !      ilines = ilines + 1
+  !      IF (ierr < 0) EXIT     
+  !      IF (ierr > 0) THEN
+  !        write(linebuf,'(i0)') ilines
+  !        CALL finish( calling_routine, 'failed to read line '//TRIM(linebuf)//' in file '//TRIM(filename) )
+  !      END IF
+  !      ! analyze line
+  !      IF (linebuf(1:1) == '#') CYCLE   
+  !      IF (linebuf(1:6) == 'units:') THEN
+  !        units=TRIM(linebuf(7:))
+  !        CYCLE
+  !      ENDIF 
+  !      READ(linebuf,FMT=*,IOSTAT=ierr) zvalbuf(1:ncols)
+  !      IF (ierr /= 0) THEN
+  !        write(linebuf,'(i0)') ilines
+  !        CALL finish( calling_routine, 'failed to read data in line '//TRIM(linebuf)//' in file '//TRIM(filename) )
+  !      END IF
+  !      ncount = ncount + 1
+  !      IF (ncount > maxcount) THEN
+  !        write(linebuf,'(i0)') maxcount
+  !        CALL finish( calling_routine, 'error reading file '//TRIM(filename)//': number of lines exceeds '//linebuf )
+  !      END IF
+  !      DO jc = 1,ncols
+  !        buffer(ncount,jc) = zvalbuf(jc)
+  !      END DO
+  !    END DO
+  !
+  !    CLOSE(iunit)
+  !
+  !  END IF
+  !
+  !END SUBROUTINE read_ascii_file
 
 END MODULE mo_hammoz_lite_emi_vol
 

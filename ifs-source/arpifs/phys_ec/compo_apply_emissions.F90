@@ -1,7 +1,7 @@
 SUBROUTINE COMPO_APPLY_EMISSIONS( YDMODEL, &
     &                             KIDIA,   KFDIA,   KLEV,       KLON, KTRAC, &
     &                             PGELAT,  PGELAM,  PDELP,                   &
-    &                             PCEN,    PTENC,   PCFLX,                   &
+    &                             PCEN,    PTENC,   PCFLX, PAERFLX_M7,    &
     &                             PEMIS2D, PEMIS3D, PEMIS2DAUX,              &
     &                             KAERO,   KCHEM,                            &
     &                             PEXTRA,                                    &
@@ -70,6 +70,7 @@ REAL(KIND=JPRB), INTENT(IN) :: PDELP(KLON,KLEV)
 REAL(KIND=JPRB), INTENT(IN)    :: PCEN(KLON,KLEV,KTRAC)
 REAL(KIND=JPRB), INTENT(INOUT) :: PTENC(KLON,KLEV,KTRAC)
 REAL(KIND=JPRB), INTENT(INOUT) :: PCFLX(KLON,KTRAC) 
+REAL(KIND=JPRB), INTENT(INOUT) :: PAERFLX_M7(KLON,KTRAC) 
 
 ! Emission field inputs
 REAL(KIND=JPRB), INTENT(IN)         :: PEMIS2D(KLON, YDMODEL%YRML_GCONF%YGFL%NEMIS2D)
@@ -403,6 +404,7 @@ CONTAINS
             !       ZFLUX is negative for an emission as per usual IFS convention
             DO JK=1,KLEV
               PTENC(KIDIA:KFDIA,JK,ITRAC) = PTENC(KIDIA:KFDIA,JK,ITRAC) - ZPROFILE(KIDIA:KFDIA,JK) * ZFLUX(KIDIA:KFDIA)
+              PAERFLX_M7(KIDIA:KFDIA,ITRAC) = PAERFLX_M7(KIDIA:KFDIA,ITRAC) + (ZPROFILE(KIDIA:KFDIA,JK) * ZFLUX(KIDIA:KFDIA) * (PDELP(KIDIA:KFDIA,JK)/RG))
             ENDDO
             IF (LDDIAGTEND) THEN
               ! FIXME: this assumes that if we're doing diagnostics here, we're working on CHEM,
@@ -413,9 +415,9 @@ CONTAINS
             ENDIF
       
             ZSFCFLUX(KIDIA:KFDIA) = ZPROFILE(KIDIA:KFDIA,KLEV+1) * ZFLUX(KIDIA:KFDIA)
-    
             PCFLX(KIDIA:KFDIA,ITRAC) = PCFLX(KIDIA:KFDIA,ITRAC) + ZSFCFLUX(KIDIA:KFDIA)
-    
+            PAERFLX_M7(KIDIA:KFDIA,ITRAC) = PAERFLX_M7(KIDIA:KFDIA,ITRAC) + ZSFCFLUX(KIDIA:KFDIA)
+            
             IF (LDDIAGFLUX) THEN 
               ! FIXME: this assumes that if we're doing diagnostics here, we're working on CHEM,
               !   which are the leading elements in the EXTRA array (*unlike* the tracer arrays,
@@ -434,9 +436,10 @@ CONTAINS
                 CALL GET_2D_EMISSION_M7_NUMPAR( JSPECIES, KSPECIES, YDSPECIES, YDEMIS_DESC, ZPROFILE, KINDEX, &
                                                & ZFLUX, ZFLUX_NUM, ZSFCFLUX_NUM, ITRAC_NUM)
                 DO JK=1,KLEV
-                   PTENC(KIDIA:KFDIA,JK,ITRAC_NUM) = PTENC(KIDIA:KFDIA,JK,ITRAC_NUM) - ZPROFILE(KIDIA:KFDIA,JK) * ZFLUX_NUM(KIDIA:KFDIA)
+                  PTENC(KIDIA:KFDIA,JK,ITRAC_NUM) = PTENC(KIDIA:KFDIA,JK,ITRAC_NUM) - ZPROFILE(KIDIA:KFDIA,JK) * ZFLUX_NUM(KIDIA:KFDIA)
                 ENDDO
-                PCFLX(KIDIA:KFDIA,ITRAC_NUM) = PCFLX(KIDIA:KFDIA,ITRAC_NUM) + ZFLUX_NUM(KIDIA:KFDIA)
+                PCFLX(KIDIA:KFDIA,ITRAC_NUM) = PCFLX(KIDIA:KFDIA,ITRAC_NUM) + ZSFCFLUX_NUM(KIDIA:KFDIA)
+                PAERFLX_M7(KIDIA:KFDIA,ITRAC_NUM) = PAERFLX_M7(KIDIA:KFDIA,ITRAC_NUM) + ZSFCFLUX_NUM(KIDIA:KFDIA)
             ENDIF
 
             KFOUND = KFOUND + 1
@@ -496,6 +499,7 @@ CONTAINS
             ZEMIS3D(KIDIA:KFDIA,1:KLEV) = PEMIS3D(KIDIA:KFDIA,1:KLEV,YDEMIS_DESC%PARAM_INDEX) * YDEMIS_DESC%SCALING
             DO JK=1,KLEV
               ZEMIS3D(KIDIA:KFDIA,JK) = ZEMIS3D(KIDIA:KFDIA,JK) * ZDIURN(KIDIA:KFDIA)
+              PAERFLX_M7(KIDIA:KFDIA,ITRAC) = PAERFLX_M7(KIDIA:KFDIA,ITRAC) + ZEMIS3D(KIDIA:KFDIA,JK)
             ENDDO
             PTENC(KIDIA:KFDIA,1:KLEV,ITRAC) = PTENC(KIDIA:KFDIA,1:KLEV,ITRAC) &
                                             & + ZEMIS3D(KIDIA:KFDIA,1:KLEV) * (RG / PDELP(KIDIA:KFDIA,1:KLEV))

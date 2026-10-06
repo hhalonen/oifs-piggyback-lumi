@@ -544,17 +544,18 @@ CONTAINS
     IF (lcheck_init) THEN  
       IF (p_pe == p_io) THEN
         write(*,*) 'ham_lite_init_modes - checks' 
-        DO jmode = 1,nclass
-          write(*,*) 'mode'
-          write(*,'(a,5x,e12.4,e12.4)') TRIM(sizeclass(jmode)%shortname), zmode(jmode)
-          DO jspec = 1,nspec 
-            IF ((jspec == id_so4) .OR. (jspec == id_oc) .OR. (jspec == id_bc)) THEN
-              write(*,*) 'species'
-              write(*,'(a,5x,e12.4,5x,e12.4,5x,e12.4)') TRIM(speclist(jspec)%shortname),  &
-                speclist(jspec)%density, ztsum(jspec,jmode), zfrac(jspec,jmode)
-            END IF
-          END DO
-        END DO
+        !hhermann: Commented for global runs
+        !DO jmode = 1,nclass
+          !write(*,*) 'mode'
+          !write(*,'(a,5x,e12.4,e12.4)') TRIM(sizeclass(jmode)%shortname), zmode(jmode)
+          !DO jspec = 1,nspec 
+            !IF ((jspec == id_so4) .OR. (jspec == id_oc) .OR. (jspec == id_bc)) THEN
+              !write(*,*) 'species'
+              !write(*,'(a,5x,e12.4,5x,e12.4,5x,e12.4)') TRIM(speclist(jspec)%shortname),  &
+              !  speclist(jspec)%density, ztsum(jspec,jmode), zfrac(jspec,jmode)
+            !END IF
+          !END DO
+        !END DO
       END IF
      
     END IF 

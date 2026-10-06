@@ -7,7 +7,7 @@ SUBROUTINE TM5M7_SRC( &
  & PLSM , PSST , PQ  , PRHO  , PSNS , PT  , PTL  , PTSPHY, PZ0M, KCHEM,                   &
  & PWIND, PWS1 ,PSOIL_TYPE,                                                               &
  & PCVL, PCVH, KTVL, KTVH,                                                                &
- & PLDAY,  PAERFLX, PCFLX, PCEN  , PTENC, PEMIDIAG, PSO2SRC,PSO4SRC, GPGAW)
+ & PLDAY,  PAERFLX_M7, PCFLX, PCEN  , PTENC, PEMIDIAG, PSO2SRC,PSO4SRC, GPGAW)
 
 ! ╭────────────────────────────────────────────────────────────────────────────╮
 ! │                                                      (updated 03-Jun-2024) │
@@ -119,7 +119,7 @@ REAL(KIND=JPRB),    INTENT(IN)    :: PZ0M(KLON)
 INTEGER(KIND=JPIM), INTENT(IN)    :: KCHEM(YDMODEL%YRML_GCONF%YGFL%NCHEM)
 
 ! RCHG -> try to understand what is 12 and 9 here.
-REAL(KIND=JPRB),    INTENT(INOUT) :: PAERFLX(KLON,12,9)
+REAL(KIND=JPRB),    INTENT(INOUT) :: PAERFLX_M7(KLON,KTRAC)
 REAL(KIND=JPRB),    INTENT(INOUT) :: PCFLX(KLON,KTRAC)
 
 REAL(KIND=JPRB),    INTENT(IN)    :: PCVL(KLON), PCVH(KLON) ! Low/High vegetation cover
@@ -414,13 +414,13 @@ ENDIF
 
 ! RCHG: define what is 1:12, 1:9 and 1:5 with a meaninful name 
 !
-PAERFLX(KIDIA:KFDIA,1:12,1:9)=0._JPRB
+!PAERFLX(KIDIA:KFDIA,1:12,1:9)=0._JPRB
 ZAERMAP(KIDIA:KFDIA,1:5)=0._JPRB
 CALL TM5M7_SRC_DUST( YDEPHY, YDEAERMAP, YDEAERSRC, KIDIA, KFDIA, KLON, KLEV, KTILES, KSW,&
                    & PLSM, ZWNDDU, PSNS, PZ0M, &
                    & PAP(:,KLEV), PTL,  PSOIL_TYPE, &
                    & PFRTI, PCVL, PCVH, KTVL, KTVH, &
-                   & emis_mass, emis_number, PAERFLX, ZGLON, ZGLAT, &
+                   & emis_mass, emis_number, ZGLON, ZGLAT, &
                    & ZRWPWP, ZRWSAT, ZAERMAP, PALB, PALBD, PWS1, PHSDFOR, &
                    & IMM,ISOILPH1, ISOILPH2, ISOILPH3, ISOILPH4, ISOILPH5, &
                    & IZ0AM, IPOTSRC, ISOILTYPE, IAREA, ICULT,IZ0M, IFPAR, GPGAW, &
@@ -465,6 +465,15 @@ DO JL=KIDIA,KFDIA
   ZCFLX(JL,KAERO(icoi_n)) = emis_number(mode_coi)%d3(JL,KLEV,1)*(-1._JPRB)
   ZCFLX(JL,KAERO(iduaci)) = emis_mass(mode_aci)%d3(JL,KLEV,1)*(-1._JPRB)
   ZCFLX(JL,KAERO(iducoi)) = emis_mass(mode_coi)%d3(JL,KLEV,1)*(-1._JPRB)
+  
+  PAERFLX_M7(JL,KAERO(iacs_n)) =PAERFLX_M7(JL,KAERO(iacs_n))+ emis_number(mode_acs)%d3(JL,KLEV,4)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(icos_n)) =PAERFLX_M7(JL,KAERO(icos_n))+ emis_number(mode_cos)%d3(JL,KLEV,4)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(issacs)) =PAERFLX_M7(JL,KAERO(issacs))+ emis_mass(mode_acs)%d3(JL,KLEV,4)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(isscos)) =PAERFLX_M7(JL,KAERO(isscos))+ emis_mass(mode_cos)%d3(JL,KLEV,4)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(iaci_n)) =PAERFLX_M7(JL,KAERO(iaci_n))+ emis_number(mode_aci)%d3(JL,KLEV,1)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(icoi_n)) =PAERFLX_M7(JL,KAERO(icoi_n))+ emis_number(mode_coi)%d3(JL,KLEV,1)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(iduaci)) =PAERFLX_M7(JL,KAERO(iduaci))+ emis_mass(mode_aci)%d3(JL,KLEV,1)*(-1._JPRB)
+  PAERFLX_M7(JL,KAERO(iducoi)) =PAERFLX_M7(JL,KAERO(iducoi))+ emis_mass(mode_coi)%d3(JL,KLEV,1)*(-1._JPRB)
 
 ENDDO
 

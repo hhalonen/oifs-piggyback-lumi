@@ -176,7 +176,7 @@ MODULE mo_util_extfield_lite
 
   RECURSIVE FUNCTION ef_get_geometry(efield,ncid,jgeom) RESULT (found)
  
-!    USE mo_mpi_lite,         ONLY: my_process_is_mpi_workroot, p_pe, p_io, p_bcast, p_comm_work
+    !USE mo_mpi_lite,         ONLY: my_process_is_mpi_workroot, p_pe, p_io, p_bcast, p_comm_work
 
     IMPLICIT NONE
 
@@ -244,10 +244,10 @@ MODULE mo_util_extfield_lite
  
     IF (.NOT. found) THEN
       CALL nf_check( nf_inq_varid( ncid, efield%ef_varname, varid ),efield%ef_file)
-!      IF ( p_pe == p_io ) THEN 
+      !IF ( p_pe == p_io ) THEN 
       found = ef_check_vardims(ncid,varid, ndim, dims)
-!      END IF
-!      CALL p_bcast(found,     p_io, p_comm_work)
+      !END IF
+      !CALL p_bcast(found,     p_io, p_comm_work)
       IF (found) jgeom = efield%ef_geometry
     END IF
  
@@ -855,7 +855,7 @@ MODULE mo_util_extfield_lite
     USE mtime_lite,                  ONLY: datetime!, newDatetime, deallocateDatetime
     USE mo_model_domain_lite,        ONLY: t_patch
     USE mo_subm_main_lite,           ONLY: emi_scenario
-!    USE mo_mpi_lite,                 ONLY: my_process_is_mpi_workroot, p_pe, p_io, p_bcast, p_comm_work
+    !USE mo_mpi_lite,                 ONLY: my_process_is_mpi_workroot, p_pe, p_io, p_bcast, p_comm_work
     !USE mo_util_timeconv,       ONLY: add_date, write_date
 
     IMPLICIT NONE
@@ -915,15 +915,15 @@ MODULE mo_util_extfield_lite
         !                                            efield%ef_varname)
       ENDIF
       ! read unit of field once (lfirst!)
-!      IF ( p_pe == p_io ) THEN
+      !IF ( p_pe == p_io ) THEN
         CALL ef_open (jg, p_patch, efield, ncid, .FALSE.)
         CALL nf_check(nf_inq_varid( ncid, efield%ef_varname, varid ),efield%ef_file)
         efield%ef_actual_unit=''
         CALL nf_check(nf_get_att_text(ncid, varid, 'units',efield%ef_actual_unit),efield%ef_file)
         CALL nf_check( nf_close( ncid ) )
-!      END IF
+      !END IF
       
-!      CALL p_bcast(efield%ef_actual_unit,     p_io, p_comm_work)
+      !CALL p_bcast(efield%ef_actual_unit,     p_io, p_comm_work)
     ENDIF
 
     IF (efield%ef_timeindex == 0) THEN

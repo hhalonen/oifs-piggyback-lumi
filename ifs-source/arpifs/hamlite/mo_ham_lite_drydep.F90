@@ -370,7 +370,7 @@ MODULE mo_ham_lite_drydep
         ! Slinn (1982) deposition velocity v_d = v_s / (1 - exp(-v_s * R_tot)).
         ! Guard against (a) R_tot=0 and (b) v_s*R_tot underflow (-> exp=1 -> div/0).
         ! For v_s*R_tot << 1 the Taylor limit gives v_d -> 1 / R_tot.
-        IF (ztemp <= zeps) THEN
+        IF (ABS(zvsed(jl) * ztemp) <= zeps) THEN
           ztemp = 0._dp
         ELSE IF (zvsed(jl) * ztemp > 1.0e-8_dp) THEN
           ztemp = zvsed(jl) / (1._dp - exp(-1._dp * zvsed(jl) * ztemp))

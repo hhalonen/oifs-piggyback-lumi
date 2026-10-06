@@ -364,8 +364,8 @@ CONTAINS
       END DO 
       tmean = tsum/inum 
 
-      !write(*,*) sname, '   ', tname 
-      !write(*,'(a,5x,i10,i10,i10)') 'min, max, mean', tmin, tmax, tmean
+      write(*,*) sname, '   ', tname 
+      write(*,'(a,5x,i10,i10,i10)') 'min, max, mean', tmin, tmax, tmean
 
     END IF
 
@@ -497,8 +497,8 @@ CONTAINS
       END DO 
       tmean = tsum/REAL(inum) 
 
-      write(*,*) sname, '   ', tname 
-      write(*,'(a,5x,e12.4,e12.4,e12.4)') 'min, max, mean', tmin, tmax, tmean
+      !write(*,*) sname, '   ', tname 
+      !write(*,'(a,5x,e12.4,e12.4,e12.4)') 'min, max, mean', tmin, tmax, tmean
 
     END IF
 
@@ -526,7 +526,7 @@ CONTAINS
     INTEGER, INTENT(IN)           ::  jb 
     CHARACTER(LEN=*), INTENT(IN)  ::  sname, iname 
 
-    IF ((p_pe == p_io) .AND. (jb == 1)) write(*,*) sname, '   ', iname
+    !IF ((p_pe == p_io) .AND. (jb == 1)) write(*,*) sname, '   ', iname
  
   END SUBROUTINE ham_lite_check_wcc
 

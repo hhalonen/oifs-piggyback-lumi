@@ -7,7 +7,7 @@ SUBROUTINE HAMM7_INTERFACE( &
  & PLU,       PMFU,      PO3P,      PQP,         PTP,      PTHP,     PTENC,    PCFLX,   &
  & PAERDDP,   PAERSDM,   PAERSRC,   PAERWS,      PAERGUST, PAERUST,  PAERMAP, &
  & PCLAERS,   PPRAERS,   PCHEM2AER,                                           &
- & PFRTI,     PLSM,      PSNS,      PWND,        PWS1,     PAERFLX,  PAERLIF, &
+ & PFRTI,     PLSM,      PSNS,      PWND,        PWS1,  PAERFLX_M7, PAERLIF, &
  & PAERODDF,  PTSPHY,    PGFL,                                                &
  & PODTO,     PAERO_WVL_DIAG,                                                 &
  & PAER_TAU,  PAER_SSA,  PAER_ASYM, PAER_TAU_LW,                              &
@@ -15,7 +15,7 @@ SUBROUTINE HAMM7_INTERFACE( &
  & PEXTRA,    PVERVEL,   PCCNL,     PCCNO,       PAHFSTI,  PCI,      PZ0M,    &
  & PAHFLEV,   PUP,       PVP,       PCVL,        PCVH,     PSO2DD,   PGEMU,   &
  & PBLH,      PSNOWACL,  KCTOP,     KCBOT,                                    &
- & PAEPM1,    PAEPM25,   PAEPM10)
+ & PAEPM1,    PAEPM25,   PAEPM10, PKH, PKM, PLAIL, PLAIH, PCLAKE)
 
 ! ╭────────────────────────────────────────────────────────────────────────────╮
 ! │                                                      (updated 30-APR-2024) │
@@ -131,7 +131,7 @@ SUBROUTINE HAMM7_INTERFACE( &
 !     PSNS       : MASS OF SNOW PER UNIT SURFACE
 !     PWND(KLON)                  : Surface wind
 !     PWS1   : REAL     : TOP LAYER SOIL MOISTURE CONTENT
-!     PAERFLX(KLON,12,9)     : DIAGNOSTIC DUST SOURCE FLUXES
+!     PAERFLX(KLON,KTRAC)     : DIAGNOSTIC DUST SOURCE FLUXES
 !     PAERLIF(KLON,9)        : DIAGNOSTIC LIFTING THRESHOLD SPEED
 !     PAERODDF    ! Diagnostic array with aerosol fluxes (sources and sinks)
 !     PTSPHY                : TIMESTEP                  (s)
@@ -169,7 +169,7 @@ USE YOE_AERODIAG, ONLY: JPAERO_WVL_AOD, JPAERO_WVL_AODABS, JPAERO_WVL_AODFM,   &
 USE YOMLUN,       ONLY: NULOUT
 
 ! HAM-M7
-USE MO_HAM,                  ONLY: nclass, naerocomp, sizeclass, nccndiag, subm_ngasspec
+USE MO_HAM,                  ONLY: nclass, naerocomp, sizeclass, nccndiag, subm_ngasspec, aerocomp
 USE OIFS_TO_HAM,             ONLY: ind_oifs_ham
 USE MO_HAM_SUBM,             ONLY: HAM_SUBM_INTERFACE                   ! replaced HAM-M7 call with submodel interface
 USE MO_ACTIV,                ONLY: activ_updraft,nw, idt_cdnc, idt_icnc ! HAM-M7 activation updraft calculation, effective radii
@@ -190,6 +190,45 @@ USE TM5M7_OPTICS_DATA,       ONLY : NWDEP, NASWBAND, ASWBAND !,WDEP, AER_TAU, AE
 USE TM5_PHOTOLYSIS,          ONLY : NBANDS_TROP, WAV_GRID, WAV_GRIDA
 USE TM5M7_EMIS_DATA,         ONLY : VKARMAN ! von karman constant for dry deposition
 USE TM5_CHEM_MODULE,         ONLY : NCHEM2AER
+
+!-->hhermann: HAM-Lite
+
+USE hamlite_variables,             ONLY: this_datetime, &
+                                   kbndsw, &
+                                   kbndlw, &
+                                   zrwet,  &
+                                   zrhop_lite
+USE hamlite_driver_input,          ONLY: jg
+USE mtime_lite,                    ONLY: t_datetime => datetime
+USE mo_subm_interface_lite,        ONLY: cloud_mig_subm_1,      &
+                                   cloud_mig_subm_2,      &
+                                   radiation_subm_1,      &
+                                   radiation_subm_2,      &
+                                   interface_tmx_subm,    &
+                                   aes_phy_main_subm
+                                   !interface_aes_hamlite !eehol: sedimentation... 
+                                   !too much hazzle so calling straight aes_phy_main_subm
+USE mo_ham_lite_misc,              ONLY: pm6rp,prhop,ham_lite_mprops
+USE mo_math_constants_lite,        ONLY: grav
+USE mo_run_config_lite,            ONLY: dtime,nlev,ntracer
+!eehol: these logicals are controlled by mo_subm_main_list_config
+USE mo_subm_main_lite,             ONLY: lemissions, & 
+                                   ldrydep, &
+                                   lwetdep, &
+                                   lsedimentation, &
+                                   lradiation
+USE mo_ham_lite_convert_concentrations, ONLY: mmr2conc, conc2mmr, mmr2conctend
+USE mo_ham_lite_main,              ONLY: nclasslite => nclass, sizeclasslite => sizeclass, cmr2mmr
+USE hamlite_driver_input,          ONLY: jblite => jb
+USE mo_subm_trac_lite,             ONLY: ntraclite => ntrac
+USE MO_HAM_M7CTL,                  ONLY: INUCS,  ISO4NS, ISO4KS, ISO4AS, ISO4CS,  &
+                                         IBCKS,  IBCAS,  IBCCS,  IBCKI,   &
+                                         IOCKS,  IOCAS,  IOCCS,  IOCKI,   &
+                                         ISSAS,  ISSCS,                   &
+                                         IDUAS,  IDUCS,  IDUAI,  IDUCI
+USE mo_xt_borrow_lite,             ONLY: xt_borrow_lite
+
+!<--hhermann
 !-----------------------------------------------------------------------
 
 IMPLICIT NONE
@@ -219,7 +258,7 @@ REAL(KIND=JPRB),INTENT(IN)    :: PFRTI(KLON,KTILES)
 REAL(KIND=JPRB),INTENT(IN)    :: PAERWS(KLON), PAERGUST(KLON), PAERUST(KLON), PAERMAP(KLON,5)
 REAL(KIND=JPRB),INTENT(IN)    :: PAERSRC(KLON,YDMODEL%YRML_GCONF%YGFL%NACTAERO)
 REAL(KIND=JPRB),INTENT(IN)    :: PCHEM2AER(KLON,KLEV,NCHEM2AER)
-REAL(KIND=JPRB),INTENT(IN)    :: PAERFLX(KLON,12,9), PAERLIF(KLON,9), PCLAERS(KLON)
+REAL(KIND=JPRB),INTENT(IN)    :: PAERLIF(KLON,9), PCLAERS(KLON)
 REAL(KIND=JPRB),INTENT(IN)    :: PLSM(KLON)  , PSNS(KLON)    , PWND(KLON)   , PWS1(KLON)
 REAL(KIND=JPRB),INTENT(IN)    :: PTSPHY
 REAL(KIND=JPRB),INTENT(IN)    :: PVERVEL(KLON,KLEV) ! vertical velocity (needed in HAM-M7 activation)
@@ -239,6 +278,9 @@ REAL(KIND=JPRB),INTENT(IN)    :: PSNOWACL(KLON,KLEV)  ! accretion rate of snow w
 REAL(KIND=JPRB),INTENT(INOUT) :: PTENC(KLON,KLEV,KTRAC)
 REAL(KIND=JPRB),INTENT(INOUT) :: PAERDDP(KLON,YDMODEL%YRML_GCONF%YGFL%NACTAERO)
 REAL(KIND=JPRB),INTENT(INOUT) :: PAERSDM(KLON,YDMODEL%YRML_GCONF%YGFL%NACTAERO)
+
+REAL(KIND=JPRB),INTENT(INOUT) :: PAERFLX_M7(KLON,KTRAC)
+
 ! Total optical depth at various wavelenghts. 
 ! NOTE!! These wavelength definitions are not necessarily consistent
 ! with what is used in IFS-AER
@@ -262,6 +304,15 @@ REAL(KIND=JPRB),INTENT(IN)    :: PBLH(KLON)  ! Boundary layer height
 REAL(KIND=JPRB),INTENT(OUT)     :: PAEPM1(KLON)
 REAL(KIND=JPRB),INTENT(OUT)     :: PAEPM25(KLON)
 REAL(KIND=JPRB),INTENT(OUT)     :: PAEPM10(KLON)
+
+!-->hhermann
+REAL(KIND=JPRB), INTENT(IN) :: &
+       PKH(KLON,KLEV), &    ! Exchange coefficient for heat
+       PKM(KLON,KLEV), &    ! Exchange coefficient for momentum
+       PCLAKE(KLON), &      ! Lake fraction
+       PLAIL(KLON), &       ! LOW VEGETAION LAI  
+	   PLAIH(KLON)          ! HIGH VEGETAION LAI
+!<--hhermann
 
 !*   0.5    LOCAL VARIABLES
 !           ---------------
@@ -459,6 +510,71 @@ REAL(KIND=JPRB) :: LAMBDA_DIAG(YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG)
 
 REAL(KIND=JPRB) :: ZAOD_DIAG(KLON,YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG), ZSSA_DIAG(KLON,YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG)
 REAL(KIND=JPRB) :: ZABS_DIAG(KLON,YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG), ZASY_DIAG(KLON,YDMODEL%YRML_GCONF%YGFL%NAERO_WVL_DIAG)
+
+!-->hhermann
+
+INTEGER, PARAMETER ::  &
+       kmodes = 17,    &    ! Number of tracer modes 
+       		                ! (DU_AS, DU_CS, SS_AS, SS_CS, BC_KS, BC_AS, 
+		                    ! BC_CS, SO4_KS, SO4_AS, SO4_CS)
+	   ksurf_lite = 4       ! number of surface types (land/water/ice/vegetation)
+	   
+INTEGER :: &
+       isurf, &             ! surface type index
+       iqt, &               ! index of first non-water tracer
+       ksfc_type, &         ! eehol: integers for dry deposition surface
+       idx_wtr, &
+       idx_ice, &
+       idx_lnd, &
+       i,j,k,l,m            ! index
+
+REAL(JPRB) :: &
+       zlai(KLON),                          & ! total vegetation leaf area index
+       kband_lw  (2,kbndlw),                & ! limits of longwave bands [1/cm] - RRTMGP
+       kband_sw  (2,kbndsw),                & ! limits of shortwave bands [1/cm] - RRTMGP
+       aer_tau_sw_vr (KLON,KLEV,kbndsw),    & ! SW aerosol optical depth
+       aer_ssa_sw_vr (KLON,KLEV,kbndsw),    & ! SW aerosol single scattering albedo
+       aer_asy_sw_vr (KLON,KLEV,kbndsw),    & ! SW aerosol asymmetry factor
+       aer_tau_lw_vr (KLON,KLEV,kbndlw),    & ! LW aerosol optical depth
+       zmmr_trac_modes(KLON, KLEV, kmodes), & ! Tracer number concentrations for each M7 mode
+       modefrac_num(KLON, KLEV, kmodes),    & ! Number proportion of each tracer mode in the total tracer concentration
+       zxtte_lite(KLON, KLEV, kmodes),      & ! Tracer mass concentration tendency [kg/(kg*s)]
+       zmair (KLON,KLEV),                   & ! air mass [kg/m2] 
+       zxlqg (KLON,KLEV),                   & ! graupel [kg/kg]
+       zxpri (KLON),                        & ! precip rate ice [kg/m2/s] 
+       zxprg (KLON),                        & ! precip rate graupel [kg/m2/s] 
+       zglac     (KLON),                    & ! fraction of land covered by glaciers
+       zsfcWind  (KLON),                    & ! 10m windspeed
+       zfrc_tile     (KLON,ksurf_lite),     & ! area fraction of each surface type (land/water/ice)
+       zz0m_tile     (KLON,ksurf_lite),     & ! surface roughness length
+       ztsfc_tile    (KLON,ksurf_lite),     & ! surface temperature  
+       zsfcWind_tile (KLON,ksurf_lite),     & ! 10m windspeed          
+       zkh_tile      (KLON,ksurf_lite),     & ! exchange coefficient for heat
+       zkm_tile      (KLON,ksurf_lite),     & ! exchange coefficient for momentum 
+       zzf           (KLON,KLEV),           & ! geometric height above sea level, full level [m] 
+       ztracnum      (KLON,KLEV,nclasslite),& ! Tracer concentration [#/kg]
+       ztend         (KLON,KLEV,nclasslite),& ! tracer tendency [#/kg/s]
+       ztend_tot     (KLON,KLEV,nclasslite),& ! total tracer tendency [#/kg/s]
+       zzh           (KLON,KLEV+1),         & ! geometric height above sea level, half level [m]
+       zpvgf         (KLON),                &
+       mass_mean_rad (nclasslite),          & ! mass mean radius of particles
+       count_mean_rad(nclasslite),          & ! count mean radius of particles
+       zrs1_tmp(KLON, KLEV+1),              & ! Temporary variable for converting OIFS variables to correct dimensions for HAMLite.
+       ZFLUX_WDEP(KLON,NCLASS),             &
+       ZFLUX_DDEP(KLON,NCLASS),             &
+       ZFLUX_SEDI(KLON,NCLASS),             &
+       ZPRECIP_RAIN(KLON),                  &
+       ZPRECIP_ICE(KLON),                   &
+       ZPRECIP_SNOW(KLON),                  &
+       zwa_lite(KLON,KLEV),                 &
+       ZXTTEouti(KLON,KLEV,ntrac),          &
+       ZXTTEoutf(KLON,KLEV,ntrac),          &
+       ZXTTEoutdiff(KLON,KLEV,ntrac),       &
+       ZXTTEoutconv(KLON,KLEV,nclasslite),  &
+       ZXTTEoutmodes(KLON,KLEV,kmodes)
+
+       
+!<--hhermann
 !-----------------------------------------------------------------------
 
 #include "abor1.intfb.h"
@@ -783,6 +899,9 @@ DO JMASS=1,naerocomp
       if(trim(YAERO(JO)%CNAME)=='SO4_AS') then   
         ZXTTE(JL,JK,JH)=ZXTTE(JL,JK,JH)+PCHEM2AER(JL,JK,2)!!! need to be verrified, Lianghai
       end if
+      if(trim(YAERO(JO)%CNAME)=='SO4') then
+        PAERFLX_M7(JL,KAERO(JO)) = PAERFLX_M7(JL,KAERO(JO)) + PCHEM2AER(JL,JK,1) * ZDPG(JL,JK) !fill unused so4 field with gas so4
+      end if
       !if(trim(YAERO(ind_oifs_ham%ind_mass_OIFS(JMASS))%CNAME)=='SO4') then!!! add SO4 into tendency, ugly loop for now,Lianghai
       !  ZXTTE(JL,JK,ind_oifs_ham%ind_mass_HAM(JMASS))=ZXTTE(JL,JK,ind_oifs_ham%ind_mass_HAM(JMASS))+PCHEM2AER(JL,JK,1)
       !end if
@@ -885,8 +1004,51 @@ ENDDO
 
     ZWPDF(KIDIA:KFDIA,1:KLEV,:) = 0.0_JPRB
     
+    !-->hhermann    
+    !calculate saturation water vapor pressure from saturation specific humidity
+    DO JK=1,KLEV
+        DO JL=KIDIA,KFDIA
+	     ZESW(JL,JK)=(ZQSAT(JL,JK)*PRSF1(JL,JK))/(0.62198_JPRB)
+	ENDDO
+    ENDDO
+
+    ! LWP
+    DO JK=1,KLEV
+      DO JL=KIDIA,KFDIA
+        IF ( ZAP(JL,JK) >=0.001_JPRB ) THEN
+          ZTMPA = 1.0_JPRB/ZAP(JL,JK)
+          LLIQCLD(JL,JK) = ( PLP(JL,JK)*ZTMPA  ) > ZEPSEC ! logical for liquid cloud
+          LICECLD(JL,JK) = ( PIP(JL,JK)*ZTMPA  ) > ZEPSEC ! logical for ice cloud
+          ZQLWP(JL,JK)   = MIN(MAX(0._JPRB, PLP(JL,JK)*ZTMPA), RCLDMAX)   ! lwc
+          ZQIWP(JL,JK)   = MIN(MAX(0._JPRB, PIP(JL,JK)*ZTMPA), RCLDMAX)   ! iwc
+          ZMSNOWACL_str(JL,JK) = PSNOWACL(JL,JK)*ZTMPA ! accretion rate of snow with cloud drop. in cloudy part for strat. wetdep
+        ELSE
+          LLIQCLD(JL,JK) = .FALSE.
+          LICECLD(JL,JK) = .FALSE.
+          ZQLWP(JL,JK)   = 0.0_JPRB
+          ZQIWP(JL,JK)   = 0.0_JPRB
+          ZMSNOWACL_str(JL,JK) = 0.0_JPRB
+        END IF
+      END DO
+    END DO
+    ZMSNOWACL_cov(KIDIA:KFDIA,1:KLEV) = 0.0_JPRB ! accretion rate of snow 0 for conv. wetdep
+
+    
+    !---find highest model level where there is cloud
+    KTOP = KLEV !eehol: add as default (basically if no cloud so KTOP is assigned to lowest level)
+    DO JK=1,KLEV
+       IF ( ANY(ZAP(KIDIA:KFDIA,JK) >=0.001_JPRB) ) THEN ! if cloud fraction is larger than threshold
+          KTOP = JK
+          EXIT
+       ENDIF
+    END DO
+    !<--hhermann
+    
     !-----------------------------------------------------------------
     ! Submodel interface call (HAM aerosol microphysics)
+    
+    !hhermann
+    ZXTTEouti(kidia:kfdia,1:KLEV,1:ntrac) = ZXTTE(kidia:kfdia,1:KLEV,1:ntrac)
     
     CALL GSTATS(2501,0)
 
@@ -913,41 +1075,43 @@ ENDDO
         H2O_MODE(IMODE)%d2(KIDIA:KFDIA,1:KLEV) = ZWW(KIDIA:KFDIA,1:KLEV,IMODE) ! ?
       END IF
     ENDDO
+    
+    !-->hhermann
+    ZXTTEoutf(kidia:kfdia,1:KLEV,1:ntrac) = ZXTTE(kidia:kfdia,1:KLEV,1:ntrac)
+    
+    ZXTTEoutdiff(kidia:kfdia,1:KLEV,1:ntrac) = &
+        ZXTTEoutf(kidia:kfdia,1:KLEV,1:ntrac) - &
+        ZXTTEouti(kidia:kfdia,1:KLEV,1:ntrac)
+        
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,1)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUAS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,2)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUCS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,3)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUAI)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,4)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUCI)%IDT)
+    
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,5)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISSAS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,6)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISSCS)%IDT)
+    
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,7)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCKS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,8)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCAS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,9)  = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCCS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,10) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCKI)%IDT)
+    
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,11) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCKS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,12) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCAS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,13) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCCS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,14) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCKI)%IDT)
+    
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,15) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4KS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,16) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4AS)%IDT)
+    ZXTTEoutmodes(KIDIA:KFDIA,1:KLEV,17) = ZXTTEoutdiff(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4CS)%IDT)
+    
+    !<--hhermann
+          
     !-----------------------------------------------------------------
 
     CALL GSTATS(2502,0)
 
     ZTKEM1(KIDIA:KFDIA,1:KLEV) = 0._JPRB ! turbulent kinetic energy as zero for now as it is not used (YET!)
-
-    ! LWP
-    DO JK=1,KLEV
-      DO JL=KIDIA,KFDIA
-        IF ( ZAP(JL,JK) >=0.001_JPRB ) THEN
-          ZTMPA = 1.0_JPRB/ZAP(JL,JK)
-          LLIQCLD(JL,JK) = ( PLP(JL,JK)*ZTMPA  ) > ZEPSEC ! logical for liquid cloud
-          LICECLD(JL,JK) = ( PIP(JL,JK)*ZTMPA  ) > ZEPSEC ! logical for ice cloud
-          ZQLWP(JL,JK)   = MIN(MAX(0._JPRB, PLP(JL,JK)*ZTMPA), RCLDMAX)   ! lwc
-          ZQIWP(JL,JK)   = MIN(MAX(0._JPRB, PIP(JL,JK)*ZTMPA), RCLDMAX)   ! iwc
-          ZMSNOWACL_str(JL,JK) = PSNOWACL(JL,JK)*ZTMPA ! accretion rate of snow with cloud drop. in cloudy part for strat. wetdep
-        ELSE
-          LLIQCLD(JL,JK) = .FALSE.
-          LICECLD(JL,JK) = .FALSE.
-          ZQLWP(JL,JK)   = 0.0_JPRB
-          ZQIWP(JL,JK)   = 0.0_JPRB
-          ZMSNOWACL_str(JL,JK) = 0.0_JPRB
-        END IF
-      END DO
-    END DO
-    ZMSNOWACL_cov(KIDIA:KFDIA,1:KLEV) = 0.0_JPRB ! accretion rate of snow 0 for conv. wetdep
-
-    !---find highest model level where there is cloud
-    KTOP = KLEV !eehol: add as default (basically if no cloud so KTOP is assigned to lowest level)
-    DO JK=1,KLEV
-       IF ( ANY(ZAP(KIDIA:KFDIA,JK) >=0.001_JPRB) ) THEN ! if cloud fraction is larger than threshold
-          KTOP = JK
-          EXIT
-       ENDIF
-    END DO
 
     ! Default values for effective radii
     REFFL(KIDIA:KFDIA,1:KLEV,ZKROW) = ZDEF_RE_LIQ ! comes from liquid effective radius routine (PP_MIN_RE_UM)
@@ -1459,6 +1623,252 @@ ENDDO
     CALL xt_borrow(KFDIA, KLON,  KLEV, KLEV+1, ntrac, &
          PRSF1, PRS1, &
          ZXTM1, ZXTTE)
+    
+    !-->hhermann: HAM-Lite
+         
+      ksfc_type=ksurf_lite
+      idx_wtr=2
+      idx_ice=3
+      idx_lnd=1
+      ztend(:,:,:) = 0._JPRB !eehol: tendency as 0 for start (NOTE! this is nullified before every process, thus the ztend_tot)
+      ztend_tot(:,:,:) = 0._JPRB !eehol: total tendency as 0 for start
+      ZFLUX_WDEP(:,:) = 0._JPRB
+      ZFLUX_DDEP(:,:) = 0._JPRB
+      ZFLUX_SEDI(:,:) = 0._JPRB
+	  
+	  !------------------------------------------------------------------------------
+	  
+      DO jk = 0, KLEV
+          zrs1_tmp  (KIDIA:KFDIA, jk+1) = PRS1  (KIDIA:KFDIA, jk)
+      END DO
+      
+      ! Other OIFS variables to HAM-Lite variables
+	  
+	  zmair(KIDIA:KFDIA,1:KLEV) = ZRHO(KIDIA:KFDIA,1:KLEV)*ZDZ(KIDIA:KFDIA,1:KLEV)
+	  
+	  ! Similar as in the box model
+	  iqt = 1
+	  zxlqg   (:,:) = 0.0_JPRB                ! graupel
+      zglac     (:) =  0._JPRB                ! fraction of land covered by glaciers
+      zzf(KIDIA:KFDIA, 1:KLEV) = ZDZ(KIDIA:KFDIA,1:KLEV)/2._JPRB   ! full level height
+
+      ! Half level height
+      zzh(KIDIA:KFDIA, KLEV+1) = 0._JPRB
+      DO jk = KLEV, 1, -1
+          zzh(KIDIA:KFDIA, jk) = zzh(KIDIA:KFDIA, jk+1) + ZDZ(KIDIA:KFDIA, jk)
+      END DO
+      DO jk = KLEV, 1, -1
+          zzf(KIDIA:KFDIA, jk) = zzh(KIDIA:KFDIA, jk) - (ZDZ(KIDIA:KFDIA, jk) / 2)
+      END DO
+      
+	  ! Tracer mass mixing ratios:
+      zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,1)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUAS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,2)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUCS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,3)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUAI)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,4)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IDUCI)%IDT)
+	  
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,5)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISSAS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,6)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISSCS)%IDT)
+	  
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,7)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCKS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,8)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCAS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,9)  = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCCS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,10) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IBCKI)%IDT)
+	  
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,11) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCKS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,12) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCAS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,13) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCCS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,14) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(IOCKI)%IDT)
+	  
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,15) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4KS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,16) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4AS)%IDT)
+	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,17) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4CS)%IDT)
+	  
+	  ! Count mean radius to mass mean radius
+	  count_mean_rad(1:nclasslite) = sizeclasslite(1:nclasslite)%lite_radi
+	  DO jclass=1, nclasslite
+	    mass_mean_rad(jclass) = cmr2mmr(jclass) * count_mean_rad(jclass)
+	  END DO
+
+      ! Convert tracer mixing ratios to number concentrations and combine them
+      CALL mmr2conc(KIDIA, KFDIA, KLON, KLEV, kmodes, nclasslite, zmmr_trac_modes, &
+          & ztracnum, ZRHO, mass_mean_rad, modefrac_num)
+          
+      CALL mmr2conctend(KIDIA, KFDIA, KLON, KLEV, kmodes, nclasslite, ZXTTEoutmodes, &
+          & ZXTTEoutconv, ZRHO, mass_mean_rad, modefrac_num)
+	  
+	  CALL ham_lite_mprops( jg, jblite, KIDIA, KFDIA, KLON, KLEV, PTP, PRSF1, ZQP) !eehol: aerosol rwet and density calculations (relhum also)
+	  zrwet(KIDIA:KFDIA, 1:KLEV, jblite, 1:nclasslite) = pm6rp(KIDIA:KFDIA, 1:KLEV, 1:nclasslite)
+      zrhop_lite(KIDIA:KFDIA, 1:KLEV, jblite, 1:nclasslite) = prhop(KIDIA:KFDIA, 1:KLEV, 1:nclasslite)
+      
+      ! Meteorology values
+      zfrc_tile(KIDIA:KFDIA,1) 		    = PLSM(KIDIA:KFDIA)                     ! Land area fraction
+      zfrc_tile(KIDIA:KFDIA,2) 		    = ZFRW(KIDIA:KFDIA)                     ! Water area fraction
+      zfrc_tile(KIDIA:KFDIA,3) 		    = PCI(KIDIA:KFDIA)                      ! Ice area fraction
+      zfrc_tile(KIDIA:KFDIA,4) 		    = PCVL(KIDIA:KFDIA)+PCVH(KIDIA:KFDIA)   ! Vegetation area fraction
+      DO isurf = 1,ksurf_lite
+          zz0m_tile(KIDIA:KFDIA, isurf) = PZ0M(KIDIA:KFDIA) * zfrc_tile(KIDIA:KFDIA, isurf)! Surface roughness length [m]
+      END DO
+      zsfcWind(KIDIA:KFDIA) = PWND(KIDIA:KFDIA)                              ! Surface wind
+      DO isurf = 1,ksurf_lite
+          zsfcWind_tile(KIDIA:KFDIA, isurf) = PWND(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA, isurf)
+      END DO
+      DO isurf = 1,ksurf_lite
+          zkh_tile(KIDIA:KFDIA ,isurf) = PKH(KIDIA:KFDIA, KLEV-1)*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for heat in 3D turb.
+      END DO
+      DO isurf = 1,ksurf_lite
+          zkm_tile(KIDIA:KFDIA ,isurf) = PKM(KIDIA:KFDIA, KLEV-1)*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for momentum in 3D turb.
+      END DO
+      ztsfc_tile(KIDIA:KFDIA,1) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (land)
+      ztsfc_tile(KIDIA:KFDIA,2) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (water)
+      ztsfc_tile(KIDIA:KFDIA,3) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (ice)
+      ztsfc_tile(KIDIA:KFDIA,4) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (vegetation)
+      zlai(KIDIA:KFDIA) = PLAIH(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + &! Leaf area index zlai(KIDIA:KFDIA) = 
+            PLAIL(KIDIA:KFDIA)*(1.0_JPRB-zfrc_tile(KIDIA:KFDIA,4))         ! zlaih(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + 
+                                                                         ! zlail(KIDIA:KFDIA)*(1-zfrc_tile(KIDIA:KFDIA,4))
+                                                                         ! Weighted sum of low and high vegetation values
+                                                                         ! Weighted sum of low and high vegetation values
+
+      !-------Start cloud microphysics (activation and wet removal)------------------------
+	  !---Cloud microphysics (activation)
+	  !WRITE(*,*) '<---Cloud microphysics (activation)'
+	  
+	  ! Vertical velocity from Pa/s to m/s
+	  zwa_lite(KIDIA:KFDIA,1:KLEV) = -PVERVEL(KIDIA:KFDIA,1:KLEV) / &
+                                (ZRHO(KIDIA:KFDIA,1:KLEV) * RG)
+      
+      CALL cloud_mig_subm_1(jg, jblite, KIDIA, KFDIA, ktop, KLEV, &
+                      KLON, nclasslite,                    &
+                      ZDZ, ZRHO, zwa_lite, PTP, PRSF1,      &
+                      ZQP, PLP, PIP, ztracnum, ZCDNCACT, ZESW)
+
+	  !WRITE(*,*) '---> End cloud microphysics (activation)'
+	  !---Wet removal
+      
+      IF ( lwetdep ) THEN
+	  
+	    ZPRECIP_RAIN(KIDIA:KFDIA) = 0._JPRB
+        ZPRECIP_ICE(KIDIA:KFDIA)  = 0._JPRB
+        ZPRECIP_SNOW(KIDIA:KFDIA) = 0._JPRB
+   
+	    DO JK = 1, KLEV
+	      ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
+          ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
+          ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
+	    END DO
+	    zxprg(:) = 0._JPRB
+	    
+	    CALL cloud_mig_subm_2(jg, jblite, KIDIA, KFDIA, ktop, KLEV,              &
+                          KLON, nclasslite,                            & 
+                          time_step_len,                                   &  
+                          ZRHO, PTP, zmair,                       &
+                          PLP, PIP, PRP, PSP, zxlqg,        &
+                          ZPRECIP_RAIN, ZPRECIP_ICE, ZPRECIP_SNOW, zxprg,               & 
+                          ztracnum, ztend, ZFLUX_WDEP)
+	    
+        !CALL cloud_mig_subm_2(jg, jblite, KIDIA, KFDIA, ktop, KLEV,              &
+        !                  KLON, nclasslite,                            & 
+        !                  time_step_len,                                   &  
+        !                  ZRHO, PTP, zmair,                       &
+        !                  PLP, PIP, PRP, PSP, zxlqg,        &
+        !                  PFPLSL(KIDIA:KFDIA,KLEV), zxpri, PFPLSN(KIDIA:KFDIA,KLEV), zxprg,               & 
+        !                  ztracnum, ztend, ZFLUX_WDEP)
+
+	    ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) = ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) + &
+	            ztend(KIDIA:KFDIA,1:KLEV,1:nclasslite) !eehol: add tendency to total tendency
+
+	  END IF
+	  !-------End cloud microphysics (activation and wet removal)------------------------
+
+	  !-------Start radiation calculations------------------------
+	  !---Radiation
+	  IF ( lradiation ) THEN
+	  
+        CALL radiation_subm_1(jg, jblite, KIDIA, KFDIA,                                           &
+                          KLON, KLEV, ntracer, nclasslite, ZQP, iqt,                     &
+                          kbndlw, kbndsw, kband_lw, kband_sw,                         &
+                          ztracnum, zmair, PTP, PRSF1,                               &                                                         
+                          aer_tau_sw_vr, aer_ssa_sw_vr, aer_asy_sw_vr, aer_tau_lw_vr)
+                          
+	    !eehol: radiation_subm_2 is basically just diagnostics but includes cache cleanup so I included it here but removed the diagnostics
+        CALL radiation_subm_2(jg, jblite, KIDIA, KFDIA,                                                 &
+                          KLON, KLEV, kbndlw, kbndsw,                                     & 
+                          ZDZ, aer_tau_sw_vr, aer_ssa_sw_vr, aer_asy_sw_vr, aer_tau_lw_vr)
+      
+	  END IF
+	  !-------End radiation calculations------------------------
+
+	  !-------Start dry deposition------------------------
+	  !---Interface with TMX (emi and drydep but emis are now simplified for box model only!! (usually these come from host model!)
+	  
+	  IF ( ldrydep .OR. lemissions ) THEN
+                            
+        CALL interface_tmx_subm(jg, jblite, KIDIA, KFDIA,         &
+                            KLON, KLEV, KLEV+1, nclasslite,       &
+                            ksfc_type, idx_wtr, idx_ice, idx_lnd, &
+                            time_step_len,         &
+                            PLSM, zglac, PCLAKE,        &
+                            PCI, zsfcWind,              &
+                            PGELAM, PGELAT,   &
+                            zfrc_tile, zz0m_tile,                 &
+                            ztsfc_tile, zsfcWind_tile,            &
+                            zkh_tile, zkm_tile, PAERWS, &
+                            zzf, zzh, ZDZ,                        &
+                            zmair, PRSF1, zrs1_tmp,               &
+                            PTP, ZRHO, ZQP,                       &
+                            ztracnum,                             &
+                            ztend,zrwet,zrhop_lite,PCVH,zlai,ZFLUX_DDEP)
+      
+	    ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) = ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) + &
+	        ztend(KIDIA:KFDIA,1:KLEV,1:nclasslite) !eehol: add tendency to total tendency
+      
+	  END IF
+	  !-------End dry deposition------------------------
+	  
+	  !-------Start sedimentation------------------------
+	  !---Sedimentation
+	  IF ( lsedimentation ) THEN
+	  
+        CALL aes_phy_main_subm (  jg, jblite, KIDIA, KFDIA,       &
+                            KLON, KLEV, KLEV+1, nclasslite,  &
+                            time_step_len,                       &  
+                            ZDZ, PTP,                    &  
+                            zmair, ZRHO,                  &  
+                            PRSF1, zrs1_tmp,                &  
+                            ZQP, ztracnum, ztend, zrwet, zrhop_lite, ZFLUX_SEDI)
+      
+	    ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) = ztend_tot(KIDIA:KFDIA,1:KLEV,1:nclasslite) + &
+	        ztend(KIDIA:KFDIA,1:KLEV,1:nclasslite) !eehol: add tendency to total tendency
+	    
+	  END IF
+	  !-------End sedimentation------------------------
+	  
+	  CALL xt_borrow_lite(KFDIA, KLON,  KLEV, KLEV+1, nclasslite, &
+            PRSF1, PRS1, ztracnum, ztend_tot, time_step_len)
+	  
+	  !-------End aerosol processes------------------------
+	  ! Convert tracer tendency from #/kg/s to kg/kg/s and split to modes
+	  
+	  CALL conc2mmr(KIDIA, KFDIA, KLON, KLEV, &
+	       kmodes, nclasslite, zxtte_lite, ztend_tot, &
+	       ztracnum, ZRHO, mass_mean_rad, modefrac_num)
+	  
+	  ! Get tracer mmr [kg/kg]
+	  DO i = KIDIA, KFDIA
+    	DO j = 1, KLEV
+    	  DO k = 1,kmodes
+    	    zmmr_trac_modes(i,j,k) = zmmr_trac_modes(i,j,k)+zxtte_lite(i,j,k)*time_step_len
+    	  END DO
+    	END DO
+      END DO
+	  DO jt=1,nclasslite
+	    ztracnum(KIDIA:KFDIA,1:KLEV,jt) = ztracnum(KIDIA:KFDIA,1:KLEV,jt) + &
+	        ztend_tot(KIDIA:KFDIA,1:KLEV,jt)*time_step_len !add total tendency to number concentrations
+	  END DO
+	  ztend_tot(:,:,:) = 0._JPRB !eehol: nullify total tendency
+	  ztend(:,:,:) = 0._JPRB !eehol: nullify tendency (precaution)
+	  
+	!<--hhermann
 
     !-----------------------------------------------------------------
     !--> Add HAM modified tendency back to PTENC (OIFS values)
@@ -1833,23 +2243,22 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
 !-->hhermann: Output for ML
 
   ! HAM-M7 mode aerosol number emissions
-  DO JM = 1, NCLASS
-    JO = ind_oifs_ham%ind_class_OIFS(JM)
-    IF (JO > 0) PGFL(KIDIA:KFDIA, JM, YAEROUT(1)%MP) = PAERSRC(KIDIA:KFDIA, JO)
+  DO JN=1,NACTAERO
+    PGFL(KIDIA:KFDIA,KAERO(JN),YAEROUT(1)%MP)  = -1.0_JPRB * PAERFLX_M7(KIDIA:KFDIA,KAERO(JN))
   END DO
-  PGFL(KIDIA:KFDIA,NCLASS+1:KLEV,YAEROUT(1)%MP) = 0.0_JPRB
+  PGFL(KIDIA:KFDIA,KAERO(NACTAERO)+1:KLEV,YAEROUT(1)%MP) = 0.0_JPRB
   
   ! HAM-Lite tracer number concentrations
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(2)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,1)
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(3)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,2)
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(4)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,3)
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(5)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,4)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(2)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,1)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(3)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,2)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(4)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,3)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(5)%MP) = ztracnum(KIDIA:KFDIA,1:KLEV,4)
   
   ! HAM-M7 550nm extinction coefficient
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(6)%MP) = PAER_TAU(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-Lite 550nm extinction coefficient
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = aer_tau_sw_vr(KIDIA:KFDIA,1:KLEV,10)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = aer_tau_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-M7 SSA
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(8)%MP) = PAER_SSA(KIDIA:KFDIA,1:KLEV,10)
@@ -1858,10 +2267,10 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(9)%MP) = PAER_ASYM(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-Lite SSA
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(10)%MP) = aer_ssa_sw_vr(KIDIA:KFDIA,1:KLEV,10)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(10)%MP) = aer_ssa_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-Lite asymmetry factor
-  !PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = aer_asy_sw_vr(KIDIA:KFDIA,1:KLEV,11)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = aer_asy_sw_vr(KIDIA:KFDIA,1:KLEV,11)
   
   ! HAM-M7 CDNC
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(12)%MP) = ZCDNCACT(KIDIA:KFDIA,1:KLEV)
@@ -1872,27 +2281,43 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   ! HAM-M7 550nm AOD
   PGFL(KIDIA:KFDIA,1,YAEROUT(14)%MP) = PAOD(KIDIA:KFDIA,10)
   
-  ! Tendency NUM_KS ham after update surface
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(15)%MP) = ZXTTE(KIDIA:KFDIA,1:KLEV,23)
+  ! HAM-M7 microphysics tendency in HAM-Lite SS mode
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(15)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,1)
   
-  ! Tendency NUM_AS ham after update surface
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(16)%MP) = ZXTTE(KIDIA:KFDIA,1:KLEV,24)
+  ! HAM-M7 microphysics tendency in HAM-Lite dust mode
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(16)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,2)
+  
+  ! HAM-M7 microphysics tendency in HAM-Lite carbonaceous mode
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(17)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,3)
+  
+  ! HAM-M7 microphysics tendency in HAM-Lite sulfuric mode
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(18)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,4)
   
   ! HAM-Lite mode emissions
-  PGFL(KIDIA:KFDIA,1,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(8)) + PAERSRC(KIDIA:KFDIA,KAERO(31))    	       ! SS
-  PGFL(KIDIA:KFDIA,2,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(9))  + PAERSRC(KIDIA:KFDIA,KAERO(32)) + &
-                                                  & PAERSRC(KIDIA:KFDIA,KAERO(20)) + PAERSRC(KIDIA:KFDIA,KAERO(26))    ! Dust
-  PGFL(KIDIA:KFDIA,3,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(23)) + PAERSRC(KIDIA:KFDIA,KAERO(6))  + &
-                                                  & PAERSRC(KIDIA:KFDIA,KAERO(29)) + PAERSRC(KIDIA:KFDIA,KAERO(17)) + &
-                                                  & PAERSRC(KIDIA:KFDIA,KAERO(18))                                     ! Carbonaceous
-  PGFL(KIDIA:KFDIA,4,YAEROUT(17)%MP) = PAERSRC(KIDIA:KFDIA,KAERO(24)) + PAERSRC(KIDIA:KFDIA,KAERO(7))  + &
-                                                  & PAERSRC(KIDIA:KFDIA,KAERO(30)) + PAERSRC(KIDIA:KFDIA,KAERO(22)) + &
-                                                  & PAERSRC(KIDIA:KFDIA,KAERO(5))  + PAERSRC(KIDIA:KFDIA,KAERO(28))    ! Sulfuric
-  PGFL(KIDIA:KFDIA,5:KLEV,YAEROUT(17)%MP) = 0.0_JPRB
-
+  PGFL(KIDIA:KFDIA,1,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,8) + PAERFLX_M7(KIDIA:KFDIA,31))    	! SS
+  PGFL(KIDIA:KFDIA,2,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,9)  + PAERFLX_M7(KIDIA:KFDIA,32) + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,20) + PAERFLX_M7(KIDIA:KFDIA,26))    ! Dust
+  PGFL(KIDIA:KFDIA,3,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,23) + PAERFLX_M7(KIDIA:KFDIA,6)  + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,29) + PAERFLX_M7(KIDIA:KFDIA,17) + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,18))                                 ! Carbonaceous
+  PGFL(KIDIA:KFDIA,4,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,24) + PAERFLX_M7(KIDIA:KFDIA,7)  + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,30) + PAERFLX_M7(KIDIA:KFDIA,22) + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,5)  + PAERFLX_M7(KIDIA:KFDIA,28))    ! Sulfuric
+  PGFL(KIDIA:KFDIA,5:KLEV,YAEROUT(19)%MP) = 0.0_JPRB
+  
+  ! Cloud fraction
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(20)%MP) = PAP(KIDIA:KFDIA,1:KLEV)
+  
+  ! RH
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(21)%MP) = ZRH(KIDIA:KFDIA,1:KLEV)
+  
+  ! Geopotential height
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(22)%MP) = PAPHIF(KIDIA:KFDIA,1:KLEV)
+  
 !<--hhermann
 
 ENDIF
+
 
 
 !------------------------------------------------------------------------------

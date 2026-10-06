@@ -83,6 +83,7 @@ MODULE mo_ham_lite_wetdep
     ! compute ratio of rain, snow, and graupel to cloud water and ice
     DO jk = jks,klev
       DO jl = jcs,jce  
+        
         zxlqa = pxlqc(jl,jk) + pxlqi(jl,jk) + pxlqr(jl,jk) + pxlqs(jl,jk) + pxlqg(jl,jk)   
         zxlqb = pxlqr(jl,jk) + pxlqs(jl,jk) + pxlqg(jl,jk) 
         ltest = (zxlqa > qcld_min)  

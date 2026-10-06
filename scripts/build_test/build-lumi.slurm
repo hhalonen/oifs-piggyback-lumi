@@ -4,7 +4,7 @@
 #SBATCH --partition=small
 #SBATCH --nodes=1
 #SBATCH --exclusive
-#SBATCH --time=03:00:00
+#SBATCH --time=00:15:00
 #SBATCH --output=%x-%j.out
 #
 #  Batch build of OpenIFS 48r1 + HAMlite on LUMI-C.
@@ -30,10 +30,9 @@ source ./oifs-config.edit_me.sh
 # already inside an allocation.
 export IGT_BUILD_LAUNCHER=""
 
-./scripts/build_test/openifs-test.sh -cb \
+./scripts/build_test/openifs-test.sh -b \
     -j "${SLURM_CPUS_ON_NODE:-64}" \
     --arch="${OIFS_ARCH}" \
-    --clean \
     --without-single-precision
 
 echo "Build finished. Executable expected at: ${OIFS_EXEC}"

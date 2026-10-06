@@ -123,7 +123,7 @@ MODULE mo_hammoz_lite_emi_mat
     USE mo_io_units_lite,      ONLY: find_next_free_unit
     USE mo_util_string_lite,   ONLY: toupper
     USE mo_exception_lite,     ONLY: finish, message, message_text
-!    USE mo_mpi_lite,           ONLY: p_pe, p_io, p_bcast,  p_comm_work
+    !USE mo_mpi_lite,           ONLY: p_pe, p_io, p_bcast,  p_comm_work
     USE mo_subm_main_lite,     ONLY: emi_basepath
     USE mo_util_string_lite,   ONLY: separator
 
@@ -176,7 +176,7 @@ MODULE mo_hammoz_lite_emi_mat
     efinterpolate= EF_NOINTER
 
     ! read the emissions matrix on the I/O processor
-!    IF ( p_pe .eq. p_io  ) THEN
+    !IF ( p_pe .eq. p_io  ) THEN
       iunit = find_next_free_unit (30, 100)
       OPEN(iunit,file="emi_spec.txt",status='OLD',iostat=ierr)
       IF (ierr /= 0) THEN
@@ -436,14 +436,14 @@ MODULE mo_hammoz_lite_emi_mat
           END DO
         END IF  ! eof (no information)
       END IF  ! iostat (emi_spec) /= 0
-!    END IF  ! p_parallel_io
+    !END IF  ! p_parallel_io
 
-!    CALL p_bcast(lcorrect, p_io, p_comm_work)
+    !CALL p_bcast(lcorrect, p_io, p_comm_work)
     IF (.NOT. lcorrect) CALL finish('em_read','program stopped due to errors!')
     
     ! distribute across all processors 
-!    CALL p_bcast_em(ematrix, p_io, comm=p_comm_work)
-!    CALL p_bcast(nsectors,p_io, p_comm_work)
+    !CALL p_bcast_em(ematrix, p_io, comm=p_comm_work)
+    !CALL p_bcast(nsectors,p_io, p_comm_work)
  
   END SUBROUTINE em_read
 
@@ -790,46 +790,46 @@ MODULE mo_hammoz_lite_emi_mat
 
 ! !---------------------------------------------------------------------------------------------------
 
-!  SUBROUTINE p_bcast_em (em_struc, p_source, comm)
-!
-!!    USE mo_mpi_lite, ONLY: p_bcast, p_all_comm => process_mpi_all_comm 
-!
-!    IMPLICIT NONE
-!
-!    INTEGER,           INTENT(IN)    :: p_source
-!    INTEGER, OPTIONAL, INTENT(IN)    :: comm
-!    TYPE(emi_matrix),  INTENT(INOUT) :: em_struc
-!
-!    INTEGER :: p_comm, jsec, jvar
-!
-!    IF (PRESENT(comm)) THEN
-!      p_comm = comm
-!    ELSE
-!      p_comm = p_all_comm
-!    ENDIF
-!
-!    CALL p_bcast(em_struc%em_nsectors,    p_source, p_comm)
-!    DO jsec=1, em_struc%em_nsectors
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_sectorname,   p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_file,         p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_varname,      p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_nvars,        p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_eftype,       p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_efgeometry,   p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_eftimedef,    p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_eftimeoffset, p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_efinterpolate,p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_efvalue,      p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_emtype,       p_source, p_comm)
-!      CALL p_bcast(em_struc%em_sectors(jsec)%es_nlev,         p_source, p_comm)
-!      DO jvar=1, em_struc%em_sectors(jsec)%es_nvars
-!        CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_varname,     p_source, p_comm)
-!        CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_translation, p_source, p_comm)
-!        CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_factor,      p_source, p_comm)
-!      END DO
-!    END DO
-!
-!  END SUBROUTINE p_bcast_em
+  !SUBROUTINE p_bcast_em (em_struc, p_source, comm)
+  !
+  !  USE mo_mpi_lite, ONLY: p_bcast, p_all_comm => process_mpi_all_comm 
+  !
+  !  IMPLICIT NONE
+  !
+  !  INTEGER,           INTENT(IN)    :: p_source
+  !  INTEGER, OPTIONAL, INTENT(IN)    :: comm
+  !  TYPE(emi_matrix),  INTENT(INOUT) :: em_struc
+  !
+  !  INTEGER :: p_comm, jsec, jvar
+  !
+  !  IF (PRESENT(comm)) THEN
+  !    p_comm = comm
+  !  ELSE
+  !    p_comm = p_all_comm
+  !  ENDIF
+  !
+  !  CALL p_bcast(em_struc%em_nsectors,    p_source, p_comm)
+  !  DO jsec=1, em_struc%em_nsectors
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_sectorname,   p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_file,         p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_varname,      p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_nvars,        p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_eftype,       p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_efgeometry,   p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_eftimedef,    p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_eftimeoffset, p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_efinterpolate,p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_efvalue,      p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_emtype,       p_source, p_comm)
+  !    CALL p_bcast(em_struc%em_sectors(jsec)%es_nlev,         p_source, p_comm)
+  !    DO jvar=1, em_struc%em_sectors(jsec)%es_nvars
+  !      CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_varname,     p_source, p_comm)
+  !      CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_translation, p_source, p_comm)
+  !      CALL p_bcast(em_struc%em_sectors(jsec)%es_variables(jvar)%ev_factor,      p_source, p_comm)
+  !    END DO
+  !  END DO
+  !
+  !END SUBROUTINE p_bcast_em
 
 ! !---------------------------------------------------------------------------------------------------
 
