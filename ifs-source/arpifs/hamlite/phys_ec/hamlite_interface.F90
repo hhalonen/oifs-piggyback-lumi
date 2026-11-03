@@ -7,7 +7,7 @@ SUBROUTINE HAMLITE_INTERFACE( &
  & PLU,       PMFU,      PO3P,      PQP,         PTP,      PTHP,     PTENC,   PCFLX,  &
  & PAERDDP,   PAERSDM,   PAERSRC,   PAERWS,      PAERGUST, PAERUST,  PAERMAP, &
  & PCLAERS,   PPRAERS,   PCHEM2AER,                                           &
- & PFRTI,     PLSM,      PSNS,      PWND,        PWS1,     PAERLIF,           &
+ & PFRTI,     PLSM,      PSNS,      PWND,        PWS1,     PAERLIF, &
  & PAERODDF,  PTSPHY,    PGFL,                                                &
  & PODTO,     PAERO_WVL_DIAG,                                                 &
  & PAER_TAU,  PAER_SSA,  PAER_ASYM, PAER_TAU_LW,                              &
@@ -15,7 +15,7 @@ SUBROUTINE HAMLITE_INTERFACE( &
  & PEXTRA,    PVERVEL,   PCCNL,     PCCNO,       PAHFSTI,  PCI,      PZ0M,    &
  & PAHFLEV,   PUP,       PVP,       PCVL,        PCVH,     PSO2DD,   PGEMU,   &
  & PBLH,      PSNOWACL,  KCTOP,     KCBOT,                                    &
- & PAEPM1,    PAEPM25,   PAEPM10,   PKH, PKM, PLAIL, PLAIH)
+ & PAEPM1,    PAEPM25,   PAEPM10,   PKH, PKM, PLAIL, PLAIH, PAERFLX_M7)
 
 ! -----------------------------------------------------------------------
 ! Purpose:
@@ -120,6 +120,7 @@ REAL(KIND=JPRB),INTENT(IN)    :: PLAIL(KLON)       ! LOW VEGETATION LAI
 REAL(KIND=JPRB),INTENT(IN)    :: PLAIH(KLON)       ! HIGH VEGETATION LAI
 REAL(KIND=JPRB),INTENT(IN)    :: PKH(KLON,KLEV)    ! Exchange coefficient for heat
 REAL(KIND=JPRB),INTENT(IN)    :: PKM(KLON,KLEV)    ! Exchange coefficient for momentum
+REAL(KIND=JPRB),INTENT(IN)    :: PAERFLX_M7(KLON,KTRAC)
 
 REAL(KIND=JPRB),INTENT(INOUT) :: PTENC(KLON,KLEV,KTRAC)
 REAL(KIND=JPRB),INTENT(INOUT) :: PAERDDP(KLON,YDMODEL%YRML_GCONF%YGFL%NACTAERO)
@@ -421,15 +422,15 @@ IF ( lwetdep ) THEN
    ZPRECIP_SNOW(KIDIA:KFDIA) = 0._JPRB
    ! precip fluxes column integrated
 	!DO JK = 1, KLEV
-	!  ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
+    !  ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
     !  ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
     !  ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
-	!END DO
+    !END DO
 	    
-	ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,KLEV)
+    ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,KLEV)
     ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,KLEV)
     ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,KLEV)
-
+    
    CALL cloud_mig_subm_2( &
       & 1, 1, KIDIA, KFDIA, 1, KLEV, KLON, NCLASS, &
       & TIME_STEP_LEN, &
@@ -481,10 +482,12 @@ IF ( ldrydep ) THEN
       ZSFCWIND(JL) = PWND(JL)                              ! Surface wind
 
       DO ISURF = 1,KSURF_LITE
+         !-->hhermann: removed multiplications by zfrc_tile
          ZZ0M_TILE(JL, ISURF) = MAX(1.0E-5_JPRB,PZ0M(JL))!*ZFRC_TILE(JL, ISURF))! Surface roughness length [m]
          ZSFCWIND_TILE(JL, ISURF) = PWND(JL)!*ZFRC_TILE(JL, ISURF)
          ZKH_TILE(JL, ISURF) = PKH(JL, KLEV)/PWND(JL)!*ZFRC_TILE(JL, ISURF)! Horizontal exchange coefficient for momentum in 3D turb.
          ZKM_TILE(JL, ISURF) = ((PAERUST(JL)/PWND(JL))**(2._JPRB))!*ZFRC_TILE(JL,ISURF) !inverse operation done in mo_subm_interface_lite to get ustar
+         !<--hhermann
          !zkm_tile(JL, ISURF) = PKM(JL, KLEV)!*zfrc_tile(JL, ISURF)! Horizontal exchange coefficient for heat in 3D turb.
          ZTSFC_TILE(JL, ISURF) = PTP(JL, KLEV) ! surface temperature (type)
       END DO
@@ -651,9 +654,9 @@ END DO
 !ENDIF
 
 IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
-  !---------------------------------------
-  !-->hhermann: ML data
 
+!-->hhermann: Output for ML
+  
   ! HAM-Lite tracer number concentrations
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(1)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,1)
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(2)%MP) = ZXTM1(KIDIA:KFDIA,1:KLEV,2)
@@ -667,10 +670,28 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(6)%MP) = PAER_SSA(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-Lite asymmetry factor
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = PAER_ASYM(KIDIA:KFDIA,1:KLEV,11)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(7)%MP) = PAER_ASYM(KIDIA:KFDIA,1:KLEV,10)
   
-  !<--hhermann: ML data
-  !---------------------------------------
+  ! Cloud fraction
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(8)%MP) = PAP(KIDIA:KFDIA,1:KLEV)
+  
+  ! RH
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(9)%MP) = ZRH(KIDIA:KFDIA,1:KLEV)
+  
+  ! Geopotential height
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(10)%MP) = PAPHIF(KIDIA:KFDIA,1:KLEV)
+  
+  ! CDNC
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = ZCDNCACT(KIDIA:KFDIA,1:KLEV)
+  
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(12)%MP) = 0.0_JPRB
+  PGFL(KIDIA:KFDIA,1,YAEROUT(12)%MP) = -1.0_JPRB * PAERFLX_M7(KIDIA:KFDIA,KAERO(ind_oifs_hamlite%ind_mass_OIFS(2))) ! SS
+  PGFL(KIDIA:KFDIA,2,YAEROUT(12)%MP) = -1.0_JPRB * PAERFLX_M7(KIDIA:KFDIA,KAERO(ind_oifs_hamlite%ind_mass_OIFS(1))) ! Dust
+  PGFL(KIDIA:KFDIA,3,YAEROUT(12)%MP) = -1.0_JPRB * PAERFLX_M7(KIDIA:KFDIA,KAERO(ind_oifs_hamlite%ind_mass_OIFS(3))) ! Carbonaceous
+  PGFL(KIDIA:KFDIA,4,YAEROUT(12)%MP) = -1.0_JPRB * PAERFLX_M7(KIDIA:KFDIA,KAERO(ind_oifs_hamlite%ind_mass_OIFS(4))) ! Sulfuric
+  
+!<--hhermann
+
 ENDIF
 
 END ASSOCIATE

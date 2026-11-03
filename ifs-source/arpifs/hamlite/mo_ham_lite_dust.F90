@@ -288,8 +288,7 @@ MODULE mo_ham_lite_dust
  
     bc_regint%bc_domain = BC_BOTTOM
     bc_regint%ef_type = EF_FILE
-    bc_regint%ef_template = '/scratch/project_462000807/hhermann/' // &
-        'oifs-hamlite-coupling/ifs-source/arpifs/hamlite/orig_nc/dust_regions.nc' 
+    bc_regint%ef_template = 'orig_nc/dust_regions.nc' 
     bc_regint%ef_varname = 'regions'
     bc_regint%ef_geometry = EF_LONLAT
     bc_regint%ef_timedef = EF_IGNOREYEAR
@@ -409,8 +408,7 @@ MODULE mo_ham_lite_dust
     CALL message('',separator)
     CALL message('bgc_dust_read_yearly','reading soil type distributions')
 
-    cfile='//scratch/project_462000807/hhermann/oifs-hamlite-coupling/' // &
-        'ifs-source/arpifs/hamlite/orig_nc/soil_type_all.nc'
+    cfile='orig_nc/soil_type_all.nc'
     CALL check_input_file_exist('bgc_dust_read_yearly',cfile)
 
     !CALL openInputFile(stream_id, cfile, p_patch, default_read_method)
@@ -452,8 +450,7 @@ MODULE mo_ham_lite_dust
     ALLOCATE(zvar2d(2, 2))
 
     !--- Read preferential sources distribution:
-    cfile='/scratch/project_462000807/hhermann/oifs-hamlite-coupling/' // &
-        'ifs-source/arpifs/hamlite/orig_nc/dust_preferential_sources.nc'  
+    cfile='orig_nc/dust_preferential_sources.nc'  
 
     WRITE(message_text,'(a,a)') 'reading potential sources distribution ', TRIM(cfile)
     CALL message('',message_text)
@@ -479,8 +476,7 @@ MODULE mo_ham_lite_dust
       !eehol: Allocate your pointer based on dimension sizes (NEED TO BE SAME AS INCOMING FILE!!!! JUST HARDCODED FOR NOW!!)
       ALLOCATE(zvar2d(2, 2))
 
-      cfile='/scratch/project_462000807/hhermann/oifs-hamlite-coupling/' // &
-        'ifs-source/arpifs/hamlite/orig_nc/dust_msg_pot_sources.nc'
+      cfile='orig_nc/dust_msg_pot_sources.nc'
 
       WRITE(message_text,'(a,a)') 'reading potential Saharan sources', TRIM(cfile)
       CALL message('',message_text)
@@ -591,8 +587,7 @@ MODULE mo_ham_lite_dust
     !eehol: Allocate your pointer based on dimension sizes (NEED TO BE SAME AS INCOMING FILE!!!! JUST HARDCODED FOR NOW!!)
     ALLOCATE(p2d(2, 2))
 
-    cfile='/scratch/project_462000807/hhermann/oifs-hamlite-coupling/' // &
-    'ifs-source/arpifs/hamlite/orig_nc/dust_potential_sources.nc'
+    cfile='orig_nc/dust_potential_sources.nc'
 
     WRITE(message_text,'(a,a)') 'reading dust potential sources field ', TRIM(cfile)
     CALL message('bgc_read_fpar_field',message_text)
@@ -1338,3 +1333,4 @@ MODULE mo_ham_lite_dust
   END SUBROUTINE check_input_file_exist
 
 END MODULE mo_ham_lite_dust
+

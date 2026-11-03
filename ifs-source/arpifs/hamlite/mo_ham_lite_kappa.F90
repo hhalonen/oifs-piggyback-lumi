@@ -81,9 +81,7 @@ MODULE mo_ham_lite_kappa
   !--------------------
 
   ! file name for lookup table
-  CHARACTER(LEN=256), PARAMETER :: lut_fn = "/scratch/project_462000807/" // &
-  "hhermann/oifs-hamlite-coupling/ifs-source/arpifs/hamlite/orig_nc/" // &
-  "lut_kappa.nc"
+  CHARACTER(LEN=32), PARAMETER :: lut_fn = "lut_kappa.nc"
 
   ! dimension names in lookup table
   CHARACTER(LEN=16), PARAMETER :: cdimn_Rd = "DryRadius"
@@ -139,7 +137,7 @@ MODULE mo_ham_lite_kappa
     USE mo_netcdf_parallel_lite,   ONLY: p_nf90_open, p_nf90_get_att, p_nf90_inq_dimid, &
                                     p_nf90_inquire_dimension, p_nf90_close 
     USE mo_util_netcdf77_lite,     ONLY: read_var_nf77_1d, read_var_nf77_4d 
-    !USE mo_mpi_lite,               ONLY: p_pe, p_io, p_bcast, p_comm_work
+!    USE mo_mpi_lite,               ONLY: p_pe, p_io, p_bcast, p_comm_work
     USE mo_util_string_lite,       ONLY: separator          
     
     IMPLICIT NONE
@@ -186,17 +184,17 @@ MODULE mo_ham_lite_kappa
     !--- allocate arrays
 
     ! coordinates 
-    !IF (  p_pe .EQ. p_io  ) THEN 
+!    IF (  p_pe .EQ. p_io  ) THEN 
       ALLOCATE(Rd(N_Rd))
       ALLOCATE(T(N_T))
       ALLOCATE(rh(N_rh))
       ALLOCATE(kappa(N_kappa))
-    !END IF
+!    END IF
 
     ! lookup table for growth factor
     ALLOCATE(gf(N_Rd, N_T, N_rh, N_kappa))
   
-    !IF ( p_pe .EQ. p_io ) THEN 
+!    IF ( p_pe .EQ. p_io ) THEN 
 
       ! coordinate variables
       CALL read_var_nf77_1d(lut_fn, TRIM(cdimn_Rd), TRIM(cvarn_Rd), Rd, idum)
@@ -219,13 +217,12 @@ MODULE mo_ham_lite_kappa
       rh_max = rh(N_rh)
       kappa_min = kappa(1)
       kappa_max = kappa(N_kappa)
-      
       rh_init_step = rh(2)-rh(1)
       inv_rh_init_step = 1._dp/rh_init_step
       rh_step_compress = (rh(3)-rh(2))/rh_init_step ! compression ratio 
       log_rh_step_compress = LOG(rh_step_compress)
 
-    !END IF
+!    END IF
 
     !--- close file
     CALL nf_check(p_nf90_close(zncid))
@@ -242,16 +239,16 @@ MODULE mo_ham_lite_kappa
     !CALL p_bcast(rh_min,    p_io, p_comm_work)
     !CALL p_bcast(rh_max,    p_io, p_comm_work)
     !CALL p_bcast(N_rh,      p_io, p_comm_work)
-    !
+ 
     !CALL p_bcast(rh_init_step,          p_io, p_comm_work)
     !CALL p_bcast(inv_rh_init_step,      p_io, p_comm_work)
     !CALL p_bcast(rh_step_compress,      p_io, p_comm_work)
     !CALL p_bcast(log_rh_step_compress,  p_io, p_comm_work)
-    !
+ 
     !CALL p_bcast(kappa_min,  p_io, p_comm_work)
     !CALL p_bcast(kappa_max,  p_io, p_comm_work)
     !CALL p_bcast(N_kappa,    p_io, p_comm_work)
-    !
+
     !CALL p_bcast(gf,  p_io, p_comm_work) 
 
     !--- report lookup table data
@@ -278,12 +275,12 @@ MODULE mo_ham_lite_kappa
     CALL check_kappa
 
     !--- release memory holding the coordinate variables
-    !IF ( p_pe .eq. p_io ) THEN
+!    IF ( p_pe .eq. p_io ) THEN
        DEALLOCATE(Rd)
        DEALLOCATE(T)
        DEALLOCATE(rh)
        DEALLOCATE(kappa)
-    !END IF
+!    END IF
  
   END SUBROUTINE start_kappa
 
@@ -291,7 +288,7 @@ MODULE mo_ham_lite_kappa
  
   SUBROUTINE check_kappa 
      
-    !USE mo_mpi_lite,       ONLY: p_pe, p_io 
+!    USE mo_mpi_lite,       ONLY: p_pe, p_io 
    
     INTEGER, PARAMETER :: n_check = 100
     LOGICAL, PARAMETER :: lcheck_kappa = .FALSE.
@@ -300,7 +297,7 @@ MODULE mo_ham_lite_kappa
     REAL(dp) :: rhm, rhv
 
     IF (lcheck_kappa) THEN 
-      !IF (p_pe == p_io) THEN
+!      IF (p_pe == p_io) THEN
 
         write(*,*) 'check lookup table for hygroscopic growth factor' 
 
@@ -319,7 +316,7 @@ MODULE mo_ham_lite_kappa
 
         END DO
         
-      !END IF
+!      END IF
     END IF
  
   END SUBROUTINE check_kappa

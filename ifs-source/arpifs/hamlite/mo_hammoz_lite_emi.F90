@@ -155,10 +155,10 @@ MODULE mo_hammoz_lite_emi
 
           ! set scaling factor for emissions
           emfactor(jsect,jspec) = zfactor    
-          !IF ((abs((zfactor - 1.0_dp)) > zeps) .AND. (p_pe == p_io )) THEN
-          !  write (message_text,'(a,e9.2)') 'emissions will be scaled with a factor of ', zfactor
-          !  CALL message('init_emissions', message_text)
-          !ENDIF
+          IF ((abs((zfactor - 1.0_dp)) > zeps) .AND. (p_pe == p_io )) THEN
+            write (message_text,'(a,e9.2)') 'emissions will be scaled with a factor of ', zfactor
+            CALL message('init_emissions', message_text)
+          ENDIF
 
           ! set emission flag
           speclist(jspec)%lemis = .TRUE.

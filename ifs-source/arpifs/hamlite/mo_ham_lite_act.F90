@@ -195,7 +195,6 @@ MODULE mo_ham_lite_act
           zalpha(jl,jk) = (grav*zamw*alv) / (cpd*argas*ptm1(jl,jk)**2) - (grav*zamd) / (argas*ptm1(jl,jk)) 
 
           ! equation (12) in [1]  
-
           zgamma(jl,jk) = (argas*ptm1(jl,jk)) / (zsat(jl,jk)*zamw) + (zamw*alv**2) / (cpd*papm1(jl,jk)*zamd*ptm1(jl,jk))
 
           ! diffusivity of water vapour in air, equation (13.3) in [3], [m2/s]  
