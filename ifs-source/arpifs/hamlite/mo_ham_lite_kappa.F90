@@ -82,8 +82,7 @@ MODULE mo_ham_lite_kappa
 
   ! file name for lookup table
   CHARACTER(LEN=256), PARAMETER :: lut_fn = "/scratch/project_462000807/" // &
-  "hhermann/oifs-hamlite-coupling/ifs-source/arpifs/hamlite/orig_nc/" // &
-  "lut_kappa.nc"
+  "hhermann/hamlite_piggyback/orig_nc/lut_kappa.nc"
 
   ! dimension names in lookup table
   CHARACTER(LEN=16), PARAMETER :: cdimn_Rd = "DryRadius"
