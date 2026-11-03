@@ -71,29 +71,26 @@ MODULE mo_ham_lite_convert_concentrations
     REAL(dp), PARAMETER :: epsD = 1.0e-20_dp
     REAL(dp) :: D, vol, mp
     REAL(dp) :: rho_p_mode
-    INTEGER :: grp_of_mode(kmodes)
     INTEGER :: grp_of_tracer(kmodes)
     REAL(dp) :: rho_p_defaults(kmodes)
     
     ! Map tracers
-    grp_of_tracer = (/ 1,1,1,1, 2,2, 3,3,3,3,4,4,4,3, 4,4,4 /)
-    ! Map modes
-    grp_of_mode = (/ 3,4,3,4, 3,4, 2,3,4,2,2,3,4,2, 2,3,4 /)
+    grp_of_tracer = (/ 1,1,1,1, 2,2, 4,4,4,3,4,4,4,3, 4,4,4 /)
     
-    ! Default particle material densities per mode [kg/m^3]
+    ! Default particle material densities per mode [kg/m^3] (HAMM7 densities)
     rho_p_defaults = (/ &
-        2600.0_dp, 2600.0_dp, 2600.0_dp, 2600.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
-        2160.0_dp, 2160.0_dp,  &                        ! SS AS, SS CS
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
-        1770.0_dp, 1770.0_dp, 1770.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
+        2650.0_dp, 2650.0_dp, 2650.0_dp, 2650.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
+        2165.0_dp, 2165.0_dp,  &                        ! SS AS, SS CS
+        1800.0_dp, 1800.0_dp, 1800.0_dp, 1800.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
+        1300.0_dp, 1300.0_dp, 1300.0_dp, 1300.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
+        1841.0_dp, 1841.0_dp, 1841.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
 
     pxtte = 0.0_dp
 
     DO m = 1, kmodes
         DO i = kidia, kfdia
             DO k = 1, klev
-                SELECT CASE (grp_of_mode(m))
+                SELECT CASE (grp_of_tracer(m))
                     CASE (1)
                         D = MAX(pprad(1), epsD)
                     CASE (2)
@@ -164,7 +161,6 @@ MODULE mo_ham_lite_convert_concentrations
     REAL(dp), PARAMETER :: minfrac = 1.e-20_dp   ! Minimum modefrac
     REAL(dp) :: D, vol, mp
     REAL(dp) :: rho_p_mode
-    INTEGER :: grp_of_mode(kmodes)
     INTEGER :: grp_of_tracer(kmodes)
     REAL(dp) :: rho_p_defaults(kmodes)
     REAL(dp) :: denom
@@ -172,17 +168,15 @@ MODULE mo_ham_lite_convert_concentrations
     REAL(wp) :: pxtm1_group(kproma,klev,ktrac)
     
     ! Map tracers
-    grp_of_tracer = (/ 1,1,1,1, 2,2, 3,3,3,3,4,4,4,3, 4,4,4 /)
-    ! Map modes
-    grp_of_mode = (/ 3,4,3,4, 3,4, 2,3,4,2,2,3,4,2, 2,3,4 /)
+    grp_of_tracer = (/ 1,1,1,1, 2,2, 4,4,4,3,4,4,4,3, 4,4,4 /)
     
-    ! Default particle material densities per mode [kg/m^3]
+    ! Default particle material densities per mode [kg/m^3] (HAMM7 densities)
     rho_p_defaults = (/ &
-        2600.0_dp, 2600.0_dp, 2600.0_dp, 2600.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
-        2160.0_dp, 2160.0_dp,  &                        ! SS AS, SS CS
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
-        1770.0_dp, 1770.0_dp, 1770.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
+        2650.0_dp, 2650.0_dp, 2650.0_dp, 2650.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
+        2165.0_dp, 2165.0_dp,  &                        ! SS AS, SS CS
+        1800.0_dp, 1800.0_dp, 1800.0_dp, 1800.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
+        1300.0_dp, 1300.0_dp, 1300.0_dp, 1300.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
+        1841.0_dp, 1841.0_dp, 1841.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
     
     ! Compute number concentrations per kg: sum over modes of (mmr_mode / m_p_mode)
     pxtm1 = 0.0_dp
@@ -196,7 +190,7 @@ MODULE mo_ham_lite_convert_concentrations
             rho_p_mode = rho_p_defaults(m)
         end if
 
-        SELECT CASE (grp_of_mode(m))
+        SELECT CASE (grp_of_tracer(m))
             CASE (1)
                 D = MAX(pprad(1), epsD)
             CASE (2)
@@ -237,7 +231,7 @@ MODULE mo_ham_lite_convert_concentrations
     ! Non-negativity guard
     pxtm1 = MAX(pxtm1_group, 0.0_dp)
 
-    END SUBROUTINE mmr2conc
+  END SUBROUTINE mmr2conc
     
     
   SUBROUTINE mmr2conctend(kidia, kfdia, kproma, klev, &
@@ -263,7 +257,6 @@ MODULE mo_ham_lite_convert_concentrations
     REAL(dp), PARAMETER :: minfrac = 1.e-20_dp   ! Minimum modefrac
     REAL(dp) :: D, vol, mp
     REAL(dp) :: rho_p_mode
-    INTEGER :: grp_of_mode(kmodes)
     INTEGER :: grp_of_tracer(kmodes)
     REAL(dp) :: rho_p_defaults(kmodes)
     REAL(dp) :: denom
@@ -271,17 +264,15 @@ MODULE mo_ham_lite_convert_concentrations
     REAL(wp) :: pxtm1_group(kproma,klev,ktrac)
     
     ! Map tracers
-    grp_of_tracer = (/ 1,1,1,1, 2,2, 3,3,3,3,4,4,4,3, 4,4,4 /)
-    ! Map modes
-    grp_of_mode = (/ 3,4,3,4, 3,4, 2,3,4,2,2,3,4,2, 2,3,4 /)
+    grp_of_tracer = (/ 1,1,1,1, 2,2, 4,4,4,3,4,4,4,3, 4,4,4 /)
     
-    ! Default particle material densities per mode [kg/m^3]
+    ! Default particle material densities per mode [kg/m^3] (HAMM7 densities)
     rho_p_defaults = (/ &
-        2600.0_dp, 2600.0_dp, 2600.0_dp, 2600.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
-        2160.0_dp, 2160.0_dp,  &                        ! SS AS, SS CS
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
-        1500.0_dp, 1500.0_dp, 1500.0_dp, 1500.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
-        1770.0_dp, 1770.0_dp, 1770.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
+        2650.0_dp, 2650.0_dp, 2650.0_dp, 2650.0_dp, &   ! DU AS, DU CS, DU AI, DU CI
+        2165.0_dp, 2165.0_dp,  &                        ! SS AS, SS CS
+        1800.0_dp, 1800.0_dp, 1800.0_dp, 1800.0_dp, &   ! BC KS, BC AS, BC CS, BC KI
+        1300.0_dp, 1300.0_dp, 1300.0_dp, 1300.0_dp, &   ! OC KS, OC AS, OC CS, OC KI
+        1841.0_dp, 1841.0_dp, 1841.0_dp /)              ! SO4 KS, SO4 AS, SO4 CS
     
     ! Compute number concentrations per kg: sum over modes of (mmr_mode / m_p_mode)
     pxtm1 = 0.0_dp
@@ -295,7 +286,7 @@ MODULE mo_ham_lite_convert_concentrations
             rho_p_mode = rho_p_defaults(m)
         end if
 
-        SELECT CASE (grp_of_mode(m))
+        SELECT CASE (grp_of_tracer(m))
             CASE (1)
                 D = MAX(pprad(1), epsD)
             CASE (2)

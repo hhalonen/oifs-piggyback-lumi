@@ -218,7 +218,7 @@ USE mo_subm_main_lite,             ONLY: lemissions, &
                                    lsedimentation, &
                                    lradiation
 USE mo_ham_lite_convert_concentrations, ONLY: mmr2conc, conc2mmr, mmr2conctend
-USE mo_ham_lite_main,              ONLY: nclasslite => nclass, sizeclasslite => sizeclass, cmr2mmr
+USE mo_ham_lite_main,              ONLY: nclasslite => nclass, sizeclasslite => sizeclass, cmr2ram
 USE hamlite_driver_input,          ONLY: jblite => jb
 USE mo_subm_trac_lite,             ONLY: ntraclite => ntrac
 USE MO_HAM_M7CTL,                  ONLY: INUCS,  ISO4NS, ISO4KS, ISO4AS, ISO4CS,  &
@@ -557,7 +557,7 @@ REAL(JPRB) :: &
        ztend_tot     (KLON,KLEV,nclasslite),& ! total tracer tendency [#/kg/s]
        zzh           (KLON,KLEV+1),         & ! geometric height above sea level, half level [m]
        zpvgf         (KLON),                &
-       mass_mean_rad (nclasslite),          & ! mass mean radius of particles
+       ram (nclasslite),                    & ! Radius of average mass
        count_mean_rad(nclasslite),          & ! count mean radius of particles
        zrs1_tmp(KLON, KLEV+1),              & ! Temporary variable for converting OIFS variables to correct dimensions for HAMLite.
        ZFLUX_WDEP(KLON,NCLASS),             &
@@ -573,6 +573,7 @@ REAL(JPRB) :: &
        ZXTTEoutconv(KLON,KLEV,nclasslite),  &
        ZXTTEoutmodes(KLON,KLEV,kmodes)
 
+REAL(KIND=JPRB) :: ZCDNCACT_out(KLON,KLEV)
        
 !<--hhermann
 !-----------------------------------------------------------------------
@@ -1462,7 +1463,9 @@ ENDDO
                 ZFPLSL, ZFPLSN, ZFEVAPR_str, ZFSUBLS_str,          & ! rain flux, snow flux, 
                 ZDUM2D, ZDUM3D,                                    & ! zeroes as these are not needed in strat. case
                 ZAP,  PCOVPTOT, ZRHO, ZDUMMY, ZWDEP_SCAV_IC, ZWDEP_SCAV_BC)  ! cloud frac., precip. frac., air dens., in/output*3
-
+        
+        ZCDNCACT_out(KIDIA:KFDIA, 1:KLEV) = ZCDNCACT(KIDIA:KFDIA, 1:KLEV)
+        
         ! Add stratiform case wet removal fluxes to diagnostics
         DO JMASS=1,NAEROCOMP
           JY=KAERO(ind_oifs_ham%ind_mass_OIFS(JMASS))
@@ -1684,18 +1687,18 @@ ENDDO
 	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,16) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4AS)%IDT)
 	  zmmr_trac_modes(KIDIA:KFDIA,1:KLEV,17) = ZXTM1(KIDIA:KFDIA, 1:KLEV, AEROCOMP(ISO4CS)%IDT)
 	  
-	  ! Count mean radius to mass mean radius
+	  ! Count mean radius to radius of average mass
 	  count_mean_rad(1:nclasslite) = sizeclasslite(1:nclasslite)%lite_radi
 	  DO jclass=1, nclasslite
-	    mass_mean_rad(jclass) = cmr2mmr(jclass) * count_mean_rad(jclass)
+	    ram(jclass) = cmr2ram(jclass) * count_mean_rad(jclass)
 	  END DO
 
       ! Convert tracer mixing ratios to number concentrations and combine them
       CALL mmr2conc(KIDIA, KFDIA, KLON, KLEV, kmodes, nclasslite, zmmr_trac_modes, &
-          & ztracnum, ZRHO, mass_mean_rad, modefrac_num)
+          & ztracnum, ZRHO, ram, modefrac_num)
           
       CALL mmr2conctend(KIDIA, KFDIA, KLON, KLEV, kmodes, nclasslite, ZXTTEoutmodes, &
-          & ZXTTEoutconv, ZRHO, mass_mean_rad, modefrac_num)
+          & ZXTTEoutconv, ZRHO, ram, modefrac_num)
 	  
 	  CALL ham_lite_mprops( jg, jblite, KIDIA, KFDIA, KLON, KLEV, PTP, PRSF1, ZQP) !eehol: aerosol rwet and density calculations (relhum also)
 	  zrwet(KIDIA:KFDIA, 1:KLEV, jblite, 1:nclasslite) = pm6rp(KIDIA:KFDIA, 1:KLEV, 1:nclasslite)
@@ -1707,27 +1710,29 @@ ENDDO
       zfrc_tile(KIDIA:KFDIA,3) 		    = PCI(KIDIA:KFDIA)                      ! Ice area fraction
       zfrc_tile(KIDIA:KFDIA,4) 		    = PCVL(KIDIA:KFDIA)+PCVH(KIDIA:KFDIA)   ! Vegetation area fraction
       DO isurf = 1,ksurf_lite
-          zz0m_tile(KIDIA:KFDIA, isurf) = PZ0M(KIDIA:KFDIA) * zfrc_tile(KIDIA:KFDIA, isurf)! Surface roughness length [m]
+          zz0m_tile(KIDIA:KFDIA, isurf) = PZ0M(KIDIA:KFDIA)! * zfrc_tile(KIDIA:KFDIA, isurf)! Surface roughness length [m]
       END DO
-      zsfcWind(KIDIA:KFDIA) = PWND(KIDIA:KFDIA)                              ! Surface wind
+      zsfcWind(KIDIA:KFDIA) = PWND(KIDIA:KFDIA)                                 ! Surface wind
       DO isurf = 1,ksurf_lite
-          zsfcWind_tile(KIDIA:KFDIA, isurf) = PWND(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA, isurf)
-      END DO
-      DO isurf = 1,ksurf_lite
-          zkh_tile(KIDIA:KFDIA ,isurf) = PKH(KIDIA:KFDIA, KLEV-1)*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for heat in 3D turb.
+          zsfcWind_tile(KIDIA:KFDIA, isurf) = PWND(KIDIA:KFDIA)!*zfrc_tile(KIDIA:KFDIA, isurf)
       END DO
       DO isurf = 1,ksurf_lite
-          zkm_tile(KIDIA:KFDIA ,isurf) = PKM(KIDIA:KFDIA, KLEV-1)*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for momentum in 3D turb.
+          !zkh_tile(KIDIA:KFDIA ,isurf) = PKH(KIDIA:KFDIA, KLEV-1)!*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for heat in 3D turb.
+          zkh_tile(KIDIA:KFDIA ,isurf) = PKH(KIDIA:KFDIA, KLEV)/ZWND(KIDIA:KFDIA)
+      END DO
+      DO isurf = 1,ksurf_lite
+          !zkm_tile(KIDIA:KFDIA ,isurf) = PKM(KIDIA:KFDIA, KLEV-1)*zfrc_tile(KIDIA:KFDIA, isurf)! Horizontal exchange coefficient for momentum in 3D turb.
+          zkm_tile(KIDIA:KFDIA, isurf) = ((PAERUST(KIDIA:KFDIA)/ZWND(KIDIA:KFDIA))**(2._JPRB))!*zfrc_tile(KIDIA:KFDIA,isurf) ! Similar as HAMLite standalone
       END DO
       ztsfc_tile(KIDIA:KFDIA,1) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (land)
       ztsfc_tile(KIDIA:KFDIA,2) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (water)
       ztsfc_tile(KIDIA:KFDIA,3) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (ice)
       ztsfc_tile(KIDIA:KFDIA,4) 		= PTP(KIDIA:KFDIA, KLEV)  ! surface temperature (vegetation)
-      zlai(KIDIA:KFDIA) = PLAIH(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + &! Leaf area index zlai(KIDIA:KFDIA) = 
-            PLAIL(KIDIA:KFDIA)*(1.0_JPRB-zfrc_tile(KIDIA:KFDIA,4))         ! zlaih(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + 
-                                                                         ! zlail(KIDIA:KFDIA)*(1-zfrc_tile(KIDIA:KFDIA,4))
-                                                                         ! Weighted sum of low and high vegetation values
-                                                                         ! Weighted sum of low and high vegetation values
+      zlai(KIDIA:KFDIA) = PLAIH(KIDIA:KFDIA)*PCVH(KIDIA:KFDIA) + &! Leaf area index zlai(KIDIA:KFDIA) = 
+         PLAIL(KIDIA:KFDIA)*PCVL(KIDIA:KFDIA)                  ! zlaih(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + 
+                                                               ! zlail(KIDIA:KFDIA)*(1-zfrc_tile(KIDIA:KFDIA,4))
+                                                               ! Weighted sum of low and high vegetation values
+                                                               ! Weighted sum of low and high vegetation values
 
       !-------Start cloud microphysics (activation and wet removal)------------------------
 	  !---Cloud microphysics (activation)
@@ -1751,11 +1756,16 @@ ENDDO
         ZPRECIP_ICE(KIDIA:KFDIA)  = 0._JPRB
         ZPRECIP_SNOW(KIDIA:KFDIA) = 0._JPRB
    
-	    DO JK = 1, KLEV
-	      ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
-          ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
-          ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
-	    END DO
+	    !DO JK = 1, KLEV
+	    !  ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
+        !  ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
+        !  ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
+	    !END DO
+	    
+	    ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,KLEV)
+        ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,KLEV)
+        ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,KLEV)
+	    
 	    zxprg(:) = 0._JPRB
 	    
 	    CALL cloud_mig_subm_2(jg, jblite, KIDIA, KFDIA, ktop, KLEV,              &
@@ -1851,7 +1861,7 @@ ENDDO
 	  
 	  CALL conc2mmr(KIDIA, KFDIA, KLON, KLEV, &
 	       kmodes, nclasslite, zxtte_lite, ztend_tot, &
-	       ztracnum, ZRHO, mass_mean_rad, modefrac_num)
+	       ztracnum, ZRHO, ram, modefrac_num)
 	  
 	  ! Get tracer mmr [kg/kg]
 	  DO i = KIDIA, KFDIA
@@ -2270,10 +2280,10 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(10)%MP) = aer_ssa_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-Lite asymmetry factor
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = aer_asy_sw_vr(KIDIA:KFDIA,1:KLEV,11)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(11)%MP) = aer_asy_sw_vr(KIDIA:KFDIA,1:KLEV,10)
   
   ! HAM-M7 CDNC
-  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(12)%MP) = ZCDNCACT(KIDIA:KFDIA,1:KLEV)
+  PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(12)%MP) = ZCDNCACT_out(KIDIA:KFDIA,1:KLEV)
   
   ! HAM-M7 ICNC
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(13)%MP) = ZICNC(KIDIA:KFDIA,1:KLEV)
@@ -2281,10 +2291,10 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   ! HAM-M7 550nm AOD
   PGFL(KIDIA:KFDIA,1,YAEROUT(14)%MP) = PAOD(KIDIA:KFDIA,10)
   
-  ! HAM-M7 microphysics tendency in HAM-Lite SS mode
+  ! HAM-M7 microphysics tendency in HAM-Lite dust mode
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(15)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,1)
   
-  ! HAM-M7 microphysics tendency in HAM-Lite dust mode
+  ! HAM-M7 microphysics tendency in HAM-Lite SS mode
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(16)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,2)
   
   ! HAM-M7 microphysics tendency in HAM-Lite carbonaceous mode
@@ -2294,15 +2304,15 @@ IF(.NOT.LIFSMIN  .AND. .NOT.LIFSTRAJ) THEN
   PGFL(KIDIA:KFDIA,1:KLEV,YAEROUT(18)%MP) = ZXTTEoutconv(KIDIA:KFDIA,1:KLEV,4)
   
   ! HAM-Lite mode emissions
-  PGFL(KIDIA:KFDIA,1,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,8) + PAERFLX_M7(KIDIA:KFDIA,31))    	! SS
+  PGFL(KIDIA:KFDIA,1,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,8)  + PAERFLX_M7(KIDIA:KFDIA,31))    ! SS
   PGFL(KIDIA:KFDIA,2,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,9)  + PAERFLX_M7(KIDIA:KFDIA,32) + &
                                                   & PAERFLX_M7(KIDIA:KFDIA,20) + PAERFLX_M7(KIDIA:KFDIA,26))    ! Dust
-  PGFL(KIDIA:KFDIA,3,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,23) + PAERFLX_M7(KIDIA:KFDIA,6)  + &
-                                                  & PAERFLX_M7(KIDIA:KFDIA,29) + PAERFLX_M7(KIDIA:KFDIA,17) + &
-                                                  & PAERFLX_M7(KIDIA:KFDIA,18))                                 ! Carbonaceous
-  PGFL(KIDIA:KFDIA,4,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,24) + PAERFLX_M7(KIDIA:KFDIA,7)  + &
+  PGFL(KIDIA:KFDIA,3,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,17) + PAERFLX_M7(KIDIA:KFDIA,18))    ! Insoluble
+  PGFL(KIDIA:KFDIA,4,YAEROUT(19)%MP) = -1.0_JPRB * (PAERFLX_M7(KIDIA:KFDIA,23) + PAERFLX_M7(KIDIA:KFDIA,6)  + &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,29) +                              &
+                                                  & PAERFLX_M7(KIDIA:KFDIA,24) + PAERFLX_M7(KIDIA:KFDIA,7)  + &
                                                   & PAERFLX_M7(KIDIA:KFDIA,30) + PAERFLX_M7(KIDIA:KFDIA,22) + &
-                                                  & PAERFLX_M7(KIDIA:KFDIA,5)  + PAERFLX_M7(KIDIA:KFDIA,28))    ! Sulfuric
+                                                  & PAERFLX_M7(KIDIA:KFDIA,5)  + PAERFLX_M7(KIDIA:KFDIA,28))    ! Soluble
   PGFL(KIDIA:KFDIA,5:KLEV,YAEROUT(19)%MP) = 0.0_JPRB
   
   ! Cloud fraction

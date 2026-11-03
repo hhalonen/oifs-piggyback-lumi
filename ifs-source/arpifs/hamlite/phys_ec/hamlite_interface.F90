@@ -420,11 +420,15 @@ IF ( lwetdep ) THEN
    ZPRECIP_ICE(KIDIA:KFDIA)  = 0._JPRB
    ZPRECIP_SNOW(KIDIA:KFDIA) = 0._JPRB
    ! precip fluxes column integrated
-   DO JK = 1, KLEV
-     ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
-     ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
-     ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
-   ENDDO
+	!DO JK = 1, KLEV
+	!  ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,JK)
+    !  ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,JK)
+    !  ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,JK)
+	!END DO
+	    
+	ZPRECIP_RAIN(KIDIA:KFDIA) = ZPRECIP_RAIN(KIDIA:KFDIA) + PFPLSL(KIDIA:KFDIA,KLEV)
+    ZPRECIP_ICE(KIDIA:KFDIA)  = ZPRECIP_ICE(KIDIA:KFDIA)  + PFPLSN(KIDIA:KFDIA,KLEV)
+    ZPRECIP_SNOW(KIDIA:KFDIA) = ZPRECIP_SNOW(KIDIA:KFDIA) + PFPLSN(KIDIA:KFDIA,KLEV)
 
    CALL cloud_mig_subm_2( &
       & 1, 1, KIDIA, KFDIA, 1, KLEV, KLON, NCLASS, &
@@ -477,17 +481,17 @@ IF ( ldrydep ) THEN
       ZSFCWIND(JL) = PWND(JL)                              ! Surface wind
 
       DO ISURF = 1,KSURF_LITE
-         ZZ0M_TILE(JL, ISURF) = MAX(1.0E-5_JPRB,PZ0M(JL)*ZFRC_TILE(JL, ISURF))! Surface roughness length [m]
-         ZSFCWIND_TILE(JL, ISURF) = PWND(JL)*ZFRC_TILE(JL, ISURF)
-         ZKH_TILE(JL, ISURF) = PKH(JL, KLEV)*ZFRC_TILE(JL, ISURF)! Horizontal exchange coefficient for momentum in 3D turb.
-         ZKM_TILE(JL, ISURF) = ((PAERUST(JL)/PWND(JL))**(2._JPRB))*ZFRC_TILE(JL,ISURF) !inverse operation done in mo_subm_interface_lite to get ustar
+         ZZ0M_TILE(JL, ISURF) = MAX(1.0E-5_JPRB,PZ0M(JL))!*ZFRC_TILE(JL, ISURF))! Surface roughness length [m]
+         ZSFCWIND_TILE(JL, ISURF) = PWND(JL)!*ZFRC_TILE(JL, ISURF)
+         ZKH_TILE(JL, ISURF) = PKH(JL, KLEV)/PWND(JL)!*ZFRC_TILE(JL, ISURF)! Horizontal exchange coefficient for momentum in 3D turb.
+         ZKM_TILE(JL, ISURF) = ((PAERUST(JL)/PWND(JL))**(2._JPRB))!*ZFRC_TILE(JL,ISURF) !inverse operation done in mo_subm_interface_lite to get ustar
          !zkm_tile(JL, ISURF) = PKM(JL, KLEV)!*zfrc_tile(JL, ISURF)! Horizontal exchange coefficient for heat in 3D turb.
          ZTSFC_TILE(JL, ISURF) = PTP(JL, KLEV) ! surface temperature (type)
       END DO
    END DO
 
-   ZLAI(KIDIA:KFDIA) = PLAIH(KIDIA:KFDIA)*PCVL(KIDIA:KFDIA) + &! Leaf area index zlai(KIDIA:KFDIA) = 
-         PLAIL(KIDIA:KFDIA)*PCVH(KIDIA:KFDIA)                  ! zlaih(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + 
+   ZLAI(KIDIA:KFDIA) = PLAIH(KIDIA:KFDIA)*PCVH(KIDIA:KFDIA) + &! Leaf area index zlai(KIDIA:KFDIA) = 
+         PLAIL(KIDIA:KFDIA)*PCVL(KIDIA:KFDIA)                  ! zlaih(KIDIA:KFDIA)*zfrc_tile(KIDIA:KFDIA,4) + 
                                                                ! zlail(KIDIA:KFDIA)*(1-zfrc_tile(KIDIA:KFDIA,4))
                                                                ! Weighted sum of low and high vegetation values
                                                                ! Weighted sum of low and high vegetation values
